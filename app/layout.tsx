@@ -24,6 +24,13 @@ const description =
   "Quanto você vendeu, quais produtos puxam seu faturamento, quem comprou de novo e se sua promoção deu lucro. Conecte sua loja VTEX em minutos, sem precisar de um time de dados.";
 
 export const metadata: Metadata = {
+  /* O apex é o endereço canônico da LP. Sem isto, `www.qlareo.com` e
+     `qlareo.com` seriam duas páginas idênticas aos olhos do Google, e as
+     URLs de og:image sairiam relativas — o que quebra o preview em
+     WhatsApp e LinkedIn, que não resolvem caminho relativo.
+     O redirect 308 do www vive em next.config.ts. */
+  metadataBase: new URL("https://qlareo.com"),
+  alternates: { canonical: "/" },
   title,
   description,
   applicationName: "Qlareo",
@@ -33,6 +40,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     siteName: "Qlareo",
+    url: "https://qlareo.com",
   },
   twitter: { card: "summary_large_image", title, description },
   robots: { index: true, follow: true },
