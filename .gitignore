@@ -8,6 +8,8 @@ next-env.d.ts
 .vercel
 .DS_Store
 
-# local-only agent config; .claude/skills is a junction into .agents/skills
+# agent config is local-only; skills live at user scope, not per project
 .claude/settings.local.json
 .claude/skills/
+.agents/
+skills-lock.json
