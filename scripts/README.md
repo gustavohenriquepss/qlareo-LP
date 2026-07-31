@@ -24,7 +24,10 @@ na sua planilha.
 Para gerar uma:
 
 ```powershell
-[Convert]::ToBase64String([Security.Cryptography.RandomNumberGenerator]::GetBytes(32))
+$rng = [Security.Cryptography.RNGCryptoServiceProvider]::new()
+$bytes = New-Object byte[] 32
+$rng.GetBytes($bytes); $rng.Dispose()
+($bytes | ForEach-Object { $_.ToString("x2") }) -join ""
 ```
 
 Guarde esse valor — é o `WAITLIST_WEBHOOK_TOKEN` da LP.
@@ -35,7 +38,9 @@ Guarde esse valor — é o `WAITLIST_WEBHOOK_TOKEN` da LP.
 2. Engrenagem ao lado de "Selecione o tipo" › **App da Web**.
 3. Configure:
    - Executar como: **Eu**
-   - Quem pode acessar: **Qualquer pessoa**
+   - Quem pode acessar: **Qualquer pessoa** ← sem isto o Google devolve a tela
+     de login e o `doPost` nunca roda; a LP recebe o mesmo erro com token certo
+     ou errado.
 4. **Implantar** e autorize (o aviso "app não verificado" é esperado —
    é o seu próprio script: **Avançado › Acessar <nome>**).
 5. Copie a **URL do app da Web** (termina em `/exec`).
@@ -53,6 +58,10 @@ WAITLIST_WEBHOOK_TOKEN=<o mesmo valor do passo 2>
 ```
 
 ## 5. Testar
+
+Teste **pela rota da LP**, não com `curl` direto no `/exec`: ao seguir o
+redirect do Google, o curl reenvia o POST sem `Content-Length` e leva um
+`411`. O `fetch` do Node (que a rota usa) trata isso corretamente.
 
 ```powershell
 $body = @{ name = "Teste"; email = "teste@exemplo.com"; company = "Loja X"; source = "curl" } | ConvertTo-Json
