@@ -286,10 +286,30 @@ export const finalCta = {
 export const footer = {
   tagline: "Inteligência Comercial",
   copyright: `© ${new Date().getFullYear()} Qlareo. Todos os direitos reservados`,
+  /* Perfis pessoais do fundador, não contas da empresa: a Qlareo é pré-lançamento
+     e ainda não tem presença própria. Apontar para um perfil vazio custa mais
+     confiança do que apontar para uma pessoa com rosto e histórico.
+     `label` é o nome acessível do link — o ícone é `aria-hidden`, então esta é a
+     ÚNICA coisa que um leitor de tela anuncia. Por isso diz "Perfil no X" e não
+     só "X": fora do contexto visual do rodapé, "X" não informa o destino.
+     `icon` é um discriminador, não um componente: este arquivo é conteúdo puro
+     e o mapa para o SVG vive em `components/ui/social-icons.tsx`. */
   social: [
-    { label: "LinkedIn", href: "https://www.linkedin.com/company/qlareo" },
-    { label: "Instagram", href: "https://www.instagram.com/qlareo" },
-    { label: "Twitter", href: "https://x.com/qlareo" },
+    {
+      label: "Perfil no LinkedIn",
+      icon: "linkedin",
+      href: "https://www.linkedin.com/in/gustavohpss",
+    },
+    {
+      label: "Perfil no X",
+      icon: "x",
+      href: "https://x.com/gustavopadeiro",
+    },
+    {
+      label: "Perfil no Instagram",
+      icon: "instagram",
+      href: "https://www.instagram.com/ogustavopadeiro",
+    },
   ],
 } as const;
 

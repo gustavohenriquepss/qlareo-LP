@@ -1,4 +1,5 @@
 import { Logo } from "@/components/ui/logo";
+import { socialIcons } from "@/components/ui/social-icons";
 import { footer, nav } from "@/lib/content";
 
 export function SiteFooter() {
@@ -29,19 +30,33 @@ export function SiteFooter() {
 
         <div className="flex flex-col items-start justify-between gap-4 text-[16px] sm:flex-row sm:items-center">
           <p className="text-ink-muted">{footer.copyright}</p>
-          <ul className="flex items-center gap-4">
-            {footer.social.map((item) => (
-              <li key={item.label}>
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="control rounded-lg text-ink transition-colors hover:text-brand"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
+          {/* `-mx-2` cancela a folga do alvo de toque nas pontas, para os ícones
+              alinharem com a régua da coluna e não flutuarem 8px para dentro.
+              `gap-2` mantém 8px entre alvos vizinhos — o dedo precisa disso para
+              não acertar o link errado. */}
+          <ul className="-mx-2 flex items-center gap-2">
+            {footer.social.map((item) => {
+              const Icon = socialIcons[item.icon];
+
+              return (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    /* O ícone é `aria-hidden`, então sem isto o link não teria
+                       nome nenhum — um leitor de tela leria só "link". */
+                    aria-label={item.label}
+                    /* Dica no ponteiro: quem vê o desenho reconhece a rede, mas
+                       o título confirma que é perfil pessoal, não conta da marca. */
+                    title={item.label}
+                    className="control-icon rounded-lg text-ink-muted transition-colors hover:text-brand"
+                  >
+                    <Icon className="size-5" />
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

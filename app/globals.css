@@ -176,6 +176,26 @@
       min-height: 2.75rem; /* 44px */
     }
   }
+
+  /* Extensão da landing: controle SÓ-ÍCONE. Mesma régua do `.control` acima —
+     36px para ponteiro fino, 44px para o dedo — mas aqui a LARGURA também
+     precisa ser travada. `.control` só define altura porque assume que existe
+     texto dentro esticando a caixa; um ícone de 20px não estica nada, e o alvo
+     sairia com 20×36. Usado pelos links de rede social do rodapé. */
+  .control-icon {
+    min-height: 2.25rem; /* 36px */
+    min-width: 2.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (pointer: coarse) {
+    .control-icon {
+      min-height: 2.75rem; /* 44px */
+      min-width: 2.75rem;
+    }
+  }
 }
 
 /* Cursor da palavra que se alterna no H1 (`components/typing-words.tsx`).
