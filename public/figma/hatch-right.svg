@@ -1,0 +1,30 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="60" height="106" viewBox="0 0 60 106" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Hero-section">
+<g clip-path="url(#clip0_0_4)">
+<mask id="path-1-inside-1_0_4" fill="white">
+<path d="M0 0H60V106H0V0Z"/>
+</mask>
+<path d="M0 0H60V106H0V0Z" fill="none"/>
+<path id="Vector 234251302" d="M-28 60L48.5 -71" stroke="#cbd5e1"/>
+<path id="Vector 234251303" d="M-22 65L54.5 -66" stroke="#cbd5e1"/>
+<path id="Vector 234251304" d="M-22 65L54.5 -66" stroke="#cbd5e1"/>
+<path id="Vector 234251305" d="M-20 78L56.5 -53" stroke="#cbd5e1"/>
+<path id="Vector 234251306" d="M-18 91L58.5 -40" stroke="#cbd5e1"/>
+<path id="Vector 234251307" d="M-16 104L60.5 -27" stroke="#cbd5e1"/>
+<path id="Vector 234251308" d="M-14 117L62.5 -14" stroke="#cbd5e1"/>
+<path id="Vector 234251309" d="M-12 130L64.5 -1" stroke="#cbd5e1"/>
+<path id="Vector 234251310" d="M-10 143L66.5 12" stroke="#cbd5e1"/>
+<path id="Vector 234251311" d="M-8 156L68.5 25" stroke="#cbd5e1"/>
+<path id="Vector 234251312" d="M-6 169L70.5 38" stroke="#cbd5e1"/>
+<path id="Vector 234251313" d="M-4 182L72.5 51" stroke="#cbd5e1"/>
+<path id="Vector 234251314" d="M-2 195L74.5 64" stroke="#cbd5e1"/>
+<path id="Vector 234251315" d="M0 208L76.5 77" stroke="#cbd5e1"/>
+</g>
+<path d="M60 106V107H61V106H60ZM60 0H59V106H60H61V0H60ZM60 106V105H0V106V107H60V106Z" fill="#cbd5e1" mask="url(#path-1-inside-1_0_4)"/>
+</g>
+<defs>
+<clipPath id="clip0_0_4">
+<path d="M0 0H60V106H0V0Z" fill="white"/>
+</clipPath>
+</defs>
+</svg>

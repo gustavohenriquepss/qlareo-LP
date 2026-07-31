@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — espelham `qlareo/web/app/globals.css`, o design system do
+   produto. Esta página é a porta de entrada do app: quem clica no CTA e entra
+   no produto não pode sentir que trocou de marca.
+
+   NÃO edite valor de token aqui. A fonte da verdade é o produto; mudança de
+   token desce de lá para cá. O que é legítimo adicionar neste arquivo são
+   tokens que só existem no contexto de marketing — estão isolados no bloco
+   "Extensões da landing" no fim, e nenhum deles redefine um token do produto.
+
+   Os valores abaixo vêm auditados de origem (WCAG 4.5:1 para texto, 3:1 para
+   objeto gráfico, contra as três superfícies). Os pares que esta página usa e
+   o produto não — CTA sobre branco, destaque da marca sobre o cartão escuro —
+   foram reauditados aqui:
+
+     on-primary sobre --primary  8.72:1     ink-muted sobre --background  5.44:1
+     brand sobre --background    4.94:1     ink-muted sobre --surface     5.69:1
+     brand sobre --ink (24px+)   3.45:1     ink-muted sobre --surface-2   5.19:1
+   --------------------------------------------------------------------------- */
+:root {
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+
+  --ink: #0f172a;
+  --ink-secondary: #334155;
+  /* Slate-500 darkened 40% toward slate-600. Slate-500 puro (#64748b) passa em
+     branco (4.76) mas REPROVA sobre --surface-2 (4.34). Este valor passa nos
+     três fundos (5.69 / 5.19 / 5.44) sem colapsar a hierarquia de três níveis
+     do texto (17.85 / 10.35 / 5.69). */
+  --ink-muted: #58687d;
+
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  /* Azul da marca (símbolo da logo). Coincide em hex com --ring, mas é um token
+     à parte de propósito: identidade não é ação nem foco. */
+  --brand: #2563eb;
+
+  /* Ação. É --primary que pinta botão, não --brand: no produto a distinção
+     separa "isto é a Qlareo" de "isto faz alguma coisa", e o CTA desta página
+     é a mesma promessa que o botão de dentro do app. De quebra, #1e40af sobre
+     branco dá 8.72:1, contra os 5.17:1 que --brand dava. */
+  --primary: #1e40af;
+  --primary-hover: #1d4ed8;
+  --on-primary: #ffffff;
+  --ring: #2563eb;
+
+  --positive: #15803d;
+  --negative: #dc2626;
+  --warning: #b45309;
+
+  /* --- Tokens de gráfico -------------------------------------------------
+     Vieram inteiros do produto, para a prévia da seção "O Produto" desenhar com
+     as MESMAS cores da tela de verdade. Valem as mesmas travas de lá: o par
+     categórico passou por validação de daltonismo (pior par adjacente ΔE 32,3
+     protan / 29,3 tritan sobre o cartão), a escada ABC precisa de 3:1 contra
+     --surface em cada degrau (10,36 / 6,70 / 3,68) e --axis é TEXTO, então vale
+     4,5:1. Mudar valor aqui sem mudar no produto quebra a promessa da página. */
+
+  /* Categórico (identidade). Ordem fixa, nunca ciclada. */
+  --series-1: #2563eb;
+  --series-2: #d97706;
+
+  /* Sequencial (magnitude). Um matiz, claro→escuro; A é o mais escuro. */
+  --abc-a: #1e3a8a;
+  --abc-b: #1d4ed8;
+  --abc-c: #3b82f6;
+
+  /* Grade é decorativa, isenta de mínimo de contraste. Eixo é rótulo de tick. */
+  --grid: #e2e8f0;
+  --axis: #64748b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-muted: var(--ink-muted);
+
+  --color-border-subtle: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-brand: var(--brand);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+
+  --color-positive: var(--positive);
+  --color-negative: var(--negative);
+  --color-warning: var(--warning);
+
+  --font-sans: var(--font-inter);
+
+  /* --- Extensões da landing --------------------------------------------
+     Não existem no produto porque o produto não tem página de marketing.
+     Nenhuma redefine token do design system. */
+
+  /* O Figma desenha a página inteira dentro de uma coluna régua de 1200px.
+     O app usa 1400px porque é um painel; a diferença é intencional. */
+  --spacing-frame: 1200px;
+
+  /* Texto sobre o cartão escuro da seção "A Virada". O produto não tem
+     superfície escura — é um recurso de marketing, não de painel — então não
+     há `--on-ink` lá para copiar. Existe como token próprio em vez de
+     `--on-primary` emprestado: aquele token promete legibilidade sobre
+     #1e40af, e este cartão é #0f172a. Branco sobre --ink dá 17.85:1. */
+  --color-on-ink: var(--surface);
+}
+
+/* Cor de borda padrão. Precisa estar em `@layer base`: fora de camada, esta
+   regra é CSS "sem camada" e vence QUALQUER utilitário do Tailwind, que vive em
+   `@layer utilities` — e aí `border-brand` sairia cinza.
+
+   DIVERGE DO PRODUTO DE PROPÓSITO: lá o padrão é `--border`, porque um painel
+   denso empilha muita linha e a régua fina evita que a tela vire uma grade. Aqui
+   a linha é elemento de composição — o Figma desenha a página inteira dentro de
+   uma coluna riscada, e no tom sutil ela sumia contra o #f8fafc. Todas as bordas
+   desta página, sem exceção, usam `--border-strong`. `--border` continua
+   definido acima só para o arquivo permanecer comparável com o do produto. */
+@layer base {
+  * {
+    border-color: var(--border-strong);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Altura do cabeçalho fixo, para o alvo da âncora não ficar escondido. */
+    scroll-padding-top: 83px;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--ink);
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Never remove focus rings. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  /* Dinheiro e contagem têm que alinhar pela vírgula entre linhas — inegociável
+     num relatório, e por isso vale para todo valor numérico, não só tabela. Vem
+     do produto junto com os tokens de gráfico. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* Controles interativos. 36px é o certo para ponteiro fino; a regra de 44×44
+     existe para o DEDO, então ela entra quando o ponteiro é grosso (touch).
+     Mesma definição do produto — aqui ela cobre o CTA do cabeçalho e os links
+     de navegação, que no desenho do Figma vinham com 20-35px de alvo. */
+  .control {
+    min-height: 2.25rem; /* 36px */
+    display: inline-flex;
+    align-items: center;
+  }
+
+  @media (pointer: coarse) {
+    .control {
+      min-height: 2.75rem; /* 44px */
+    }
+  }
+}
+
+/* Cursor da palavra que se alterna no H1 (`components/typing-words.tsx`).
+   `steps` em vez de fade: cursor de terminal liga e desliga, não esmaece. O
+   componente não renderiza o cursor sob `prefers-reduced-motion`, então esta
+   animação nunca chega a rodar nesse caso. */
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@utility animate-caret {
+  animation: caret-blink 1.06s steps(1, end) infinite;
+}
+
+/* Troca de aba na seção "O Produto". Só opacidade e um deslocamento mínimo: a
+   imagem tem que confirmar que mudou, não fazer número. O bloco de
+   `prefers-reduced-motion` acima zera a duração e a troca vira instantânea. */
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-panel-in {
+  animation: panel-in 240ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
