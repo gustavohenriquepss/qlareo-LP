@@ -1,4 +1,5 @@
-import { Frame, Section, cardGrid, framePadding, sectionStack } from "@/components/ui/frame";
+import { Frame, Section, framePadding, sectionStack } from "@/components/ui/frame";
+import { IllustratedCard, illustratedGrid } from "@/components/ui/illustrated-card";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { audience } from "@/lib/content";
 
@@ -10,15 +11,12 @@ export function Audience() {
 
         {/* A nota comenta a grade: fica colada nela, não no vão da seção. */}
         <div className="flex flex-col gap-6">
-          <ul className={`${cardGrid} sm:grid-cols-2 lg:grid-cols-3`}>
+          <ul className={`${illustratedGrid} sm:grid-cols-2 lg:grid-cols-3`}>
             {audience.items.map((item) => (
-              <li
-                key={item.category}
-                className="flex min-w-0 flex-col gap-3 rounded-2xl bg-surface p-6 lg:p-8"
-              >
+              <IllustratedCard key={item.category} image={item.image}>
                 <h3 className="text-[17px] font-semibold text-ink">{item.category}</h3>
                 <p className="text-[15px] leading-[1.5] text-ink-muted">{item.offer}</p>
-              </li>
+              </IllustratedCard>
             ))}
           </ul>
 

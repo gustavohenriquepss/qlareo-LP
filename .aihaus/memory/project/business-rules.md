@@ -44,13 +44,14 @@ Markdown is authoritative; indexes only retrieve it.
 
 - **status:** accepted
 - **domain:** conversão
-- **statement:** `?perfil=restaurante` abre a página do lado do restaurante; trocar no seletor atualiza a query sem recarregar, e o anunciante (padrão) não aparece na URL.
-- **source**: `components/perfil.tsx`, `lib/site.ts`, `app/page.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a)
-- **rationale:** o dono manda o link certo para cada restaurante.
-- **last-reviewed:** 615cf5230cb0b6af4070831432c035383d6c3d5a
+- **statement:** o restaurante é o perfil padrão (a prioridade é montar a rede). `?perfil=anunciante` abre a página do lado do anunciante; `?perfil=restaurante` segue aceito. Trocar no seletor atualiza a query sem recarregar, e o perfil padrão não aparece na URL.
+- **source**: `components/perfil.tsx`, `lib/site.ts`, `app/page.tsx` (working tree 2026-11-04, sobre 667e800)
+- **rationale:** o dono manda o link certo para cada público; hoje o público principal é o restaurante.
+- **last-reviewed:** 667e800acca67ada4c6360bafe163c7875e521ca
 - **links:** implements: [`components/perfil.tsx`], relates: [BR-003], decided-by: [owner, 2026-11-04]
 
-- Given o link `qlareo.com/?perfil=restaurante` When a página carrega Then o H1 é "Ganhe sacolas de delivery. Todo mês."
+- Given o link `qlareo.com/` When a página carrega Then o H1 é "Ganhe sacolas de delivery. Todo mês."
+- Given o link `qlareo.com/?perfil=anunciante` When a página carrega Then o H1 é "Entre na casa do seu cliente."
 
 ## Conflicts and gaps
 

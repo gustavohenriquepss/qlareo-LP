@@ -5,10 +5,11 @@ import { WhatsAppButton } from "@/components/whatsapp-button";
 import { formats } from "@/lib/content";
 
 /**
- * Os dois formatos do anunciante e, abaixo, a exclusividade na rede.
+ * Os dois planos do anunciante (Impacto e Alcance) e, abaixo, a exclusividade
+ * na rede.
  *
  * O primeiro cartão ganha a superfície escura do sistema (`bg-ink`), a mesma do
- * CTA final: é o formato que a página empurra. Sobre ela, o texto secundário é
+ * CTA final: é o plano que a página empurra. Sobre ela, o texto secundário é
  * `on-ink` a 80% (12:1) e o check usa o azul da marca (3.45:1, objeto gráfico).
  *
  * Cada formato tem o próprio botão de WhatsApp, com a mensagem já dizendo qual
@@ -35,15 +36,8 @@ export function Formats() {
                     dark ? "bg-ink text-on-ink" : "bg-surface text-ink",
                   ].join(" ")}
                 >
-                  <span
-                    className={[
-                      "self-start rounded-full px-3 py-1 text-[12px] font-semibold tracking-[0.08em]",
-                      dark ? "bg-on-ink/10 text-on-ink" : "bg-brand/10 text-primary",
-                    ].join(" ")}
-                  >
-                    {card.tag}
-                  </span>
-
+                  {/* Sem selo: o nome do plano (Impacto / Alcance) já diz o que
+                      cada um entrega, e o `body` explica o lado da sacola. */}
                   <div className="flex flex-col gap-3">
                     <h3 className="text-[24px] leading-tight font-semibold tracking-[-0.03em]">
                       {card.title}
