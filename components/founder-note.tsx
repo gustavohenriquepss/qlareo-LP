@@ -2,8 +2,8 @@ import Image from "next/image";
 import { founder } from "@/lib/content";
 
 /**
- * Linha sob o CTA: diz o que acontece no clique (abre o WhatsApp), com quem a
- * pessoa vai falar e que não há compromisso. Rosto e nome reais do fundador
+ * Linha sob o CTA: convida para o WhatsApp e mostra com quem a pessoa vai
+ * falar. Rosto e nome reais do fundador
  * são a prova de confiança que a página tem enquanto o piloto não tem cases.
  *
  * `tone="dark"` é para a superfície `bg-ink` (CTA final): o texto vira `on-ink`.
@@ -28,7 +28,7 @@ export function FounderNote({
       />
       <p className="flex flex-col text-[14px] leading-[1.4]">
         <span className={`font-semibold ${dark ? "text-on-ink" : "text-ink"}`}>
-          {founder.name} · {founder.role}
+          {founder.name} ({founder.role})
         </span>
         <span className={dark ? "text-on-ink/80" : "text-ink-muted"}>{founder.ctaNote}</span>
       </p>
