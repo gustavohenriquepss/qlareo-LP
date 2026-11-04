@@ -14,7 +14,7 @@
 
 ## Smoke checks
 
-- Inferred candidate: abrir `/` e `/?perfil=restaurante`, conferir o H1 de cada perfil e o texto do link `wa.me`. Source: `components/hero.tsx`, `lib/site.ts` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
+- Inferred candidate: abrir `/` (restaurante) e `/?perfil=anunciante`, conferir o H1 de cada perfil e o texto do link `wa.me`. Source: `components/hero.tsx`, `lib/site.ts` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 
 ## Rollback
 

@@ -15,8 +15,8 @@ const PerfilContext = createContext<PerfilState | null>(null);
 
 /**
  * O perfil inicial vem do servidor (`?perfil=` lido em app/page.tsx), então o
- * link mandado para um restaurante já chega renderizado do lado certo, sem
- * piscar o lado do anunciante antes.
+ * link mandado para um anunciante já chega renderizado do lado certo, sem
+ * piscar o lado do restaurante (o padrão) antes.
  */
 export function PerfilProvider({ initial, children }: { initial: Perfil; children: ReactNode }) {
   const [perfil, setState] = useState(initial);

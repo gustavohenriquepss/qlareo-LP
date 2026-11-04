@@ -5,8 +5,8 @@ page (`qlareo.com`).
 
 - Restaurantes recebem sacolas de papel kraft impressas de graça.
 - Anunciantes locais pagam 100% antecipado para aparecer nelas.
-- Dois produtos: **sacola exclusiva** (1 anunciante, frente e verso) e **meia sacola**
-  (1 anunciante por face).
+- Dois planos: **Impacto** (1 anunciante, frente e verso; id `exclusiva`) e **Alcance**
+  (1 anunciante por lado; id `meia`).
 - Piloto em Itaboraí e Icaraí, Niterói (RJ).
 
 O painel do anunciante e o redirect dos QR codes (`/r/:slug`) ficam no app, em

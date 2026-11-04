@@ -8,13 +8,14 @@ A Qlareo é uma **rede de mídia em sacolas de delivery**.
 
 - Restaurantes recebem sacolas de papel kraft impressas **de graça**.
 - Anunciantes locais pagam para aparecer nelas, **100% antecipado**.
-- Dois formatos: **sacola exclusiva** (um anunciante, frente e verso) e **meia sacola**
-  (um anunciante por face).
+- Dois planos: **Impacto** (um anunciante, sacola inteira, frente e verso) e **Alcance**
+  (um anunciante por lado). No código o id continua `exclusiva` e `meia`.
 - Piloto em **Itaboraí** e **Icaraí, Niterói** (RJ).
 
 A página fala com os dois públicos. Um seletor no topo troca o conteúdo inteiro entre
-"Sou anunciante" (padrão) e "Tenho restaurante". O link `?perfil=restaurante` já abre do
-lado do restaurante. O CTA de todas as seções é o WhatsApp.
+"Tenho restaurante" (padrão, porque a prioridade agora é montar a rede) e "Sou anunciante".
+O link `?perfil=anunciante` já abre do lado do anunciante; `?perfil=restaurante` continua
+funcionando para os links já enviados. O CTA de todas as seções é o WhatsApp.
 
 O painel do anunciante e o redirect dos QR codes (`/r/:slug`, com contagem de leituras)
 **não** moram aqui: ficam no app, em `app.qlareo.com` (repositório `gustavohenriquepss/qlareo`).
@@ -86,6 +87,12 @@ entrega AVIF/WebP no tamanho da tela):
 | `hero-qlareo.png` | Hero. A arte já traz o fundo azul e o corte do tronco, então entra sem cartão. |
 | `sacola-qlareo.png` | Imagem de compartilhamento (`app/opengraph-image.tsx`). |
 | `gustavo-padeiro.jpg` | Nota do fundador sob os CTAs (`components/founder-note.tsx`). |
+| `categorias/*.png` | Ilustrações 3D dos cartões de "Coloque seu negócio na mesa do bairro" (anunciante). |
+| `ganhos/*.png` | Ilustrações 3D dos cartões de "O que você ganha" (restaurante). |
+
+As duas pastas de ilustração seguem o mesmo padrão: PNG 400×400, fundo transparente, margem
+recortada, desenhadas pelo `IllustratedCard` (`components/ui/illustrated-card.tsx`) vazando
+pela borda de cima do cartão.
 
 Ao trocar uma imagem do hero, troque também o **nome** do arquivo: o otimizador de imagens
 do Next guarda a versão anterior pelo caminho, e o arquivo novo não aparece.

@@ -50,9 +50,10 @@ export const header = {
 
 export const perfilToggle = {
   label: "Escolha seu perfil",
+  /* O padrão (restaurante) vem primeiro. */
   options: [
-    { value: "anunciante", label: "Sou anunciante" },
     { value: "restaurante", label: "Tenho restaurante" },
+    { value: "anunciante", label: "Sou anunciante" },
   ],
 } as const satisfies { label: string; options: readonly { value: Perfil; label: string }[] };
 
@@ -67,7 +68,7 @@ export const hero: PorPerfil<{
     subhead:
       "Sua marca na sacola de delivery dos restaurantes do bairro. Ela chega na mesa, na hora em que o pedido é aberto.",
     primaryCta: "Garantir minha vaga",
-    secondaryCta: { label: "Ver formatos", href: "#formatos" },
+    secondaryCta: { label: "Ver planos", href: "#formatos" },
   },
   restaurante: {
     headline: "Ganhe sacolas de delivery. Todo mês.",
@@ -116,8 +117,8 @@ export const howItWorks: { id: string; heading: string; steps: PorPerfil<readonl
   steps: {
     anunciante: [
       {
-        title: "Escolha o formato",
-        body: "Sacola inteira só sua ou uma face dividida com outro anunciante.",
+        title: "Escolha o plano",
+        body: "Impacto, com a sacola inteira só sua, ou Alcance, com um lado dela.",
       },
       {
         title: "Mande logo e oferta",
@@ -193,16 +194,39 @@ export const audience = {
   id: "para-quem-e",
   heading: "Coloque seu negócio na mesa do bairro.",
   subhead: "Exemplos de oferta que funcionam bem na sacola.",
+  /* `image`: ilustração 3D em `public/categorias/`, decorativa (o nome da
+     categoria já diz o que ela mostra). */
   items: [
-    { category: "Academia", offer: "Primeira semana grátis para quem escanear." },
+    {
+      category: "Academia",
+      offer: "Primeira semana grátis para quem escanear.",
+      image: "/categorias/academia.png",
+    },
     {
       category: "Clínica estética ou odontológica",
       offer: "Avaliação gratuita com o cupom da sacola.",
+      image: "/categorias/dentista.png",
     },
-    { category: "Imobiliária", offer: "Avaliação do seu imóvel sem custo." },
-    { category: "Escola de idiomas", offer: "Aula experimental grátis." },
-    { category: "Pet shop", offer: "Desconto no primeiro banho." },
-    { category: "Salão e barbearia", offer: "Primeiro corte com desconto." },
+    {
+      category: "Imobiliária",
+      offer: "Avaliação do seu imóvel sem custo.",
+      image: "/categorias/imobiliaria.png",
+    },
+    {
+      category: "Escola de idiomas",
+      offer: "Aula experimental grátis.",
+      image: "/categorias/escola.png",
+    },
+    {
+      category: "Pet shop",
+      offer: "Desconto no primeiro banho.",
+      image: "/categorias/petshop.png",
+    },
+    {
+      category: "Salão e barbearia",
+      offer: "Primeiro corte com desconto.",
+      image: "/categorias/barbearia.png",
+    },
   ],
   note: "Comida, bebida e app de delivery não anunciam na rede, para proteger os restaurantes parceiros.",
 } as const;
@@ -210,16 +234,18 @@ export const audience = {
 /** Só anunciante. Mesmo âncora (`#formatos`) que "O que você ganha" do restaurante. */
 export const formats = {
   id: "formatos",
-  heading: "Escolha seu formato",
-  subhead: `Os dois formatos fecham em ${PRICING.mensal} por mês. Um entrega mais impacto, o outro mais alcance.`,
-  /* As duas listas usam a MESMA unidade (sacolas por mês) e a mesma ordem de
+  heading: "Escolha seu plano",
+  subhead: `Os dois planos fecham em ${PRICING.mensal} por mês. Um entrega mais impacto, o outro mais alcance.`,
+  /* Os planos se chamam Impacto e Alcance; o `body` diz o que cada nome
+     significa na sacola. `formato` ("exclusiva" | "meia") é só o id interno,
+     mantido para não quebrar a série do evento `click_whatsapp`.
+     As duas listas usam a MESMA unidade (sacolas por mês) e a mesma ordem de
      itens, para a comparação ser feita num eixo só. */
   cards: [
     {
       formato: "exclusiva",
-      tag: "MAIS IMPACTO",
-      title: "Sacola exclusiva",
-      body: "Frente e verso só seus. Ninguém divide a sacola com a sua marca.",
+      title: "Impacto",
+      body: "A sacola inteira é sua: frente e verso com a sua marca, sem dividir com ninguém.",
       items: [
         "2.500 sacolas por mês",
         "Frente e verso com a sua arte",
@@ -227,18 +253,17 @@ export const formats = {
       ],
       unitPrice: PRICING.exclusiva,
       unitLabel: "por sacola, frente e verso",
-      cta: "Quero a sacola exclusiva",
+      cta: "Quero o Impacto",
       featured: true,
     },
     {
       formato: "meia",
-      tag: "MAIS ALCANCE",
-      title: "Meia sacola",
-      body: "Uma face sua, a outra de um anunciante que não concorre com você.",
-      items: ["5.000 sacolas por mês", "Uma face com a sua arte", "QR exclusivo e cupom próprio"],
+      title: "Alcance",
+      body: "Um lado da sacola é seu, e você aparece no dobro de sacolas. O outro lado fica com um anunciante que não concorre com você.",
+      items: ["5.000 sacolas por mês", "Um lado com a sua arte", "QR exclusivo e cupom próprio"],
       unitPrice: PRICING.meia,
-      unitLabel: "por sacola, uma face",
-      cta: "Quero a meia sacola",
+      unitLabel: "por sacola, um lado",
+      cta: "Quero o Alcance",
       featured: false,
     },
   ],
@@ -263,14 +288,17 @@ export const gains = {
     {
       title: "Sacola sem custo",
       body: "Papel kraft impresso, entregue na sua cozinha. Uma despesa a menos todo mês.",
+      image: "/ganhos/sacola.png",
     },
     {
       title: "Sua marca no lacre",
       body: "Feche a sacola com o lacre que você já usa. Seu nome continua na entrega.",
+      image: "/ganhos/adesivo.png",
     },
     {
       title: "Nada de concorrente",
       body: "Sem anúncio de comida, bebida ou app de delivery. Você vê cada arte antes.",
+      image: "/ganhos/check-concorrentes.png",
     },
   ],
 } as const;
@@ -318,7 +346,7 @@ export const faq: { id: string; heading: string; items: PorPerfil<readonly FaqIt
     anunciante: [
       {
         q: "Quanto custa?",
-        a: `${PRICING.exclusiva} por sacola na sacola exclusiva (frente e verso) e ${PRICING.meia} na meia sacola (uma face). Os dois formatos fecham em ${PRICING.mensal} por mês.`,
+        a: `${PRICING.exclusiva} por sacola no Impacto (frente e verso) e ${PRICING.meia} no Alcance (um lado). Os dois planos fecham em ${PRICING.mensal} por mês.`,
       },
       {
         q: "Como sei se deu resultado?",
