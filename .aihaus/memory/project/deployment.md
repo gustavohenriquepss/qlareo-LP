@@ -2,24 +2,23 @@
 
 ## Environments
 
-- Verified: produção na Vercel em `https://qlareo.com`. Source: `next.config.ts`, `app/layout.tsx`, `README.md` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
+- Verified: produção na Vercel em `https://qlareo.com`, publicada a partir do `main` pela integração Git; cada branch ganha preview. Source: `README.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 
 ## Preconditions
 
-- Verified: `WAITLIST_WEBHOOK_URL` (e `WAITLIST_WEBHOOK_TOKEN`) configurados no projeto Vercel antes do deploy de produção, senão os leads só chegam aos logs. Source: `README.md`, `scripts/README.md` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
+- Verified: nenhuma variável de ambiente é necessária. Source: `README.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 
 ## Release procedure
 
-- Verified: `npx vercel` é o comando documentado. Source: `README.md` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
-- Unresolved: não está documentado se a produção sai pela integração Git da Vercel (push na `main`) ou pela CLI.
+- Verified: merge no `main` dispara o deploy de produção. Source: `README.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 
 ## Smoke checks
 
-- Inferred candidate: enviar um lead de teste pela LP em produção e confirmar a linha na planilha (adaptação de `scripts/README.md` §5). Source: `scripts/README.md` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
+- Inferred candidate: abrir `/` e `/?perfil=restaurante`, conferir o H1 de cada perfil e o texto do link `wa.me`. Source: `components/hero.tsx`, `lib/site.ts` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 
 ## Rollback
 
-- Unresolved: nenhum procedimento de rollback documentado.
+- Inferred candidate: promover o deploy anterior na Vercel (Instant Rollback). Nenhum procedimento documentado.
 
 ## Approval policy
 

@@ -1,76 +1,76 @@
 # Decisions
 
-## ADR-001 — Copy diverge do Figma sob o playbook Revenue-Centric Design
+## ADR-001 — Arquivar a landing de relatórios em tag e branch, não em rota
 
 **Status:** accepted
-**Date:** unresolved (documentado em `AUDIT.md`, reviewed 24378261073c8f52c9f30537a2ee610f5cba4230)
+**Date:** 2026-11-04
 **Milestone:** none
 **Amends:** none
-
-Related rules: BR-001, BR-002, BR-004
-
-### Context
-
-O layout segue fielmente `Qlareo / Home` (Figma node `29:1042`), mas a copy original não respondia às objeções de clique. Source: `AUDIT.md` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
-
-### Decision
-
-Mudanças de copy e interação (rótulo do CTA, click trigger, camada de confiança, custo no problema, FAQ completa, escassez honesta, modal in-page), todas reversíveis só por `lib/content.ts`. Source: `AUDIT.md` §1–8 (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
-
-### Consequences
-
-Strings marcadas `RCD:` em `lib/content.ts` divergem do Figma de propósito; consultar `AUDIT.md` antes de "corrigir" para o Figma. Source: `lib/content.ts`, `AUDIT.md` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
-
-### Reversal or migration
-
-Reverter editando `lib/content.ts`; nenhum componente precisa mudar. Source: `AUDIT.md` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
-
-## ADR-002 — Cores, tipografia e logo vêm do produto, não do Figma
-
-**Status:** accepted
-**Date:** unresolved (documentado em `AUDIT.md` §9, reviewed 24378261073c8f52c9f30537a2ee610f5cba4230)
-**Milestone:** none
-**Amends:** nota "colour untouched" em `AUDIT.md` (superseded)
 
 Related rules: none
 
 ### Context
 
-A paleta do Figma tinha cinzas que falhavam WCAG AA e um CTA a 5.17:1; o design system de `qlareo/web` já resolvia isso, e a LP precisa parecer a mesma empresa que o app. Source: `AUDIT.md` §9, `README.md` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
+A Qlareo trocou de produto (de SaaS de relatórios para rede de mídia em sacolas). O dono quer preservar a UI antiga sem publicá-la. Source: `README.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 
 ### Decision
 
-`app/globals.css` é cópia dos tokens do produto (mudanças só descem, nunca sobem); `--primary` pinta ações e `--brand` é identidade; o logo é SVG copiado de `Logo.tsx`; Inter é a única família. Source: `README.md`, `AUDIT.md` §9, `app/layout.tsx` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
+Tag anotada `legacy/relatorios-v1` e branch `archive/relatorios` no último commit da versão antiga; nada da versão antiga fica no `main`. Source: `README.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 
 ### Consequences
 
-Não editar tokens nem o logo localmente. Divergência intencional: toda borda usa `--border-strong` (o produto usa `--border`). Source: `README.md` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
+Rota "secreta" não vaza nem é indexada, e o `main` fica sem código morto. Para reaproveitar algo: `git checkout legacy/relatorios-v1 -- <caminho>`. Source: `README.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 
 ### Reversal or migration
 
-Re-copiar do produto quando ele mudar. Source: `README.md` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
+Restaurar arquivos a partir da tag.
 
-## ADR-003 — Planilha Google como fonte da verdade dos leads
+## ADR-002 — Uma página, dois perfis, perfil lido no servidor
 
 **Status:** accepted
-**Date:** unresolved (introduzido no commit `7a9af31`, reviewed 24378261073c8f52c9f30537a2ee610f5cba4230)
+**Date:** 2026-11-04
 **Milestone:** none
-**Amends:** desenho "webhook genérico, só loga" descrito em `README.md`
+**Amends:** none
 
-Related rules: BR-003
+Related rules: BR-003, BR-004
 
 ### Context
 
-A rota precisava persistir leads sem banco de dados. Source: `app/api/waitlist/route.ts` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
+Anunciante e restaurante precisam de copy e ordem de seções diferentes, e o dono manda links por perfil. Source: `components/landing.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 
 ### Decision
 
-Um Apps Script publicado como Web app grava cada lead numa aba `leads`, autenticado por token compartilhado; o Resend envia um aviso best-effort. Source: `app/api/waitlist/route.ts`, `scripts/README.md`, `scripts/waitlist-sheet.gs` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
+`app/page.tsx` lê `?perfil=` no servidor e passa para `PerfilProvider`; a ordem por perfil fica em `components/landing.tsx`. A página deixa de ser estática (render dinâmico). Source: `app/page.tsx`, `components/perfil.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 
 ### Consequences
 
-O Apps Script responde 200 até em erro, então a rota decide pelo `ok` do corpo. Atualizar o script exige "Nova versão" na implantação existente, senão a URL muda. Source: `app/api/waitlist/route.ts`, `scripts/README.md` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
+O link do restaurante chega sem piscar o lado do anunciante. O canonical continua `/`, então `?perfil=` não duplica a página no Google. Source: `app/page.tsx`, `app/layout.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 
 ### Reversal or migration
 
-Sem `WAITLIST_WEBHOOK_URL` a rota volta a só logar. Source: `app/api/waitlist/route.ts` (reviewed 24378261073c8f52c9f30537a2ee610f5cba4230).
+Para voltar a estático, ler o parâmetro no cliente (aceitando a troca visível após a hidratação).
+
+## ADR-003 — Backend do produto fica no app, não na landing
+
+**Status:** accepted
+**Date:** 2026-11-04
+**Milestone:** none
+**Amends:** none
+
+Related rules: none
+
+### Context
+
+O dono vai precisar do redirect `/r/:slug` com contagem de leituras e de um painel por anunciante. Source: `README.md`, `AGENTS.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
+
+### Decision
+
+Os dois ficam em `app.qlareo.com` (repositório `gustavohenriquepss/qlareo`). Este repositório não tem rotas de API. Source: `README.md`, `AGENTS.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
+
+### Consequences
+
+A landing não guarda dados nem segredos; não há variáveis de ambiente. Source: `README.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
+
+### Reversal or migration
+
+Nenhuma.
