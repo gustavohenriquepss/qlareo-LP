@@ -55,4 +55,3 @@ Markdown is authoritative; indexes only retrieve it.
 ## Conflicts and gaps
 
 - Unresolved: preço dos formatos, número real do WhatsApp, Instagram e arte final de OG são placeholders. Source: `README.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
-- Unresolved: `.env.example` ainda lista variáveis da waitlist antiga; a página nova não usa nenhuma variável. Source: `README.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
