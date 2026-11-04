@@ -1,3 +1,24 @@
+# Qlareo — contexto do produto
+
+A Qlareo é uma **rede de mídia em sacolas de delivery**. Este repositório é só a landing
+page (`qlareo.com`).
+
+- Restaurantes recebem sacolas de papel kraft impressas de graça.
+- Anunciantes locais pagam 100% antecipado para aparecer nelas.
+- Dois produtos: **sacola exclusiva** (1 anunciante, frente e verso) e **meia sacola**
+  (1 anunciante por face).
+- Piloto em Itaboraí e Icaraí, Niterói (RJ).
+
+O painel do anunciante e o redirect dos QR codes (`/r/:slug`) ficam no app, em
+`app.qlareo.com` (repositório `gustavohenriquepss/qlareo`), não aqui.
+
+Antes de mudar a landing, leia o `README.md`: copy só em `lib/content.ts`, nenhum token
+de design editado localmente, logo copiada do app. Não invente números (alcance, recall,
+conversão) e não troque `[SEU PREÇO]` sem o dono pedir.
+
+A versão anterior (SaaS de relatórios para lojas VTEX) está na tag `legacy/relatorios-v1`.
+Não traga essa copy de volta para o `main`.
+
 <!-- AIHAUS:START -->
 # aihaus router
 

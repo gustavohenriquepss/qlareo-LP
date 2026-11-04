@@ -1,9 +1,93 @@
 # Qlareo — Landing Page
 
-Landing page for Qlareo, built from the Figma file
-[`Qlareo / Home`](https://www.figma.com/design/BszHtpgTZb1mAcyIiCvTP2/Qlareo?node-id=29-1042).
+Landing page da Qlareo em `qlareo.com`. Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · pt-BR.
 
-Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · pt-BR.
+## O produto
+
+A Qlareo é uma **rede de mídia em sacolas de delivery**.
+
+- Restaurantes recebem sacolas de papel kraft impressas **de graça**.
+- Anunciantes locais pagam para aparecer nelas, **100% antecipado**.
+- Dois formatos: **sacola exclusiva** (um anunciante, frente e verso) e **meia sacola**
+  (um anunciante por face).
+- Piloto em **Itaboraí** e **Icaraí, Niterói** (RJ).
+
+A página fala com os dois públicos. Um seletor no topo troca o conteúdo inteiro entre
+"Sou anunciante" (padrão) e "Tenho restaurante". O link `?perfil=restaurante` já abre do
+lado do restaurante. O CTA de todas as seções é o WhatsApp.
+
+O painel do anunciante e o redirect dos QR codes (`/r/:slug`, com contagem de leituras)
+**não** moram aqui: ficam no app, em `app.qlareo.com` (repositório `gustavohenriquepss/qlareo`).
+
+## Rodar
+
+```bash
+npm install
+npm run dev          # http://localhost:3000
+npm run build        # build de produção
+npm run typecheck    # tsc --noEmit
+npm test             # testes da calculadora (node --test)
+```
+
+## Onde fica cada coisa
+
+| Caminho | O que é |
+| --- | --- |
+| `lib/content.ts` | **Toda a copy da página**, separada por perfil. Mude texto aqui, não nos componentes. |
+| `lib/site.ts` | Constantes de contato: `WHATSAPP_NUMBER`, `INSTAGRAM_URL` e as mensagens do WhatsApp. |
+| `lib/analytics.ts` | `track()` e os eventos da página. Ainda sem provider. |
+| `lib/calculator.ts` | Conta da calculadora do restaurante (função pura, com testes). |
+| `components/perfil.tsx` | Estado do perfil, leitura e escrita de `?perfil=`. |
+| `components/landing.tsx` | Ordem das seções de cada perfil. |
+| `components/` | Uma seção por arquivo. `components/ui/` tem os componentes base. |
+| `app/globals.css` | Tokens de design, **copiados do produto** (ver abaixo). |
+
+## Placeholders a trocar antes de divulgar
+
+| O quê | Onde |
+| --- | --- |
+| Número do WhatsApp (`5521000000000`) | `WHATSAPP_NUMBER` em `lib/site.ts` |
+| Instagram (`https://instagram.com/`) | `INSTAGRAM_URL` em `lib/site.ts` |
+| Preço dos formatos (`[SEU PREÇO]`) | `PRICE_PLACEHOLDER` em `lib/content.ts` |
+| Imagem de compartilhamento (OG) | `app/opengraph-image.tsx` |
+| Provider de analytics | `send()` em `lib/analytics.ts` |
+
+## Analytics
+
+Os eventos já disparam, mas ainda não vão para lugar nenhum: `send()` em `lib/analytics.ts`
+é o único ponto para ligar um provider (GA4, Plausible, PostHog…).
+
+| Evento | Quando | Propriedades |
+| --- | --- | --- |
+| `click_whatsapp` | Clique em qualquer botão de WhatsApp | `perfil`, `posicao` (`header`, `hero`, `calculadora`, `cta_final`) |
+| `toggle_perfil` | Troca no seletor do hero | `perfil` |
+| `calculadora_usada` | Os dois campos da calculadora preenchidos (uma vez por sessão) | `perfil` |
+
+## Design system
+
+Os tokens em `app/globals.css` são **cópia de `qlareo/web/app/globals.css`**, o design
+system do app. A landing é a porta de entrada do app: quem sai daqui e entra no painel
+não pode sentir que mudou de marca.
+
+**Não edite valor de token aqui.** A fonte da verdade é o app, e mudanças descem de lá
+para cá. O que existe só neste arquivo são tokens sem sentido num painel, isolados no
+bloco `Extensões da landing` no fim (`--spacing-frame`, `--on-ink`).
+
+A única cor fora do sistema é o kraft da ilustração da sacola (`#C49A6C`). Ela vive como
+constante em `components/bag-illustration.tsx` e não é usada em mais nenhum lugar.
+
+Três convenções valem para qualquer UI nova:
+
+- **`--primary` pinta ação, `--brand` é identidade.** O CTA é `bg-primary` (`#1e40af`),
+  não `bg-brand`. O azul da marca fica no símbolo da logo e em destaques.
+- **`.control` dimensiona tudo que é clicável**: 36px para ponteiro fino e 44px quando o
+  ponteiro é grosso (dedo).
+- **Toda borda desta página é `--border-strong`**, onde o app usa o `--border`, mais claro.
+  Aqui a linha compõe a página (a coluna riscada de 1200px), e no tom sutil ela sumia.
+
+`components/ui/logo.tsx` é cópia literal do `Logo.tsx` do app. Mantenha os dois iguais:
+copie de novo em vez de editar. No fundo escuro, use `<Logo className="text-on-ink" />`. O
+nome herda `currentColor` e o símbolo continua no azul da marca.
 
 ## Arquivo
 
@@ -18,9 +102,9 @@ em planilha) está preservada fora do `main`. Ela não fica publicada como rota 
 Para recuperar:
 
 ```bash
-git checkout legacy/relatorios-v1          # só olhar (HEAD destacado)
-git switch -c minha-branch legacy/relatorios-v1   # trabalhar a partir dele
-git checkout legacy/relatorios-v1 -- components/preview   # trazer um arquivo/pasta para o main
+git checkout legacy/relatorios-v1                         # só olhar (HEAD destacado)
+git switch -c minha-branch legacy/relatorios-v1           # trabalhar a partir dele
+git checkout legacy/relatorios-v1 -- components/preview   # trazer uma pasta para o main
 ```
 
 **Preview:** o projeto é implantado pela integração Git da Vercel, que gera um preview para
@@ -29,125 +113,11 @@ cada branch enviada ao GitHub. O da `archive/relatorios` fica em Vercel › proj
 `<projeto>-git-archive-relatorios-<time>.vercel.app`. Se o projeto tiver Deployment
 Protection ligada, o preview pede login na Vercel.
 
-O produto de relatórios em si (painel, adapters VTEX, banco) vive em outro repositório,
-`gustavohenriquepss/qlareo`, e não foi alterado aqui.
-
-## Run it
-
-```bash
-npm install
-npm run dev          # http://localhost:3000
-npm run build        # production build
-npm run typecheck    # tsc --noEmit
-```
-
-## Where things live
-
-| Path                    | What                                                              |
-| ----------------------- | ----------------------------------------------------------------- |
-| `lib/content.ts`        | **Every user-facing string.** Change copy here, not in components. |
-| `app/globals.css`       | Design tokens — **copied from the product**, see below.            |
-| `components/`           | One file per page section, in page order.                          |
-| `components/waitlist.tsx` | CTA modal + the context every CTA on the page hangs off.         |
-| `app/api/waitlist/`     | Lead intake endpoint.                                              |
-| `public/figma/`         | The 23 assets exported from Figma (SVG + PNG).                     |
-| `AUDIT.md`              | Where the copy diverges from the Figma, and the reasoning.          |
-
-## Design system
-
-The tokens in `app/globals.css` are a **copy of `qlareo/web/app/globals.css`**, the
-product's design system. This page is the front door to the app: someone who clicks the
-CTA and lands inside must not feel they changed brand.
-
-**Do not edit a token value here.** The source of truth is the product — changes flow
-down, never up. The one thing that legitimately lives only in this file is a token with
-no meaning in a dashboard; those are isolated in the `Extensões da landing` block at the
-end (`--spacing-frame`, `--on-ink`) and none of them redefines a product token.
-
-Two conventions come with it and are worth knowing before you add UI:
-
-- **`--primary` paints actions, `--brand` is identity.** The CTA is `bg-primary`
-  (`#1e40af`), not `bg-brand`. The brand blue is for the logo mark and accents.
-- **`.control` sizes anything clickable**: 36px for a fine pointer, 44px when the
-  pointer is coarse. The 44×44 rule exists for the finger, so it applies to the finger.
-
-One thing **diverges from the product on purpose**: every border on this page is
-`--border-strong`, where the product defaults to the lighter `--border`. A dense
-dashboard stacks a lot of rules and needs the hairline; here the line is a compositional
-element — the Figma draws the whole page inside a ruled column, which disappears against
-`#f8fafc` at the subtle weight. The default is set once in `globals.css`, so a border
-with no colour class still comes out right.
-
-### Line artwork
-
-Every Figma asset shipped with the old border grey (`#D1D1D1`) written inside the file,
-so the artwork silently fell out of step the moment the page's lines changed colour. All
-of it is now aligned, by one of two mechanisms:
-
-- **Single-colour artwork is painted with a CSS mask**, not served as an image — the five
-  step icons in the problem section and both `deco-lines`. The shape comes from the file,
-  the colour comes from `--border-strong`, so the two cannot diverge again. Those files
-  declare `stroke`/`fill="currentColor"`: they no longer decide a colour.
-  **Do not "clean up" that attribute to `none`** — a mask reads the *alpha* channel, and
-  an undrawn path has zero alpha, so the artwork would vanish entirely.
-- **`hatch-left/right.svg` carry the value literally**, because they are genuinely
-  multi-colour (hatching, an edge rule, and clip/mask internals) and a mask would flatten
-  them. Their panel background used to be a hard `#F6F6F6` — the *old* page colour, a
-  visible seam against `#f8fafc` — and is now transparent, so the page shows through and
-  it cannot drift again either.
-
-If `--border-strong` ever changes, those two hatch files are the only assets to update:
-`grep -rl D1D1D1 public/`.
-
-`components/ui/logo.tsx` is likewise a verbatim copy of the product's `Logo.tsx`. Keep
-them identical; re-copy rather than edit.
-
-## Collecting leads
-
-Out of the box, `POST /api/waitlist` validates the submission and **logs it to the server
-console**. Nothing is persisted.
-
-To send leads somewhere real, set one environment variable:
-
-```bash
-WAITLIST_WEBHOOK_URL=https://...
-```
-
-The route then forwards this JSON to that URL:
-
-```json
-{
-  "email": "voce@sualoja.com.br",
-  "account": "sualoja",
-  "source": "hero",
-  "receivedAt": "2026-07-30T21:01:06.724Z"
-}
-```
-
-Any endpoint that accepts a JSON POST works — a Zapier/Make hook, a Google Apps Script
-bound to a Sheet, a Supabase edge function, or your own handler. `source` tells you which
-CTA converted (`header`, `hero`, `turn-card`, `final`).
-
-If the webhook is unreachable or rejects, the lead is written to the error log so it stays
-recoverable, and the visitor sees a retry message rather than a silent success.
-
-## The free-spots counter
-
-`lib/content.ts` exports:
-
-```ts
-export const spots = { total: 10, remaining: 10 };
-```
-
-This drives the hero badge and the click-trigger line under every CTA. Scarcity only works
-while it is true — set `total: 0` and both disappear rather than making a claim you have
-stopped honouring.
+O produto de relatórios em si (painel, adapters VTEX, banco) vive no repositório
+`gustavohenriquepss/qlareo` e não foi alterado aqui.
 
 ## Deploy
 
-```bash
-npx vercel
-```
-
-Set `WAITLIST_WEBHOOK_URL` in the project's environment variables before the production
-deploy, or leads will only reach the runtime logs.
+A integração Git da Vercel publica o `main` em produção (`qlareo.com`). O `www.qlareo.com`
+redireciona com 308 para o apex (`next.config.ts`). A página não precisa de nenhuma
+variável de ambiente.
