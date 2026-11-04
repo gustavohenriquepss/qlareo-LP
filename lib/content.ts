@@ -25,10 +25,10 @@ export const PRICING = {
 /** Quem atende no WhatsApp. Rosto e nome reais: é a prova que a página tem hoje. */
 export const founder = {
   name: "Gustavo Padeiro",
-  role: "Fundador da Qlareo",
+  role: "Fundador",
   photoAlt: "Gustavo Padeiro, fundador da Qlareo",
-  /** Linha sob o CTA: o que acontece no clique, e com quem. */
-  ctaNote: "Abre o WhatsApp e quem responde sou eu. Sem compromisso.",
+  /** Linha sob o CTA: convite direto, na voz do fundador. */
+  ctaNote: "Me chama no Whats!",
 } as const;
 
 /**
@@ -95,15 +95,15 @@ export const bag = {
 
 export const highlights: PorPerfil<readonly string[]> = {
   anunciante: [
-    "Dentro de casa, não no feed",
-    "Leituras do QR medidas",
-    "Sem concorrente na mesma sacola",
-    "Arte montada pela gente",
+    "Dentro de casa",
+    "Resultado no QR",
+    "Sem concorrente",
+    "A gente faz a arte",
   ],
   restaurante: [
-    "Sacola grátis todo mês",
-    "Reposição na sua cozinha",
-    "Você aprova os anúncios",
+    "Sacola grátis",
+    "Entrega na cozinha",
+    "Você aprova a arte",
     "Sai quando quiser",
   ],
 };
@@ -124,7 +124,7 @@ export const howItWorks: { id: string; heading: string; steps: PorPerfil<readonl
         body: "A gente monta a arte no nosso modelo e você aprova antes de imprimir.",
       },
       {
-        title: "Sua marca sai em cada entrega",
+        title: "Sua marca chega com o pedido",
         body: "Os restaurantes da rede usam a sacola em todos os pedidos do mês.",
       },
       {
@@ -156,20 +156,35 @@ export const howItWorks: { id: string; heading: string; steps: PorPerfil<readonl
 /** Só anunciante. */
 export const comparison = {
   id: "comparativo",
-  heading: "Saia do feed. Entre na mesa.",
-  subhead: "Compare a sacola com o que você já usa para anunciar no bairro.",
-  caption: "Comparativo entre a sacola Qlareo, o anúncio no Instagram e o panfleto",
+  heading: "Sua marca aonde o feed não chega.",
+  subhead: "O único anúncio que entra na casa do cliente em 100% das entregas.",
+  caption: "Comparativo entre a sacola Qlareo, o anúncio no Instagram e o outdoor",
   criterionLabel: "Critério",
-  columns: ["Sacola Qlareo", "Anúncio no Instagram", "Panfleto"],
+  columns: ["Sacola Qlareo", "Anúncio no Instagram", "Outdoor"],
   rows: [
-    { label: "Chega dentro da casa do cliente", values: ["Sim", "Não", "Às vezes"] },
+    { label: "Chega dentro da casa do cliente", values: ["Sim, em toda entrega", "Não", "Não"] },
     {
       label: "Aparece quando a pessoa tem tempo para ver",
-      values: ["Sim, na hora de abrir o pedido", "Não, some no scroll", "Não"],
+      values: [
+        "Sim, na hora de abrir o pedido",
+        "Não, some no scroll",
+        "Não, é visto de passagem",
+      ],
     },
     { label: "Bloqueador de anúncio não alcança", values: ["Sim", "Não", "Sim"] },
-    { label: "Fala com quem mora no bairro", values: ["Sim", "Depende da segmentação", "Sim"] },
+    {
+      label: "Fala com quem mora no bairro",
+      values: ["Sim", "Depende da segmentação", "Depende do ponto"],
+    },
     { label: "Resultado medido", values: ["Sim, QR e cupom", "Sim", "Não"] },
+    {
+      label: "Custo para começar",
+      values: [
+        `${PRICING.exclusiva} por sacola, com arte`,
+        "Você define a verba",
+        "Alto, com lona e instalação",
+      ],
+    },
   ],
 } as const;
 
