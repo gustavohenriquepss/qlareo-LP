@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { skipToContent } from "@/lib/content";
@@ -74,6 +75,8 @@ export default function RootLayout({
           {skipToContent}
         </a>
         {children}
+        {/* Vercel Web Analytics: page views. Os eventos saem de lib/analytics.ts. */}
+        <Analytics />
       </body>
     </html>
   );

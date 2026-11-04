@@ -35,7 +35,7 @@ npm test             # testes da calculadora (node --test)
 | --- | --- |
 | `lib/content.ts` | **Toda a copy da página**, separada por perfil. Mude texto aqui, não nos componentes. |
 | `lib/site.ts` | Constantes de contato: `WHATSAPP_NUMBER`, `INSTAGRAM_URL` e as mensagens do WhatsApp. |
-| `lib/analytics.ts` | `track()` e os eventos da página. Ainda sem provider. |
+| `lib/analytics.ts` | `track()` e os eventos da página, enviados ao Vercel Web Analytics. |
 | `lib/calculator.ts` | Conta da calculadora do restaurante (função pura, com testes). |
 | `components/perfil.tsx` | Estado do perfil, leitura e escrita de `?perfil=`. |
 | `components/landing.tsx` | Ordem das seções de cada perfil. |
@@ -47,7 +47,6 @@ npm test             # testes da calculadora (node --test)
 | O quê | Onde |
 | --- | --- |
 | Instagram (`https://instagram.com/`) | `INSTAGRAM_URL` em `lib/site.ts` |
-| Provider de analytics | `send()` em `lib/analytics.ts` |
 
 Já definidos pelo dono: o WhatsApp (`WHATSAPP_NUMBER`, atendido pelo fundador) e o preço
 (`PRICING` em `lib/content.ts`: R$ 1,30 por sacola na exclusiva, R$ 0,65 na meia, os dois
@@ -55,8 +54,13 @@ fechando em R$ 3.250 por mês). Preço só muda quando o dono pedir.
 
 ## Analytics
 
-Os eventos já disparam, mas ainda não vão para lugar nenhum: `send()` em `lib/analytics.ts`
-é o único ponto para ligar um provider (GA4, Plausible, PostHog…).
+Provider: **Vercel Web Analytics** (`@vercel/analytics`). O `<Analytics />` em `app/layout.tsx`
+conta as page views, e `send()` em `lib/analytics.ts` envia os eventos abaixo. Ele é o único
+ponto que conhece o provider. Em dev nada é enviado; o pacote só registra no console.
+
+Para os dados aparecerem, o Web Analytics precisa estar ativado no projeto da Vercel
+(**Analytics › Enable**). Eventos personalizados só aparecem nos planos Pro e Enterprise;
+no Hobby, só as page views.
 
 | Evento | Quando | Propriedades |
 | --- | --- | --- |
