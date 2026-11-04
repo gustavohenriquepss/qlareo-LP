@@ -1,23 +1,29 @@
-import { Frame, Section, framePadding } from "@/components/ui/frame";
+import { Frame, Section, cardGrid, framePadding, sectionStack } from "@/components/ui/frame";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { audience } from "@/lib/content";
 
 export function Audience() {
   return (
     <Section id={audience.id}>
-      <Frame className={`flex flex-col gap-8 ${framePadding}`}>
+      <Frame className={`${sectionStack} ${framePadding}`}>
         <SectionHeading heading={audience.heading} subhead={audience.subhead} />
 
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {audience.items.map((item) => (
-            <li key={item.category} className="flex min-w-0 flex-col gap-2 rounded-2xl bg-surface p-6">
-              <h3 className="text-[16px] font-semibold text-ink">{item.category}</h3>
-              <p className="text-[15px] leading-[1.4] text-ink-muted">{item.offer}</p>
-            </li>
-          ))}
-        </ul>
+        {/* A nota comenta a grade: fica colada nela, não no vão da seção. */}
+        <div className="flex flex-col gap-6">
+          <ul className={`${cardGrid} sm:grid-cols-2 lg:grid-cols-3`}>
+            {audience.items.map((item) => (
+              <li
+                key={item.category}
+                className="flex min-w-0 flex-col gap-3 rounded-2xl bg-surface p-6 lg:p-8"
+              >
+                <h3 className="text-[17px] font-semibold text-ink">{item.category}</h3>
+                <p className="text-[15px] leading-[1.5] text-ink-muted">{item.offer}</p>
+              </li>
+            ))}
+          </ul>
 
-        <p className="text-[15px] leading-[1.4] text-ink-muted">{audience.note}</p>
+          <p className="text-[15px] leading-[1.5] text-ink-muted">{audience.note}</p>
+        </div>
       </Frame>
     </Section>
   );

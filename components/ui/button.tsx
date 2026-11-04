@@ -4,19 +4,22 @@ type Size = "sm" | "md" | "lg";
 type Variant = "primary" | "secondary";
 
 /*
-  `size` escala PADDING e TIPO, nunca altura. A altura é uma só, a mesma do CTA
-  do cabeçalho: `.control` do design system do produto — 36px para ponteiro
-  fino, 44px quando o ponteiro é grosso. A régua de 44×44 existe para o dedo,
-  então é no dedo que ela entra.
+  Altura por tamanho, em escala de 4: 40 / 44 / 48px.
 
-  Um CTA que muda de altura entre seções deixa de ser lido como o mesmo
-  compromisso — é a mesma razão pela qual a cor não varia. O que ainda separa um
-  CTA de herói de um do cabeçalho é a largura e o corpo do texto.
+  DIVERGE DO `.control` DO PRODUTO DE PROPÓSITO. Lá, 36px servem a um painel
+  denso, usado com mouse. Aqui o botão é o CTA de uma página de venda, aberta
+  sobretudo no celular: 44px é o mínimo de alvo de toque (Apple HIG), 48px o
+  recomendado (Material) e a faixa usual de CTA principal em landing page.
+
+  - `lg` (48px): toda ação principal de seção (hero, formatos, CTA final).
+  - `md` (44px): ações dentro de conteúdo.
+  - `sm` (40px → 44px no toque): o CTA do cabeçalho, que divide 83px de altura
+    com a logo. No dedo ele sobe para 44px, o piso de alvo de toque.
 */
 const sizes: Record<Size, string> = {
-  sm: "control px-3 text-[14px] leading-5",
-  md: "control px-5 text-[15px] leading-5",
-  lg: "control px-6 text-[16px] leading-6",
+  sm: "min-h-10 pointer-coarse:min-h-11 px-4 text-[14px] leading-5",
+  md: "min-h-11 px-5 text-[15px] leading-5",
+  lg: "min-h-12 px-7 text-[16px] leading-6",
 };
 
 /*

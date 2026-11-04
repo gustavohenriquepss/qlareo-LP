@@ -49,8 +49,8 @@ export function Calculator() {
   return (
     <Section id={calculator.id}>
       <Frame className={framePadding}>
-        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
-          <div className="flex flex-col gap-8">
+        <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-20">
+          <div className="flex flex-col gap-10">
             <SectionHeading heading={calculator.heading} subhead={calculator.subhead} />
 
             <div className="flex flex-col gap-5">
@@ -73,8 +73,8 @@ export function Calculator() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-6 rounded-2xl bg-ink p-6 text-on-ink lg:p-8">
-            <div aria-live="polite" aria-atomic="true" className="flex flex-col gap-5">
+          <div className="flex flex-col gap-8 rounded-2xl bg-ink p-6 text-on-ink lg:p-10">
+            <div aria-live="polite" aria-atomic="true" className="flex flex-col gap-6">
               <p className="flex flex-col gap-1">
                 <span className="text-[15px] text-on-ink/80">{calculator.monthlyLabel}</span>
                 <span className="tnum text-[36px] leading-none font-semibold tracking-[-0.04em] lg:text-[44px]">
@@ -89,7 +89,7 @@ export function Calculator() {
               </p>
             </div>
 
-            <p className="text-[14px] leading-[1.4] text-on-ink/80">
+            <p className="text-[14px] leading-[1.5] text-on-ink/80">
               {calculator.note}
             </p>
 

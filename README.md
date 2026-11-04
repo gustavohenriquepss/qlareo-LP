@@ -46,11 +46,12 @@ npm test             # testes da calculadora (node --test)
 
 | O quê | Onde |
 | --- | --- |
-| Número do WhatsApp (`5521000000000`) | `WHATSAPP_NUMBER` em `lib/site.ts` |
 | Instagram (`https://instagram.com/`) | `INSTAGRAM_URL` em `lib/site.ts` |
-| Preço dos formatos (`[SEU PREÇO]`) | `PRICE_PLACEHOLDER` em `lib/content.ts` |
-| Imagem de compartilhamento (OG) | `app/opengraph-image.tsx` |
 | Provider de analytics | `send()` em `lib/analytics.ts` |
+
+Já definidos pelo dono: o WhatsApp (`WHATSAPP_NUMBER`, atendido pelo fundador) e o preço
+(`PRICING` em `lib/content.ts`: R$ 1,30 por sacola na exclusiva, R$ 0,65 na meia, os dois
+fechando em R$ 3.250 por mês). Preço só muda quando o dono pedir.
 
 ## Analytics
 
@@ -59,7 +60,7 @@ Os eventos já disparam, mas ainda não vão para lugar nenhum: `send()` em `lib
 
 | Evento | Quando | Propriedades |
 | --- | --- | --- |
-| `click_whatsapp` | Clique em qualquer botão de WhatsApp | `perfil`, `posicao` (`header`, `hero`, `calculadora`, `cta_final`) |
+| `click_whatsapp` | Clique em qualquer botão de WhatsApp | `perfil`, `posicao` (`header`, `hero`, `formatos`, `calculadora`, `cta_final`) e, nos botões de formato, `formato` (`exclusiva`, `meia`, `rede`) |
 | `toggle_perfil` | Troca no seletor do hero | `perfil` |
 | `calculadora_usada` | Os dois campos da calculadora preenchidos (uma vez por sessão) | `perfil` |
 
@@ -73,15 +74,26 @@ não pode sentir que mudou de marca.
 para cá. O que existe só neste arquivo são tokens sem sentido num painel, isolados no
 bloco `Extensões da landing` no fim (`--spacing-frame`, `--on-ink`).
 
-A única cor fora do sistema é o kraft da ilustração da sacola (`#C49A6C`). Ela vive como
-constante em `components/bag-illustration.tsx` e não é usada em mais nenhum lugar.
+Nenhuma cor fora do sistema é usada na interface. Imagens em `public/` (o `next/image`
+entrega AVIF/WebP no tamanho da tela):
+
+| Arquivo | Onde aparece |
+| --- | --- |
+| `hero-qlareo.png` | Hero. A arte já traz o fundo azul e o corte do tronco, então entra sem cartão. |
+| `sacola-qlareo.png` | Imagem de compartilhamento (`app/opengraph-image.tsx`). |
+| `gustavo-padeiro.jpg` | Nota do fundador sob os CTAs (`components/founder-note.tsx`). |
+
+Ao trocar uma imagem do hero, troque também o **nome** do arquivo: o otimizador de imagens
+do Next guarda a versão anterior pelo caminho, e o arquivo novo não aparece.
 
 Três convenções valem para qualquer UI nova:
 
 - **`--primary` pinta ação, `--brand` é identidade.** O CTA é `bg-primary` (`#1e40af`),
   não `bg-brand`. O azul da marca fica no símbolo da logo e em destaques.
-- **`.control` dimensiona tudo que é clicável**: 36px para ponteiro fino e 44px quando o
-  ponteiro é grosso (dedo).
+- **Botão tem altura de página de venda, não de painel.** `Button` usa 48px (`lg`, toda
+  ação principal de seção), 44px (`md`) e 40px (`sm`, só o CTA do cabeçalho, que vai a
+  44px no toque). O seletor de perfil acompanha o CTA do hero (48px). `.control`, do
+  produto, segue valendo para link de texto e ícone: 36px para ponteiro fino, 44px no dedo.
 - **A página quase não tem linha.** Nada de coluna riscada nem divisória entre seções:
   conteúdo se agrupa em cartões brancos com canto de 16px (`rounded-2xl`) sobre o
   `--background`, e seção se separa por respiro. O público é pequeno negócio, e o visual

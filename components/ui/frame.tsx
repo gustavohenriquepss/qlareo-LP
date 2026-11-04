@@ -38,5 +38,19 @@ export function Frame({
   return <div className={`w-full max-w-frame ${className}`}>{children}</div>;
 }
 
-/** The 60px inset used by every content column in the design. */
-export const framePadding = "px-6 py-10 md:px-10 md:py-12 lg:p-[60px]";
+/**
+ * Recuo de toda coluna de conteúdo. Lateral de 24/40/60px; vertical em escala
+ * de 8 (64 → 80 → 96px). Como nenhuma linha separa uma seção da outra, o
+ * respiro É o separador: entre o conteúdo de duas seções vizinhas sobram
+ * 128/160/192px, o bastante para cada bloco ser lido como um assunto à parte.
+ */
+export const framePadding = "px-6 py-16 md:px-10 md:py-20 lg:px-[60px] lg:py-24";
+
+/**
+ * Pilha vertical de uma seção: título → conteúdo → nota. O vão (40/48px) é
+ * menor que o da seção, para o título continuar preso ao que ele anuncia.
+ */
+export const sectionStack = "flex flex-col gap-10 lg:gap-12";
+
+/** Grade de cartões: 16px no celular, 24px a partir do tablet. */
+export const cardGrid = "grid gap-4 md:gap-6";

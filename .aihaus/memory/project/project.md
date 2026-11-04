@@ -26,6 +26,6 @@
 
 ## Current constraints
 
-- Verified: nenhum número de alcance, recall ou conversão na página; preços ficam como `[SEU PREÇO]` (`PRICE_PLACEHOLDER`). Source: `lib/content.ts`, `AGENTS.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
-- Verified: tokens de `app/globals.css` são cópia do app e não se editam aqui; a única cor fora do sistema é o kraft `#C49A6C`, só na ilustração da sacola. Source: `README.md`, `components/bag-illustration.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
+- Verified: nenhum número de alcance, recall ou conversão na página; preço definido pelo dono em `PRICING` (`lib/content.ts`) e não muda sem ele pedir. Source: `lib/content.ts`, `AGENTS.md` (working tree 2026-11-04, sobre e60a70e).
+- Verified: tokens de `app/globals.css` são cópia do app e não se editam aqui; nenhuma cor fora do sistema na interface (a ilustração com o kraft `#C49A6C` saiu; o hero usa a foto do entregador em PNG). Source: `README.md` (working tree 2026-11-04, sobre e60a70e).
 - Verified: `components/ui/logo.tsx`, `app/icon.svg` e `app/apple-icon.tsx` são da marca e não mudam; no fundo escuro usa-se `<Logo className="text-on-ink" />`. Source: `README.md`, `components/ui/logo.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).

@@ -1,4 +1,4 @@
-import type { Perfil } from "@/lib/site";
+import type { Formato, Perfil } from "@/lib/site";
 
 /**
  * Eventos da página. O projeto ainda não tem provider de analytics: `track()`
@@ -6,10 +6,11 @@ import type { Perfil } from "@/lib/site";
  * provider entrar (GA4, Plausible, PostHog…).
  */
 
-export type WhatsappPosicao = "header" | "hero" | "calculadora" | "cta_final";
+export type WhatsappPosicao = "header" | "hero" | "formatos" | "calculadora" | "cta_final";
 
 type EventMap = {
-  click_whatsapp: { perfil: Perfil; posicao: WhatsappPosicao };
+  /** `formato` só vem dos botões da seção de formatos. */
+  click_whatsapp: { perfil: Perfil; posicao: WhatsappPosicao; formato?: Formato };
   toggle_perfil: { perfil: Perfil };
   calculadora_usada: { perfil: Perfil };
 };

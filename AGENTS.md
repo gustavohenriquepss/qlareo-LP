@@ -14,7 +14,7 @@ O painel do anunciante e o redirect dos QR codes (`/r/:slug`) ficam no app, em
 
 Antes de mudar a landing, leia o `README.md`: copy só em `lib/content.ts`, nenhum token
 de design editado localmente, logo copiada do app. Não invente números (alcance, recall,
-conversão) e não troque `[SEU PREÇO]` sem o dono pedir.
+conversão) e não mude o preço (`PRICING` em `lib/content.ts`) sem o dono pedir.
 
 A versão anterior (SaaS de relatórios para lojas VTEX) está na tag `legacy/relatorios-v1`.
 Não traga essa copy de volta para o `main`.

@@ -8,13 +8,13 @@ Markdown is authoritative; indexes only retrieve it.
 
 - **status:** accepted
 - **domain:** marketing
-- **statement:** A página não mostra estatística de recall, alcance ou conversão. Preço aparece como `[SEU PREÇO]` até o dono definir.
+- **statement:** A página não mostra estatística de recall, alcance ou conversão. Preço definido pelo dono em 2026-11-04 (`PRICING` em `lib/content.ts`): R$ 1,30/sacola na exclusiva, R$ 0,65/sacola na meia, mesmo ticket de R$ 3.250/mês; só muda quando o dono pedir.
 - **source**: `AGENTS.md`, `lib/content.ts` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a)
 - **rationale:** produto em piloto; número sem fonte custa confiança.
 - **last-reviewed:** 615cf5230cb0b6af4070831432c035383d6c3d5a
 - **links:** implements: [`lib/content.ts`], relates: [], decided-by: [owner, 2026-11-04]
 
-- Given o dono ainda não definiu o preço When a seção de formatos é renderizada Then o investimento aparece como "[SEU PREÇO] por mês"
+- Given a seção de formatos é renderizada When o anunciante compara os formatos Then cada cartão mostra o preço por sacola e o total de R$ 3.250 por mês
 
 ### BR-002 — Restaurante não divide sacola com concorrente
 

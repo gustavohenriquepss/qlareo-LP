@@ -11,5 +11,5 @@
 
 ## Operational procedures
 
-- Verified: **Antes de divulgar**, trocar os placeholders: `WHATSAPP_NUMBER` e `INSTAGRAM_URL` em `lib/site.ts`, `PRICE_PLACEHOLDER` em `lib/content.ts` e a imagem em `app/opengraph-image.tsx`. Source: `README.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
+- Verified: **Antes de divulgar**, trocar os placeholders que restam: `INSTAGRAM_URL` em `lib/site.ts` e o provider em `send()` de `lib/analytics.ts`. WhatsApp, preço e imagem de compartilhamento já estão definidos. Source: `README.md` (working tree 2026-11-04, sobre e60a70e).
 - Verified: **Recuperar a versão antiga**: `git checkout legacy/relatorios-v1` (ou `-- <caminho>` para trazer um arquivo). Source: `README.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).

@@ -1,4 +1,4 @@
-import { Frame, Section, framePadding } from "@/components/ui/frame";
+import { Frame, Section, cardGrid, framePadding, sectionStack } from "@/components/ui/frame";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { gains } from "@/lib/content";
 
@@ -6,14 +6,14 @@ import { gains } from "@/lib/content";
 export function Gains() {
   return (
     <Section id={gains.id}>
-      <Frame className={`flex flex-col gap-8 ${framePadding}`}>
+      <Frame className={`${sectionStack} ${framePadding}`}>
         <SectionHeading heading={gains.heading} subhead={gains.subhead} />
 
-        <ul className="grid gap-4 lg:grid-cols-3">
+        <ul className={`${cardGrid} lg:grid-cols-3`}>
           {gains.cards.map((card) => (
-            <li key={card.title} className="flex min-w-0 flex-col gap-2 rounded-2xl bg-surface p-6 lg:p-8">
+            <li key={card.title} className="flex min-w-0 flex-col gap-3 rounded-2xl bg-surface p-6 lg:p-8">
               <h3 className="text-[18px] font-semibold text-ink">{card.title}</h3>
-              <p className="text-[15px] leading-[1.4] text-ink-muted">{card.body}</p>
+              <p className="text-[15px] leading-[1.5] text-ink-muted">{card.body}</p>
             </li>
           ))}
         </ul>

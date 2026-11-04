@@ -11,11 +11,11 @@ export function Highlights({ perfil }: { perfil: Perfil }) {
   return (
     <Section>
       <Frame className="px-6 md:px-10 lg:px-[60px]">
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-4">
           {highlights[perfil].map((item) => (
             <li
               key={item}
-              className="flex items-center gap-2 rounded-2xl bg-surface px-5 py-4 text-[15px] leading-[1.35] font-medium text-ink"
+              className="flex items-center gap-3 rounded-2xl bg-surface px-5 py-5 text-[15px] leading-[1.35] font-medium text-ink"
             >
               <CheckMark />
               {item}

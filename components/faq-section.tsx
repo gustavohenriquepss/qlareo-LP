@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Frame, Section, framePadding } from "@/components/ui/frame";
+import { Frame, Section, framePadding, sectionStack } from "@/components/ui/frame";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { faq } from "@/lib/content";
 import type { Perfil } from "@/lib/site";
@@ -13,10 +13,10 @@ import type { Perfil } from "@/lib/site";
 export function FaqSection({ perfil }: { perfil: Perfil }) {
   return (
     <Section id={faq.id}>
-      <Frame className={`flex flex-col gap-8 ${framePadding}`}>
+      <Frame className={`${sectionStack} ${framePadding}`}>
         <SectionHeading heading={faq.heading} />
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {faq.items[perfil].map((item, index) => (
             <details
               key={item.q}
@@ -24,11 +24,14 @@ export function FaqSection({ perfil }: { perfil: Perfil }) {
               open={index === 0}
               className="group rounded-2xl bg-surface transition-shadow open:shadow-[0_4px_20px_rgba(15,23,42,0.06)]"
             >
-              <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-2xl p-6 focus-visible:-outline-offset-2 [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 rounded-2xl p-6 focus-visible:-outline-offset-2 lg:px-8 [&::-webkit-details-marker]:hidden">
                 <ToggleIcon />
-                <h3 className="text-[16px] font-medium text-ink">{item.q}</h3>
+                <h3 className="text-[17px] font-medium text-ink">{item.q}</h3>
               </summary>
-              <p className="px-6 pb-6 pl-14 text-[15px] leading-[1.4] text-ink-muted">{item.a}</p>
+              {/* Recuo = padding (24/32) + ícone (24) + vão (12): alinha com a pergunta. */}
+              <p className="max-w-[760px] pr-6 pb-6 pl-[60px] text-[15px] leading-[1.6] text-ink-muted lg:pr-8 lg:pb-8 lg:pl-[68px]">
+                {item.a}
+              </p>
             </details>
           ))}
         </div>

@@ -9,12 +9,12 @@
 
 ## Recurring gotchas
 
-- Verified: a ilustração da sacola é `role="img"`; texto novo dentro dela precisa usar `text-ink` sobre o kraft (`--ink-muted` reprova em contraste). Source: `components/bag-illustration.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
+- Verified: o hero usa `public/hero-qlareo.png` via `next/image` (`priority`, é o LCP); a imagem de compartilhamento lê `public/sacola-qlareo.png`. Trocar a imagem sem trocar o NOME do arquivo não aparece em dev: o otimizador do Next serve a versão em cache pelo caminho. Source: `components/hero.tsx`, `app/opengraph-image.tsx` (working tree 2026-11-04, sobre e60a70e).
 - Verified: os ícones de mais/menos do FAQ são `public/figma/icon-plus.svg` e `icon-minus.svg`; não apagar junto com os outros assets do Figma. Source: `components/faq-section.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 
 ## Useful code analogs
 
-- Verified: `components/ui/segmented-toggle.tsx` é o modelo de controle de alternância (botões reais com `aria-pressed`, `.control` para alvo de toque). Source: `components/ui/segmented-toggle.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
+- Verified: `components/ui/segmented-toggle.tsx` é o modelo de controle de alternância (botões reais com `aria-pressed`, 40px por opção / 44px no toque, 48px no total). Botões usam 48/44/40px (`components/ui/button.tsx`), acima do `.control` de 36px do produto, de propósito. Source: `components/ui/segmented-toggle.tsx`, `components/ui/button.tsx` (working tree 2026-11-04, sobre e60a70e).
 - Verified: listas em cartão usam cartões soltos (`grid gap-4`, cada item `rounded-2xl bg-surface`), sem divisórias; a página não usa coluna riscada nem linha entre seções. Source: `components/audience.tsx`, `components/highlights.tsx`, `components/ui/frame.tsx` (reviewed 2026-11-04, sobre b2ce499).
 
 Each entry should name its evidence and last review date. Transient research
