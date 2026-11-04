@@ -43,13 +43,10 @@ npm test             # testes da calculadora (node --test)
 | `components/` | Uma seção por arquivo. `components/ui/` tem os componentes base. |
 | `app/globals.css` | Tokens de design, **copiados do produto** (ver abaixo). |
 
-## Placeholders a trocar antes de divulgar
+## Contato e preço
 
-| O quê | Onde |
-| --- | --- |
-| Instagram (`https://instagram.com/`) | `INSTAGRAM_URL` em `lib/site.ts` |
-
-Já definidos pelo dono: o WhatsApp (`WHATSAPP_NUMBER`, atendido pelo fundador) e o preço
+Já definidos pelo dono: o Instagram (`INSTAGRAM_URL` em `lib/site.ts`, `@qlareobr`), o
+WhatsApp (`WHATSAPP_NUMBER`, atendido pelo fundador) e o preço
 (`PRICING` em `lib/content.ts`: R$ 1,30 por sacola na exclusiva, R$ 0,65 na meia, os dois
 fechando em R$ 3.250 por mês). Preço só muda quando o dono pedir.
 
