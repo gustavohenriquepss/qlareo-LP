@@ -6,8 +6,9 @@
  * dentro de um grupo nomeado são o padrão certo para isso, e funcionam com Tab
  * e Enter/Espaço sem nenhum teclado customizado.
  *
- * Mesma régua de alvo de toque do `Button` (`.control`). O item ativo usa a
- * superfície escura do sistema (`bg-ink` + `text-on-ink`, 17.85:1).
+ * Cada opção tem 40px (44px no toque); com o recuo de 4px do grupo, o seletor
+ * inteiro fica com 48px, a mesma altura do CTA do hero logo abaixo. O item
+ * ativo usa a superfície escura do sistema (`bg-ink` + `text-on-ink`, 17.85:1).
  */
 export function SegmentedToggle<T extends string>({
   label,
@@ -38,7 +39,7 @@ export function SegmentedToggle<T extends string>({
             aria-pressed={pressed}
             onClick={() => onChange(option.value)}
             className={[
-              "control justify-center rounded-xl px-4 text-[14px] leading-5 font-medium whitespace-nowrap",
+              "inline-flex min-h-10 items-center justify-center rounded-xl px-4 text-[14px] leading-5 font-medium whitespace-nowrap pointer-coarse:min-h-11",
               "transition-colors duration-150",
               pressed ? "bg-ink text-on-ink" : "text-ink-muted hover:bg-surface-2 hover:text-ink",
             ].join(" ")}

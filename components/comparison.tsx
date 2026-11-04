@@ -1,5 +1,5 @@
 import { useId } from "react";
-import { Frame, Section, framePadding } from "@/components/ui/frame";
+import { Frame, Section, framePadding, sectionStack } from "@/components/ui/frame";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { comparison } from "@/lib/content";
 
@@ -23,7 +23,7 @@ export function Comparison() {
 
   return (
     <Section id={comparison.id}>
-      <Frame className={`flex flex-col gap-8 ${framePadding}`}>
+      <Frame className={`${sectionStack} ${framePadding}`}>
         <SectionHeading heading={comparison.heading} subhead={comparison.subhead} />
 
         <div
@@ -32,7 +32,7 @@ export function Comparison() {
           tabIndex={0}
           className="overflow-x-auto rounded-2xl bg-surface"
         >
-          <table className="w-full min-w-[560px] border-collapse text-left text-[15px] leading-[1.35]">
+          <table className="w-full min-w-[560px] border-collapse text-left text-[15px] leading-[1.45]">
             <caption id={captionId} className="sr-only">
               {comparison.caption}
             </caption>

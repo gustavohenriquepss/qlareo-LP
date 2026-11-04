@@ -6,14 +6,30 @@ import type { Perfil } from "@/lib/site";
  * comparativo, calculadora) estão aqui com copy única; a ordem de cada perfil
  * vive em `components/landing.tsx`.
  *
- * Regra da casa: nenhum número de alcance, recall ou conversão. Preço fica em
- * `PRICE_PLACEHOLDER` até o dono definir.
+ * Regra da casa: nenhum número de alcance, recall ou conversão. Preço só muda
+ * quando o dono pedir (ver `PRICING`).
  */
 
 type PorPerfil<T> = Record<Perfil, T>;
 
-/** PLACEHOLDER: preço dos formatos. */
-export const PRICE_PLACEHOLDER = "[SEU PREÇO]";
+/**
+ * Preço definido pelo dono. Os dois formatos fecham no MESMO ticket mensal:
+ * 2.500 sacolas × R$ 1,30 = 5.000 sacolas × R$ 0,65 = R$ 3.250.
+ */
+export const PRICING = {
+  exclusiva: "R$ 1,30",
+  meia: "R$ 0,65",
+  mensal: "R$ 3.250",
+} as const;
+
+/** Quem atende no WhatsApp. Rosto e nome reais: é a prova que a página tem hoje. */
+export const founder = {
+  name: "Gustavo Padeiro",
+  role: "Fundador da Qlareo",
+  photoAlt: "Gustavo Padeiro, fundador da Qlareo",
+  /** Linha sob o CTA: o que acontece no clique, e com quem. */
+  ctaNote: "Abre o WhatsApp e quem responde sou eu. Sem compromisso.",
+} as const;
 
 /**
  * Primeiro elemento focável da página. Permite que quem usa teclado ou leitor
@@ -62,17 +78,19 @@ export const hero: PorPerfil<{
   },
 };
 
-export const heroSupport =
-  "Rodando em Itaboraí e Icaraí, Niterói. Vagas de cliente fundador abertas.";
+/**
+ * Linha de apoio do hero. A escassez do anunciante é a REAL: cada sacola tem
+ * duas faces, então cada ciclo comporta um número fixo de marcas.
+ */
+export const heroSupport: PorPerfil<string> = {
+  anunciante:
+    "Rodando em Itaboraí e Icaraí, Niterói. No máximo duas marcas por sacola, nunca concorrentes, então as vagas de cada ciclo são contadas.",
+  restaurante: "Rodando em Itaboraí e Icaraí, Niterói.",
+};
 
-/** Textos impressos na ilustração da sacola do hero. */
+/** Foto do hero (`public/hero-qlareo.png`). */
 export const bag = {
-  alt: "Ilustração de uma sacola de delivery de papel kraft com o espaço da sua marca e da sua oferta, um QR code de cupom, a faixa da rede Qlareo e o lacre do restaurante.",
-  brand: "SUA MARCA AQUI",
-  offer: "Sua oferta em uma frase curta",
-  qr: "Aponte a câmera e ganhe o cupom",
-  band: "rede de delivery do bairro",
-  seal: ["LACRE DO", "RESTAURANTE"],
+  alt: "Entregador de uniforme Qlareo segurando uma sacola de delivery em papel kraft, com o espaço da sua marca e da sua oferta, um QR code de cupom e o lacre do restaurante.",
 } as const;
 
 export const highlights: PorPerfil<readonly string[]> = {
@@ -178,10 +196,12 @@ export const audience = {
 export const formats = {
   id: "formatos",
   heading: "Escolha seu formato",
-  subhead:
-    "Os dois formatos têm o mesmo investimento mensal. Um entrega mais impacto, o outro mais alcance.",
+  subhead: `Os dois formatos fecham em ${PRICING.mensal} por mês. Um entrega mais impacto, o outro mais alcance.`,
+  /* As duas listas usam a MESMA unidade (sacolas por mês) e a mesma ordem de
+     itens, para a comparação ser feita num eixo só. */
   cards: [
     {
+      formato: "exclusiva",
       tag: "MAIS IMPACTO",
       title: "Sacola exclusiva",
       body: "Frente e verso só seus. Ninguém divide a sacola com a sua marca.",
@@ -190,18 +210,33 @@ export const formats = {
         "Frente e verso com a sua arte",
         "QR exclusivo e cupom próprio",
       ],
+      unitPrice: PRICING.exclusiva,
+      unitLabel: "por sacola, frente e verso",
+      cta: "Quero a sacola exclusiva",
       featured: true,
     },
     {
+      formato: "meia",
       tag: "MAIS ALCANCE",
       title: "Meia sacola",
       body: "Uma face sua, a outra de um anunciante que não concorre com você.",
-      items: ["5.000 entregas por mês", "Uma face com a sua arte", "QR exclusivo e cupom próprio"],
+      items: ["5.000 sacolas por mês", "Uma face com a sua arte", "QR exclusivo e cupom próprio"],
+      unitPrice: PRICING.meia,
+      unitLabel: "por sacola, uma face",
+      cta: "Quero a meia sacola",
       featured: false,
     },
   ],
-  price: { before: "Investimento: ", value: PRICE_PLACEHOLDER, after: " por mês" },
-  note: "Quer ser a única marca da sua categoria em toda a rede? Pergunte pela exclusividade por rede.",
+  monthly: `${PRICING.mensal} por mês`,
+  /* A exclusividade por rede é a âncora alta: aparece como uma terceira opção,
+     e não escondida numa nota, para os dois formatos serem lidos ao lado dela. */
+  network: {
+    formato: "rede",
+    title: "Exclusividade na rede",
+    body: "Sua categoria só com você, em todos os restaurantes da rede.",
+    price: "Sob consulta",
+    cta: "Consultar exclusividade",
+  },
 } as const;
 
 /** Só restaurante. Ocupa o lugar de "Formatos", com a mesma âncora. */
@@ -268,7 +303,7 @@ export const faq: { id: string; heading: string; items: PorPerfil<readonly FaqIt
     anunciante: [
       {
         q: "Quanto custa?",
-        a: "Depende do formato e do volume. Chame no WhatsApp e mandamos a tabela do próximo ciclo.",
+        a: `${PRICING.exclusiva} por sacola na sacola exclusiva (frente e verso) e ${PRICING.meia} na meia sacola (uma face). Os dois formatos fecham em ${PRICING.mensal} por mês.`,
       },
       {
         q: "Como sei se deu resultado?",

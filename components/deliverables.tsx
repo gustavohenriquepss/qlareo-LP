@@ -1,23 +1,28 @@
-import { Frame, Section, framePadding } from "@/components/ui/frame";
+import { Frame, Section, cardGrid, framePadding, sectionStack } from "@/components/ui/frame";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { deliverables } from "@/lib/content";
 
 export function Deliverables() {
   return (
     <Section id={deliverables.id}>
-      <Frame className={`flex flex-col gap-8 ${framePadding}`}>
+      <Frame className={`${sectionStack} ${framePadding}`}>
         <SectionHeading heading={deliverables.heading} />
 
-        <ul className="grid gap-4 lg:grid-cols-3">
-          {deliverables.items.map((item) => (
-            <li key={item.title} className="flex min-w-0 flex-col gap-2 rounded-2xl bg-surface p-6 lg:p-8">
-              <h3 className="text-[18px] font-semibold text-ink">{item.title}</h3>
-              <p className="text-[15px] leading-[1.4] text-ink-muted">{item.body}</p>
-            </li>
-          ))}
-        </ul>
+        <div className="flex flex-col gap-6">
+          <ul className={`${cardGrid} lg:grid-cols-3`}>
+            {deliverables.items.map((item) => (
+              <li
+                key={item.title}
+                className="flex min-w-0 flex-col gap-3 rounded-2xl bg-surface p-6 lg:p-8"
+              >
+                <h3 className="text-[18px] font-semibold text-ink">{item.title}</h3>
+                <p className="text-[15px] leading-[1.5] text-ink-muted">{item.body}</p>
+              </li>
+            ))}
+          </ul>
 
-        <p className="text-[15px] leading-[1.4] text-ink-muted">{deliverables.footnote}</p>
+          <p className="text-[15px] leading-[1.5] text-ink-muted">{deliverables.footnote}</p>
+        </div>
       </Frame>
     </Section>
   );

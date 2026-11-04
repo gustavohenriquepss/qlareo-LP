@@ -9,12 +9,14 @@ export function SectionHeading({
   className?: string;
 }) {
   return (
-    <div className={`flex flex-col gap-2 ${className}`}>
-      <h2 className="text-[26px] leading-[1.1] tracking-[-0.05em] text-ink lg:text-[32px]">
+    <div className={`flex flex-col gap-3 lg:gap-4 ${className}`}>
+      <h2 className="text-balance text-[28px] leading-[1.1] tracking-[-0.04em] text-ink lg:text-[36px]">
         {heading}
       </h2>
       {subhead && (
-        <p className="max-w-[640px] text-[16px] leading-[1.35] text-ink-muted">{subhead}</p>
+        <p className="max-w-[640px] text-[16px] leading-[1.5] text-ink-muted lg:text-[18px]">
+          {subhead}
+        </p>
       )}
     </div>
   );
