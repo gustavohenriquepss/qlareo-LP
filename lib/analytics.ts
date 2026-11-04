@@ -1,9 +1,9 @@
+import { track as vercelTrack } from "@vercel/analytics";
 import type { Formato, Perfil } from "@/lib/site";
 
 /**
- * Eventos da página. O projeto ainda não tem provider de analytics: `track()`
- * já é chamado nos pontos certos, e `send()` é o único lugar a mudar quando um
- * provider entrar (GA4, Plausible, PostHog…).
+ * Eventos da página. Os componentes chamam `track()`; `send()` é o único lugar
+ * que conhece o provider (hoje o Vercel Web Analytics).
  */
 
 export type WhatsappPosicao = "header" | "hero" | "formatos" | "calculadora" | "cta_final";
@@ -24,9 +24,11 @@ export function track<E extends AnalyticsEvent>(event: E, props: EventMap[E]): v
   } catch {}
 }
 
-/** Ponto de integração do provider. Hoje só registra no console em dev. */
-function send(event: string, props: Record<string, unknown>): void {
-  if (process.env.NODE_ENV !== "production") {
-    console.debug("[analytics]", event, props);
-  }
+/**
+ * Ponto de integração do provider: Vercel Web Analytics. O `<Analytics />` em
+ * `app/layout.tsx` conta as page views; aqui saem os eventos personalizados.
+ * Em dev o pacote não envia nada, só registra no console.
+ */
+function send(event: string, props: EventMap[AnalyticsEvent]): void {
+  vercelTrack(event, props);
 }

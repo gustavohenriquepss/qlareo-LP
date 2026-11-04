@@ -11,5 +11,5 @@
 
 ## Operational procedures
 
-- Verified: **Antes de divulgar**, trocar os placeholders que restam: `INSTAGRAM_URL` em `lib/site.ts` e o provider em `send()` de `lib/analytics.ts`. WhatsApp, preço e imagem de compartilhamento já estão definidos. Source: `README.md` (working tree 2026-11-04, sobre e60a70e).
+- Verified: **Antes de divulgar**, trocar o placeholder que resta: `INSTAGRAM_URL` em `lib/site.ts`. WhatsApp, preço, imagem de compartilhamento e analytics (Vercel) já estão definidos. Source: `README.md` (working tree 2026-11-04, sobre 7ebb5f9).
 - Verified: **Recuperar a versão antiga**: `git checkout legacy/relatorios-v1` (ou `-- <caminho>` para trazer um arquivo). Source: `README.md` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
