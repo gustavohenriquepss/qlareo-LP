@@ -52,9 +52,17 @@ fechando em R$ 3.250 por mês). Preço só muda quando o dono pedir.
 
 ## Analytics
 
-Provider: **Vercel Web Analytics** (`@vercel/analytics`). O `<Analytics />` em `app/layout.tsx`
-conta as page views, e `send()` em `lib/analytics.ts` envia os eventos abaixo. Ele é o único
-ponto que conhece o provider. Em dev nada é enviado; o pacote só registra no console.
+Dois providers, lado a lado:
+
+- **Vercel Web Analytics** (`@vercel/analytics`): o `<Analytics />` em `app/layout.tsx` conta
+  as page views. Em dev nada é enviado; o pacote só registra no console.
+- **Microsoft Clarity** (projeto `z8li80oz9r`): o `<Clarity />` (`components/clarity.tsx`)
+  grava sessões e gera mapas de calor. Só carrega no deploy de produção da Vercel
+  (`VERCEL_ENV=production`); dev e previews ficam de fora.
+
+`send()` em `lib/analytics.ts` é o único ponto que conhece os providers e envia os eventos
+abaixo para os dois. O Clarity recebe só o nome do evento (a API dele não aceita
+propriedades), o que basta para filtrar gravações por evento.
 
 Para os dados aparecerem, o Web Analytics precisa estar ativado no projeto da Vercel
 (**Analytics › Enable**). Eventos personalizados só aparecem nos planos Pro e Enterprise;

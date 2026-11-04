@@ -5,7 +5,7 @@
 - Verified: a conta da calculadora é feita em centavos inteiros (1500 × 0.6 em ponto flutuante não dá 900 exato); aceita "0,60", "0.60" e "1.234,56"; vazio ou inválido vira R$ 0,00. Source: `lib/calculator.ts`, `lib/calculator.test.mjs` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 - Verified: `lib/calculator.ts` roda direto no Node pelos testes, então não pode usar alias `@/` nem sintaxe TS que exija compilação. Source: `lib/calculator.ts`, `package.json` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 - Verified: o seletor de perfil fica fora do bloco que remonta na troca, para manter o foco do teclado; a animação só roda depois de uma troca. Source: `components/hero.tsx`, `components/landing.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
-- Verified: eventos `click_whatsapp`, `toggle_perfil` e `calculadora_usada` vão para o Vercel Web Analytics via `send()` em `lib/analytics.ts`; page views via `<Analytics />` em `app/layout.tsx`. Eventos personalizados exigem plano Pro/Enterprise na Vercel. Source: `lib/analytics.ts`, `app/layout.tsx` (working tree 2026-11-04, sobre 7ebb5f9).
+- Verified: eventos `click_whatsapp`, `toggle_perfil` e `calculadora_usada` saem de `send()` em `lib/analytics.ts` para o Vercel Web Analytics (com propriedades) e para o Microsoft Clarity (só o nome, via `window.clarity("event", …)`). Page views via `<Analytics />`; sessões/heatmaps via `<Clarity />` (`components/clarity.tsx`, projeto `z8li80oz9r`, só com `VERCEL_ENV=production`). Eventos personalizados na Vercel exigem plano Pro/Enterprise. Source: `lib/analytics.ts`, `app/layout.tsx`, `components/clarity.tsx` (working tree 2026-11-04, sobre d562ada).
 
 ## Recurring gotchas
 

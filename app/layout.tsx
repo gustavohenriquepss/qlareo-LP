@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { Clarity } from "@/components/clarity";
 import { skipToContent } from "@/lib/content";
 import "./globals.css";
 
@@ -77,6 +78,8 @@ export default function RootLayout({
         {children}
         {/* Vercel Web Analytics: page views. Os eventos saem de lib/analytics.ts. */}
         <Analytics />
+        {/* Microsoft Clarity: mapas de calor e gravação de sessão (só em produção). */}
+        <Clarity />
       </body>
     </html>
   );

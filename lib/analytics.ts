@@ -24,11 +24,24 @@ export function track<E extends AnalyticsEvent>(event: E, props: EventMap[E]): v
   } catch {}
 }
 
+declare global {
+  interface Window {
+    clarity?: (...args: unknown[]) => void;
+  }
+}
+
 /**
- * Ponto de integração do provider: Vercel Web Analytics. O `<Analytics />` em
- * `app/layout.tsx` conta as page views; aqui saem os eventos personalizados.
- * Em dev o pacote não envia nada, só registra no console.
+ * Ponto de integração dos providers. O `<Analytics />` e o `<Clarity />` em
+ * `app/layout.tsx` contam as page views e as sessões; aqui saem os eventos.
+ *
+ * - Vercel Web Analytics recebe o evento com as propriedades. Em dev o pacote
+ *   não envia nada, só registra no console.
+ * - Clarity recebe só o nome (a API de eventos dele não aceita propriedades),
+ *   o que basta para filtrar gravações e mapas de calor por "quem clicou no
+ *   WhatsApp". Fora de produção o script não carrega e `window.clarity` não
+ *   existe, então a chamada é pulada.
  */
 function send(event: string, props: EventMap[AnalyticsEvent]): void {
   vercelTrack(event, props);
+  window.clarity?.("event", event);
 }
