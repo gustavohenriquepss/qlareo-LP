@@ -1,7 +1,4 @@
-/**
- * Constantes de contato e de perfil. O que ainda é PLACEHOLDER está marcado
- * aqui; troque antes de divulgar a página.
- */
+/** Constantes de contato e de perfil. */
 
 /**
  * Os dois públicos da página. "restaurante" é o padrão: a prioridade agora é
@@ -28,8 +25,8 @@ export function parsePerfil(value: string | string[] | null | undefined): Perfil
 /** WhatsApp do Gustavo Padeiro (fundador), só dígitos, com DDI e DDD. */
 export const WHATSAPP_NUMBER = "5521976173324";
 
-/** PLACEHOLDER: perfil do Instagram da Qlareo. */
-export const INSTAGRAM_URL = "https://instagram.com/";
+/** Perfil do Instagram da Qlareo. */
+export const INSTAGRAM_URL = "https://instagram.com/qlareobr";
 
 export const WHATSAPP_MESSAGES: Record<Perfil, string> = {
   anunciante: "Oi! Quero anunciar nas sacolas da Qlareo.",
