@@ -1,52 +1,23 @@
-import { DifferentiatorsSection } from "@/components/differentiators-section";
-import { FaqSection } from "@/components/faq-section";
-import { FinalCta } from "@/components/final-cta";
-import { Hero } from "@/components/hero";
-import { ProblemSection } from "@/components/problem-section";
-import { ProductSection } from "@/components/product-section";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
-import { TurnSection } from "@/components/turn-section";
-import { VtexStrip } from "@/components/vtex-strip";
-import { WaitlistProvider } from "@/components/waitlist";
-import { faq } from "@/lib/content";
+import { Landing } from "@/components/landing";
+import { PerfilProvider } from "@/components/perfil";
+import { PERFIL_PARAM, parsePerfil } from "@/lib/site";
 
-export default function Home() {
-  return (
-    <WaitlistProvider>
-      <SiteHeader />
-      <main id="conteudo">
-        <Hero />
-        <VtexStrip />
-        <ProblemSection />
-        <TurnSection />
-        <ProductSection />
-        <DifferentiatorsSection />
-        <FaqSection />
-        <FinalCta />
-      </main>
-      <SiteFooter />
-      <FaqStructuredData />
-    </WaitlistProvider>
-  );
-}
-
-/** FAQ rich result — the questions already exist, so the markup is free reach. */
-function FaqStructuredData() {
-  const json = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faq.items.map((item) => ({
-      "@type": "Question",
-      name: item.q,
-      acceptedAnswer: { "@type": "Answer", text: item.a },
-    })),
-  };
+/**
+ * Lê `?perfil=` no servidor para que o link mandado a um restaurante já chegue
+ * renderizado do lado dele. Isso torna a página dinâmica (renderizada a cada
+ * requisição), um custo pequeno para uma página só, e evita que o lado errado
+ * pisque antes da hidratação.
+ */
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = await searchParams;
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
-    />
+    <PerfilProvider initial={parsePerfil(params[PERFIL_PARAM])}>
+      <Landing />
+    </PerfilProvider>
   );
 }

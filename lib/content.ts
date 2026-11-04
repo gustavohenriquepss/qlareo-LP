@@ -1,333 +1,323 @@
-/**
- * Every user-facing string on the landing page.
- *
- * Copy marked `RCD:` diverges from the Figma file on purpose — see AUDIT.md for
- * the principle behind each change and the original wording it replaced.
- */
+import type { Perfil } from "@/lib/site";
 
 /**
- * Number of free early-access spots still open.
+ * Toda a copy visível da página. Onde o texto muda com o perfil, o valor é um
+ * `PorPerfil` com as duas versões. Seções que só existem num perfil (ex.:
+ * comparativo, calculadora) estão aqui com copy única; a ordem de cada perfil
+ * vive em `components/landing.tsx`.
  *
- * This drives the hero badge and the CTA click-trigger. Scarcity only converts
- * while it is TRUE — if you stop honouring the cap, set `total` to 0 and both
- * the badge and the trigger line disappear rather than lying to visitors.
+ * Regra da casa: nenhum número de alcance, recall ou conversão. Preço fica em
+ * `PRICE_PLACEHOLDER` até o dono definir.
  */
-export const spots: { total: number; remaining: number } = {
-  total: 10,
-  remaining: 10,
-};
+
+type PorPerfil<T> = Record<Perfil, T>;
+
+/** PLACEHOLDER: preço dos formatos. */
+export const PRICE_PLACEHOLDER = "[SEU PREÇO]";
 
 /**
- * First focusable element on the page. Lets a keyboard or screen-reader user
- * jump the sticky header and its nav instead of tabbing through them on the
- * way to the hero CTA.
+ * Primeiro elemento focável da página. Permite que quem usa teclado ou leitor
+ * de tela pule o cabeçalho fixo e a navegação.
  */
 export const skipToContent = "Pular para o conteúdo";
 
-export const nav = [
-  { label: "O Problema", href: "#problema" },
-  { label: "A Virada", href: "#virada" },
-  { label: "O Produto", href: "#produto" },
-  { label: "Diferenciais", href: "#diferenciais" },
-  { label: "FAQ", href: "#faq" },
-] as const;
-
-/**
- * RCD: the Figma label is "Solicitar Acesso", which answers none of the three
- * questions the brain asks before clicking (what happens, how long, what it
- * costs). These answer two of the three; the click-trigger answers the rest.
- */
-export const cta = {
-  primary: "Garantir vaga gratuita",
-  compact: "Garantir vaga",
+export const header = {
+  homeLabel: "Qlareo — início",
+  navLabel: "Seções da página",
+  nav: [
+    { label: "Como funciona", href: "#como-funciona" },
+    { label: "Formatos", href: "#formatos" },
+    { label: "Dúvidas", href: "#duvidas" },
+  ],
+  cta: "Chamar no WhatsApp",
 } as const;
 
-export const hero = {
-  badge: {
-    prefix: "Apenas",
-    highlight: `${spots.remaining} ${spots.remaining === 1 ? "vaga gratuita" : "vagas gratuitas"}`,
-    suffix: "disponíveis",
+export const perfilToggle = {
+  label: "Escolha seu perfil",
+  options: [
+    { value: "anunciante", label: "Sou anunciante" },
+    { value: "restaurante", label: "Tenho restaurante" },
+  ],
+} as const satisfies { label: string; options: readonly { value: Perfil; label: string }[] };
+
+export const hero: PorPerfil<{
+  headline: string;
+  subhead: string;
+  primaryCta: string;
+  secondaryCta: { label: string; href: string };
+}> = {
+  anunciante: {
+    headline: "Entre na casa do seu cliente.",
+    subhead:
+      "Sua marca na sacola de delivery dos restaurantes do bairro. Ela chega na mesa, na hora em que o pedido é aberto.",
+    primaryCta: "Garantir minha vaga",
+    secondaryCta: { label: "Ver formatos", href: "#formatos" },
   },
-  headline: {
-    lead: "Seus dados de ",
-    /**
-     * A palavra em destaque alterna, digitada. As quatro cobrem exatamente as
-     * quatro perguntas do subhead — quanto vendeu, quais produtos, quem voltou,
-     * se a promoção deu lucro. A PRIMEIRA entrada é a que sai no HTML do
-     * servidor: é ela que o Google, o leitor de tela e quem está sem JS leem,
-     * então ela tem que sustentar a manchete sozinha.
-     */
-    emphasis: ["Vendas", "Clientes", "Produtos", "Promoções"],
-    /** The comma stays on the first line; the break is designed, not incidental. */
-    afterEmphasis: ",",
-    secondLine: "finalmente claros",
+  restaurante: {
+    headline: "Ganhe sacolas de delivery. Todo mês.",
+    subhead:
+      "A Qlareo entrega sacolas de papel kraft impressas na sua cozinha, sem custo. Quem paga são os anunciantes do bairro.",
+    primaryCta: "Quero sacolas grátis",
+    secondaryCta: { label: "Como funciona", href: "#como-funciona" },
   },
+};
+
+export const heroSupport =
+  "Rodando em Itaboraí e Icaraí, Niterói. Vagas de cliente fundador abertas.";
+
+/** Textos impressos na ilustração da sacola do hero. */
+export const bag = {
+  alt: "Ilustração de uma sacola de delivery de papel kraft com o espaço da sua marca e da sua oferta, um QR code de cupom, a faixa da rede Qlareo e o lacre do restaurante.",
+  brand: "SUA MARCA AQUI",
+  offer: "Sua oferta em uma frase curta",
+  qr: "Aponte a câmera e ganhe o cupom",
+  band: "rede de delivery do bairro",
+  seal: ["LACRE DO", "RESTAURANTE"],
+} as const;
+
+export const highlights: PorPerfil<readonly string[]> = {
+  anunciante: [
+    "Dentro de casa, não no feed",
+    "Leituras do QR medidas",
+    "Sem concorrente na mesma sacola",
+    "Arte montada pela gente",
+  ],
+  restaurante: [
+    "Sacola grátis todo mês",
+    "Reposição na sua cozinha",
+    "Você aprova os anúncios",
+    "Sai quando quiser",
+  ],
+};
+
+type Step = { title: string; body: string };
+
+export const howItWorks: { id: string; heading: string; steps: PorPerfil<readonly Step[]> } = {
+  id: "como-funciona",
+  heading: "Como funciona",
+  steps: {
+    anunciante: [
+      {
+        title: "Escolha o formato",
+        body: "Sacola inteira só sua ou uma face dividida com outro anunciante.",
+      },
+      {
+        title: "Mande logo e oferta",
+        body: "A gente monta a arte no nosso modelo e você aprova antes de imprimir.",
+      },
+      {
+        title: "Sua marca sai em cada entrega",
+        body: "Os restaurantes da rede usam a sacola em todos os pedidos do mês.",
+      },
+      {
+        title: "Acompanhe o resultado",
+        body: "QR exclusivo e cupom próprio mostram quantas pessoas responderam.",
+      },
+    ],
+    restaurante: [
+      {
+        title: "Chame a gente",
+        body: "Conta quantos pedidos você faz por mês e o tamanho de sacola que usa.",
+      },
+      {
+        title: "Receba as sacolas",
+        body: "Entregamos na sua cozinha, sem custo, antes de cada ciclo.",
+      },
+      {
+        title: "Feche com o seu lacre",
+        body: "Use a sacola em todo pedido. Seu lacre deixa a sua marca na entrega.",
+      },
+      {
+        title: "Reposição com a gente",
+        body: "Contamos o estoque toda semana e repomos antes de acabar.",
+      },
+    ],
+  },
+};
+
+/** Só anunciante. */
+export const comparison = {
+  id: "comparativo",
+  heading: "Saia do feed. Entre na mesa.",
+  subhead: "Compare a sacola com o que você já usa para anunciar no bairro.",
+  caption: "Comparativo entre a sacola Qlareo, o anúncio no Instagram e o panfleto",
+  criterionLabel: "Critério",
+  columns: ["Sacola Qlareo", "Anúncio no Instagram", "Panfleto"],
+  rows: [
+    { label: "Chega dentro da casa do cliente", values: ["Sim", "Não", "Às vezes"] },
+    {
+      label: "Aparece quando a pessoa tem tempo para ver",
+      values: ["Sim, na hora de abrir o pedido", "Não, some no scroll", "Não"],
+    },
+    { label: "Bloqueador de anúncio não alcança", values: ["Sim", "Não", "Sim"] },
+    { label: "Fala com quem mora no bairro", values: ["Sim", "Depende da segmentação", "Sim"] },
+    { label: "Resultado medido", values: ["Sim, QR e cupom", "Sim", "Não"] },
+  ],
+} as const;
+
+/** Só anunciante. */
+export const audience = {
+  id: "para-quem-e",
+  heading: "Coloque seu negócio na mesa do bairro.",
+  subhead: "Exemplos de oferta que funcionam bem na sacola.",
+  items: [
+    { category: "Academia", offer: "Primeira semana grátis para quem escanear." },
+    {
+      category: "Clínica estética ou odontológica",
+      offer: "Avaliação gratuita com o cupom da sacola.",
+    },
+    { category: "Imobiliária", offer: "Avaliação do seu imóvel sem custo." },
+    { category: "Escola de idiomas", offer: "Aula experimental grátis." },
+    { category: "Pet shop", offer: "Desconto no primeiro banho." },
+    { category: "Salão e barbearia", offer: "Primeiro corte com desconto." },
+  ],
+  note: "Comida, bebida e app de delivery não anunciam na rede, para proteger os restaurantes parceiros.",
+} as const;
+
+/** Só anunciante. Mesmo âncora (`#formatos`) que "O que você ganha" do restaurante. */
+export const formats = {
+  id: "formatos",
+  heading: "Escolha seu formato",
   subhead:
-    "Quanto você vendeu, quais produtos puxam seu faturamento, quem comprou de novo e se sua promoção deu lucro.",
-  subheadSecondLine: "Sem precisar de um time de dados",
-  /**
-   * RCD: replaces the Figma line "Grátis para as 10 primeiras lojas". A click
-   * trigger has to break the objection standing between the visitor and the
-   * click — here: price, commitment, and effort.
-   */
-  clickTrigger: [
-    `Grátis para as ${spots.total} primeiras lojas`,
-    "Sem cartão de crédito",
-    "Conecta em minutos",
-  ],
-  dashboardAlt:
-    "Painel do Qlareo mostrando faturamento, pedidos, ticket médio e o gráfico de faturamento por dia de uma loja VTEX",
-} as const;
-
-/**
- * RCD: the Figma has no trust layer at all above the fold. Qlareo is pre-launch,
- * so inventing testimonials or logos would be dishonest — and unanimous praise
- * reads as fake anyway. These are verifiable statements about the mechanism,
- * which is the trust layer a pre-revenue product can actually earn.
- *
- * Replace with real customer proof (case study > video testimonial > logos) the
- * moment you have it — see `testimonials` below.
- */
-export const trustPoints = [
-  {
-    title: "API oficial da VTEX",
-    body: "Conexão por AppKey e AppToken, do jeito que a VTEX documenta.",
-  },
-  {
-    title: "Acesso somente leitura",
-    body: "O Qlareo nunca cria, altera ou apaga nada dentro da sua loja.",
-  },
-  {
-    title: "Você revoga quando quiser",
-    body: "O acesso sai pelo próprio Admin da VTEX, sem depender da gente.",
-  },
-] as const;
-
-/**
- * Intentionally empty. Ship real proof here — a case study with a quantified
- * result converts hardest, then a video testimonial, then logos. Do not fill
- * this with placeholder quotes: generic five-star cards read as fabricated and
- * cost more trust than showing nothing.
- */
-export const testimonials: {
-  quote: string;
-  name: string;
-  role: string;
-  company: string;
-  source?: string;
-}[] = [];
-
-export const vtexStrip = {
-  before: "Conecte sua loja",
-  after: "em minutos e tome decisões melhores",
-} as const;
-
-export const problem = {
-  id: "problema",
-  heading: ["Você vende todo dia", "e decide no escuro"],
-  body: [
-    "Sua operação já gera todos os dados que você precisa. O problema é que eles estão espalhados.",
-    "Você entra no Admin da VTEX. Exporta um CSV. Abre o Excel. Filtra. Cruza dados. Monta uma planilha.",
-    "Quando finalmente consegue enxergar o que aconteceu, já perdeu muitas horas e talvez até o timing de agir.",
-  ],
-  /**
-   * Each card carries an oversized outline icon that bleeds past its top-right
-   * corner. Figma positions them from the left inside a 192.8px card; anchoring
-   * from the right instead reproduces the same bleed at any card width, which
-   * is what keeps the composition intact once the row stacks on mobile.
-   */
-  steps: [
-    { label: "VTEX Admin", icon: "/figma/icon-cube.svg", w: 121, h: 121, top: -36.35, right: -26.2 },
-    { label: "Excel", icon: "/figma/icon-table-cells.svg", w: 120, h: 120, top: 14.65, right: -26 },
-    { label: "Filtros", icon: "/figma/icon-adjustments.svg", w: 107, h: 107, top: -22.35, right: -29.8 },
-    { label: "Fórmulas", icon: "/figma/icon-calculator.svg", w: 107, h: 107, top: -17.35, right: -22.6 },
-    { label: "Planilha", icon: "/figma/icon-document-text.svg", w: 107, h: 107, top: 30.65, right: -19.4 },
-  ],
-  /**
-   * RCD: a problem-aware visitor needs the cost named, not just the situation
-   * described. This states the recurring cost of the chain above without
-   * inventing a statistic we cannot defend.
-   */
-  cost: "Cinco passos, toda semana, só para responder “como foi meu mês?”",
-} as const;
-
-export const turn = {
-  id: "virada",
-  heading: "E se você pudesse simplesmente abrir e saber?",
-  subhead:
-    "A QLAREO coloca os principais indicadores da sua operação em um único lugar.",
-  pills: [
-    { label: "Vendas", icon: "/figma/icon-currency.svg" },
-    { label: "Clientes", icon: "/figma/icon-user-group.svg" },
-    { label: "Produtos", icon: "/figma/icon-archive-box.svg" },
-    { label: "Promoções", icon: "/figma/icon-percent-badge.svg" },
-  ],
-  caption:
-    "Sem montar dashboards do zero. Sem depender de analistas. Sem passar a tarde no Excel.",
-  card: {
-    headline: ["Você abre. ", "Enxerga. ", "Decide."],
-    body: "A informação que você precisa para direcionar sua equipe e proteger sua margem, acessível em segundos.",
-  },
-} as const;
-
-export const product = {
-  id: "produto",
-  heading: "Tudo que você precisa para entender sua operação",
-  subhead:
-    "Uma visão simples dos dados que realmente importam para quem toma decisões no e-commerce.",
-  /** Rótulo do `tablist` — o leitor de tela precisa saber de que é a lista. */
-  tablistLabel: "Recursos do Qlareo",
-  /**
-   * Cada item é uma aba: clicar troca a tela mostrada à direita. As telas não
-   * são capturas — são simulações vivas, em `components/preview/`, com os
-   * números em `lib/preview/data.ts`.
-   */
-  features: [
-    {
-      label: "Vendas",
-      icon: "/figma/icon-currency.svg",
-      lead: "Saiba como sua operação está performando.",
-      body: "Acompanhe suas vendas por período e entenda a evolução do faturamento e dos pedidos.",
-    },
-    {
-      label: "Clientes",
-      icon: "/figma/icon-user-group.svg",
-      lead: "Descubra quem está comprando.",
-      body: "Veja a relação entre novos e clientes recorrentes e entenda como sua base está contribuindo para o crescimento.",
-    },
-    {
-      label: "Produtos",
-      icon: "/figma/icon-archive-box.svg",
-      lead: "Saiba o que realmente move seu negócio.",
-      body: "Identifique seus produtos mais importantes e visualize a distribuição da sua receita com a Curva ABC.",
-    },
-    {
-      label: "Promoções",
-      icon: "/figma/icon-percent-badge.svg",
-      lead: "Entenda o que suas promoções entregam.",
-      body: "Analise o desempenho das suas campanhas e descubra quais ações estão gerando resultado.",
-    },
-  ],
-} as const;
-
-export const differentiators = {
-  id: "diferenciais",
-  heading: ["BI sem precisar", "montar um time de BI"],
-  body: [
-    "Você não precisa contratar um analista de dados.",
-    "Não precisa construir um dashboard do zero.",
-    "Não precisa aprender uma ferramenta complexa.",
-    "Não precisa transformar cada pergunta sobre sua operação em uma nova planilha.",
-  ],
+    "Os dois formatos têm o mesmo investimento mensal. Um entrega mais impacto, o outro mais alcance.",
   cards: [
     {
-      title: "Plug and Play",
-      body: "Comece a visualizar seus dados sem projetos intermináveis de BI.",
+      tag: "MAIS IMPACTO",
+      title: "Sacola exclusiva",
+      body: "Frente e verso só seus. Ninguém divide a sacola com a sua marca.",
+      items: [
+        "2.500 sacolas por mês",
+        "Frente e verso com a sua arte",
+        "QR exclusivo e cupom próprio",
+      ],
+      featured: true,
     },
     {
-      title: "Pronto para VTEX",
-      body: "Construído pensando na realidade das operações que vendem pela plataforma.",
+      tag: "MAIS ALCANCE",
+      title: "Meia sacola",
+      body: "Uma face sua, a outra de um anunciante que não concorre com você.",
+      items: ["5.000 entregas por mês", "Uma face com a sua arte", "QR exclusivo e cupom próprio"],
+      featured: false,
+    },
+  ],
+  price: { before: "Investimento: ", value: PRICE_PLACEHOLDER, after: " por mês" },
+  note: "Quer ser a única marca da sua categoria em toda a rede? Pergunte pela exclusividade por rede.",
+} as const;
+
+/** Só restaurante. Ocupa o lugar de "Formatos", com a mesma âncora. */
+export const gains = {
+  id: "formatos",
+  heading: "O que você ganha",
+  subhead: "Seu delivery continua igual. Só a sacola muda, e para de pesar no custo.",
+  cards: [
+    {
+      title: "Sacola sem custo",
+      body: "Papel kraft impresso, entregue na sua cozinha. Uma despesa a menos todo mês.",
     },
     {
-      title: "Simples de entender",
-      body: "Seus indicadores mais importantes, organizados em uma visão clara.",
+      title: "Sua marca no lacre",
+      body: "Feche a sacola com o lacre que você já usa. Seu nome continua na entrega.",
     },
     {
-      title: "Feito para PMEs",
-      body: "Inteligência comercial sem o custo de uma estrutura de dados própria.",
+      title: "Nada de concorrente",
+      body: "Sem anúncio de comida, bebida ou app de delivery. Você vê cada arte antes.",
     },
   ],
 } as const;
 
-/**
- * The Figma only carries the answer to the first question. The remaining five
- * are written here: an FAQ block is objection-handling, and a question with no
- * answer leaves the objection standing.
- */
-export const faq = {
-  id: "faq",
-  heading: "Perguntas Frequentes",
-  subhead:
-    "Tudo o que você precisa saber sobre a integração do QLAREO com a sua operação VTEX.",
+/** Só anunciante. */
+export const deliverables = {
+  id: "o-que-voce-recebe",
+  heading: "Veja o que a sua sacola trouxe.",
   items: [
     {
-      q: "Preciso ter um time de dados para usar o QLAREO?",
-      a: "Não. O QLAREO foi pensado para gestores de e-commerce que não têm um time de dados dedicado. A plataforma organiza os dados da sua VTEX em uma visão clara, pronta para usar.",
+      title: "QR exclusivo da sua campanha",
+      body: "Leva para o seu site, WhatsApp ou Instagram. Dá para trocar o destino durante a campanha sem reimprimir.",
     },
     {
-      q: "Quais dados da VTEX o QLAREO acessa?",
-      a: "Pedidos, produtos, clientes e promoções — o suficiente para montar seus indicadores de vendas. O acesso é somente leitura: o QLAREO nunca cria, altera ou apaga nada dentro da sua loja.",
+      title: "Cupom próprio",
+      body: "Para contar quem comprou no balcão ou no seu WhatsApp.",
     },
     {
-      q: "É seguro conectar minha conta VTEX?",
-      a: "Sim. A conexão usa as chaves de aplicação oficiais da VTEX (AppKey e AppToken), com permissão apenas de leitura. Você revoga o acesso quando quiser pelo próprio Admin da VTEX, sem precisar falar com a gente.",
-    },
-    {
-      q: "O QLAREO substitui um BI tradicional?",
-      a: "Para a maioria das operações, sim: ele entrega no primeiro dia os indicadores que um projeto de BI levaria semanas para montar. Se sua operação já tem data warehouse e time dedicado, o QLAREO funciona como a camada rápida de leitura do dia a dia.",
-    },
-    {
-      q: "Minha agência parceira pode acompanhar os dados da minha loja?",
-      a: "Pode. Você convida a agência como usuária da sua conta e ela passa a ver os mesmos relatórios que você, sem precisar de acesso ao Admin da VTEX.",
-    },
-    {
-      q: "E se eu tiver mais de uma conta ou loja na VTEX?",
-      a: "Você conecta quantas contas quiser e alterna entre elas no topo do painel. Cada loja mantém seus próprios relatórios e seu próprio histórico.",
+      title: "Relatório da campanha",
+      body: "Sacolas distribuídas, restaurantes da rede, leituras do QR por dia e cupons usados.",
     },
   ],
+  footnote: "Em breve, um painel para acompanhar os resultados em tempo real.",
 } as const;
 
-export const finalCta = {
-  heading: "Sua operação já tem as respostas.",
-  /** RCD: fixes the typo "par encontrá-las" present in the Figma copy. */
-  subhead: "O QLAREO te dá a clareza que você precisa para encontrá-las.",
+/** Só restaurante. */
+export const calculator = {
+  id: "a-conta",
+  heading: "Faça a conta da sua sacola.",
+  subhead: "Coloque seus números e veja quanto deixa de gastar por mês.",
+  pedidos: { label: "Pedidos por mês", placeholder: "1500" },
+  preco: { label: "Quanto você paga por sacola (R$)", placeholder: "0,60" },
+  monthlyLabel: "Você economiza por mês:",
+  yearlyLabel: "Por ano:",
+  note: "A sacola Qlareo é grátis enquanto o seu delivery estiver na rede.",
+  cta: "Quero sacolas grátis",
 } as const;
+
+type FaqItem = { q: string; a: string };
+
+export const faq: { id: string; heading: string; items: PorPerfil<readonly FaqItem[]> } = {
+  id: "duvidas",
+  heading: "Dúvidas",
+  items: {
+    anunciante: [
+      {
+        q: "Quanto custa?",
+        a: "Depende do formato e do volume. Chame no WhatsApp e mandamos a tabela do próximo ciclo.",
+      },
+      {
+        q: "Como sei se deu resultado?",
+        a: "Cada anunciante tem um QR e um cupom próprios. Você recebe o número de leituras e de cupons usados.",
+      },
+      {
+        q: "Quem cria a arte?",
+        a: "A gente. Você manda logo, oferta e link, e montamos no nosso modelo, com uma rodada de ajuste.",
+      },
+      {
+        q: "Em quais restaurantes minha marca aparece?",
+        a: "Você recebe a lista de restaurantes da rede antes de fechar.",
+      },
+      {
+        q: "Como é o pagamento?",
+        a: "Na assinatura. A impressão começa logo depois, no próximo ciclo.",
+      },
+    ],
+    restaurante: [
+      {
+        q: "É grátis mesmo?",
+        a: "Sim. Quem paga a sacola são os anunciantes. Você não paga nada.",
+      },
+      {
+        q: "Que anúncios vão na sacola?",
+        a: "Comércio e serviços do bairro. Nada de comida, bebida ou app de delivery, e você vê cada arte antes.",
+      },
+      {
+        q: "O que eu preciso fazer?",
+        a: "Usar a sacola em todo pedido e fechar com o seu lacre. O resto é com a gente.",
+      },
+      {
+        q: "E se eu quiser sair?",
+        a: "É só avisar com 30 dias. Sem multa.",
+      },
+    ],
+  },
+};
+
+export const finalCta: { heading: PorPerfil<string>; cta: string } = {
+  heading: {
+    anunciante: "Garanta sua vaga no próximo ciclo de impressão.",
+    restaurante: "Coloque seu delivery na rede Qlareo.",
+  },
+  cta: "Chamar no WhatsApp",
+};
 
 export const footer = {
-  tagline: "Inteligência Comercial",
-  copyright: `© ${new Date().getFullYear()} Qlareo. Todos os direitos reservados`,
-  /* Perfis pessoais do fundador, não contas da empresa: a Qlareo é pré-lançamento
-     e ainda não tem presença própria. Apontar para um perfil vazio custa mais
-     confiança do que apontar para uma pessoa com rosto e histórico.
-     `label` é o nome acessível do link — o ícone é `aria-hidden`, então esta é a
-     ÚNICA coisa que um leitor de tela anuncia. Por isso diz "Perfil no X" e não
-     só "X": fora do contexto visual do rodapé, "X" não informa o destino.
-     `icon` é um discriminador, não um componente: este arquivo é conteúdo puro
-     e o mapa para o SVG vive em `components/ui/social-icons.tsx`. */
-  social: [
-    {
-      label: "Perfil no LinkedIn",
-      icon: "linkedin",
-      href: "https://www.linkedin.com/in/gustavohpss",
-    },
-    {
-      label: "Perfil no X",
-      icon: "x",
-      href: "https://x.com/gustavopadeiro",
-    },
-    {
-      label: "Perfil no Instagram",
-      icon: "instagram",
-      href: "https://www.instagram.com/ogustavopadeiro",
-    },
-  ],
-} as const;
-
-export const waitlistModal = {
-  title: "Garanta sua vaga gratuita",
-  subtitle: `Três informações e a gente cuida do resto. Grátis para as ${spots.total} primeiras lojas, sem cartão de crédito.`,
-  nameLabel: "Nome",
-  namePlaceholder: "Seu nome",
-  emailLabel: "E-mail corporativo",
-  emailPlaceholder: "voce@sualoja.com.br",
-  companyLabel: "Nome da empresa",
-  companyPlaceholder: "Sua Loja Ltda",
-  submit: "Garantir minha vaga",
-  submitting: "Enviando…",
-  /** RCD: reinforce the decision the visitor just made (choice-supportive bias). */
-  successTitle: "Vaga garantida.",
-  successBody:
-    "Chegou. Vamos responder no mesmo e-mail com o passo a passo para conectar sua VTEX — leva menos de 5 minutos e você não precisa instalar nada.",
-  close: "Fechar",
-  errorGeneric: "Não conseguimos registrar agora. Tente de novo em instantes.",
+  location: "Itaboraí e Icaraí, Niterói · RJ",
+  instagramLabel: "Instagram da Qlareo",
+  copyright: `© ${new Date().getFullYear()} Qlareo`,
 } as const;

@@ -13,3 +13,10 @@ next-env.d.ts
 .claude/skills/
 .agents/
 skills-lock.json
+
+<!-- AIHAUS:START -->
+/.aihaus-download/
+.aihaus/state/
+.aihaus/runtime/
+.aihaus/backups/
+<!-- AIHAUS:END -->

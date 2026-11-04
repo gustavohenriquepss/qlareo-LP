@@ -19,9 +19,9 @@ const inter = Inter({
   display: "swap",
 });
 
-const title = "Qlareo — Seus dados de vendas na VTEX, finalmente claros";
+const title = "Qlareo — Sua marca na sacola de delivery do bairro";
 const description =
-  "Quanto você vendeu, quais produtos puxam seu faturamento, quem comprou de novo e se sua promoção deu lucro. Conecte sua loja VTEX em minutos, sem precisar de um time de dados.";
+  "Anuncie nas sacolas de delivery dos restaurantes de Itaboraí e Icaraí, Niterói. Restaurantes recebem sacolas grátis.";
 
 export const metadata: Metadata = {
   /* O apex é o endereço canônico da LP. Sem isto, `www.qlareo.com` e

@@ -2,9 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/ui/logo";
-import { WaitlistButton } from "@/components/waitlist";
-import { cta, nav } from "@/lib/content";
+import { WhatsAppButton } from "@/components/whatsapp-button";
+import { header } from "@/lib/content";
 
+/**
+ * No celular o menu fica compacto: só a logo e o WhatsApp. Os links de seção
+ * entram a partir de `lg`. Numa página de rolagem única, três links a menos
+ * no topo são três alvos a menos competindo com o único CTA.
+ */
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
 
@@ -24,14 +29,14 @@ export function SiteHeader() {
         scrolled ? "shadow-[0_1px_12px_rgba(15,23,42,0.06)]" : "",
       ].join(" ")}
     >
-      <div className="flex w-full max-w-frame items-center justify-between px-6 lg:px-0">
+      <div className="flex w-full max-w-frame items-center justify-between gap-3 px-4 sm:px-6 lg:px-0">
         {/* `decorative`: o link já se anuncia, o SVG repetiria o nome. */}
-        <a href="#top" className="control rounded-lg" aria-label="Qlareo — início">
-          <Logo className="h-9 w-auto text-ink" decorative />
+        <a href="#topo" className="control shrink-0 rounded-lg" aria-label={header.homeLabel}>
+          <Logo className="h-7 w-auto text-ink sm:h-9" decorative />
         </a>
 
-        <nav aria-label="Seções da página" className="hidden items-center gap-6 lg:flex">
-          {nav.map((item) => (
+        <nav aria-label={header.navLabel} className="hidden items-center gap-6 lg:flex">
+          {header.nav.map((item) => (
             <a
               key={item.href}
               href={item.href}
@@ -42,7 +47,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <WaitlistButton source="header" label={cta.compact} size="sm" />
+        <WhatsAppButton posicao="header" label={header.cta} size="sm" />
       </div>
     </header>
   );

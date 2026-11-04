@@ -53,12 +53,12 @@
   --warning: #b45309;
 
   /* --- Tokens de gráfico -------------------------------------------------
-     Vieram inteiros do produto, para a prévia da seção "O Produto" desenhar com
-     as MESMAS cores da tela de verdade. Valem as mesmas travas de lá: o par
+     A landing não desenha gráfico hoje. Ficam aqui para o arquivo continuar
+     comparável, linha a linha, com o do produto. Valem as travas de lá: o par
      categórico passou por validação de daltonismo (pior par adjacente ΔE 32,3
-     protan / 29,3 tritan sobre o cartão), a escada ABC precisa de 3:1 contra
-     --surface em cada degrau (10,36 / 6,70 / 3,68) e --axis é TEXTO, então vale
-     4,5:1. Mudar valor aqui sem mudar no produto quebra a promessa da página. */
+     protan / 29,3 tritan sobre o cartão), a escada sequencial precisa de 3:1
+     contra --surface em cada degrau (10,36 / 6,70 / 3,68) e --axis é TEXTO,
+     então vale 4,5:1. */
 
   /* Categórico (identidade). Ordem fixa, nunca ciclada. */
   --series-1: #2563eb;
@@ -106,7 +106,7 @@
      O app usa 1400px porque é um painel; a diferença é intencional. */
   --spacing-frame: 1200px;
 
-  /* Texto sobre o cartão escuro da seção "A Virada". O produto não tem
+  /* Texto sobre as superfícies escuras (`bg-ink`). O produto não tem
      superfície escura — é um recurso de marketing, não de painel — então não
      há `--on-ink` lá para copiar. Existe como token próprio em vez de
      `--on-primary` emprestado: aquele token promete legibilidade sobre
@@ -153,9 +153,9 @@
 }
 
 @layer components {
-  /* Dinheiro e contagem têm que alinhar pela vírgula entre linhas — inegociável
-     num relatório, e por isso vale para todo valor numérico, não só tabela. Vem
-     do produto junto com os tokens de gráfico. */
+  /* Dinheiro e contagem alinham pela vírgula entre linhas, e o valor não
+     "dança" enquanto muda (a calculadora atualiza a cada tecla). Vem do produto
+     junto com os tokens de gráfico. */
   .tnum {
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum";
@@ -198,28 +198,9 @@
   }
 }
 
-/* Cursor da palavra que se alterna no H1 (`components/typing-words.tsx`).
-   `steps` em vez de fade: cursor de terminal liga e desliga, não esmaece. O
-   componente não renderiza o cursor sob `prefers-reduced-motion`, então esta
-   animação nunca chega a rodar nesse caso. */
-@keyframes caret-blink {
-  0%,
-  49% {
-    opacity: 1;
-  }
-  50%,
-  100% {
-    opacity: 0;
-  }
-}
-
-@utility animate-caret {
-  animation: caret-blink 1.06s steps(1, end) infinite;
-}
-
-/* Troca de aba na seção "O Produto". Só opacidade e um deslocamento mínimo: a
-   imagem tem que confirmar que mudou, não fazer número. O bloco de
-   `prefers-reduced-motion` acima zera a duração e a troca vira instantânea. */
+/* Troca de perfil no seletor do hero. Só opacidade e um deslocamento mínimo: o
+   conteúdo tem que confirmar que mudou, não fazer número. O bloco de
+   `prefers-reduced-motion` abaixo zera a duração e a troca vira instantânea. */
 @keyframes panel-in {
   from {
     opacity: 0;
