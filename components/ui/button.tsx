@@ -27,12 +27,12 @@ const sizes: Record<Size, string> = {
   é ação.
 
   `secondary` é a ação de apoio ao lado de um primário (ex.: "Ver formatos" no
-  hero). Mesma forma e altura, sem cor: superfície e régua da página, para não
+  hero). Mesma forma e altura, sem cor: cartão branco com sombra leve, para não
   competir com o primário.
 */
 const variants: Record<Variant, string> = {
   primary: "bg-primary text-on-primary hover:bg-primary-hover",
-  secondary: "border border-border-strong bg-surface text-ink hover:bg-surface-2",
+  secondary: "bg-surface text-ink shadow-[0_1px_3px_rgba(15,23,42,0.08)] hover:bg-surface-2",
 };
 
 export function buttonClasses({
@@ -45,7 +45,7 @@ export function buttonClasses({
   className?: string;
 } = {}) {
   return [
-    "inline-flex shrink-0 items-center justify-center gap-2 rounded-lg font-semibold",
+    "inline-flex shrink-0 items-center justify-center gap-2 rounded-2xl font-semibold",
     "transition-[background-color,transform,box-shadow] duration-150 active:translate-y-px",
     "disabled:cursor-not-allowed disabled:opacity-60 disabled:active:translate-y-0",
     "focus-visible:outline-offset-3",

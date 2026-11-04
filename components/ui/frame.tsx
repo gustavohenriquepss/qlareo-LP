@@ -1,32 +1,27 @@
 import type { ReactNode } from "react";
 
 /**
- * O Figma risca uma coluna de 1200px por toda a página, com 1px de cada lado;
- * cada seção é uma faixa full-bleed que hospeda essa coluna. `Section` é a
- * faixa, `Frame` é a coluna riscada dentro dela.
+ * `Section` é a faixa full-bleed; `Frame` é a coluna de 1200px dentro dela.
  *
- * Como toda linha da página, estas usam `--border-strong` — ver a nota sobre a
- * cor de borda padrão em `app/globals.css`.
+ * Sem linhas de propósito: o layout antigo riscava a coluna dos dois lados e
+ * fechava cada seção com uma régua, o que deixava a página com cara de software
+ * corporativo — e o público aqui é dono de restaurante e de comércio de bairro.
+ * Quem separa seção agora é o respiro (o `framePadding`), e quem agrupa
+ * conteúdo são cartões de fundo branco com canto de 16px (`rounded-2xl`).
  */
 export function Section({
   id,
   children,
   className = "",
-  bordered = true,
 }: {
   id?: string;
   children: ReactNode;
   className?: string;
-  bordered?: boolean;
 }) {
   return (
     <section
       id={id}
-      className={[
-        "flex w-full scroll-mt-[83px] flex-col items-center bg-background",
-        bordered ? "border-b border-border-strong" : "",
-        className,
-      ].join(" ")}
+      className={`flex w-full scroll-mt-[83px] flex-col items-center bg-background ${className}`}
     >
       {children}
     </section>
@@ -40,11 +35,7 @@ export function Frame({
   children: ReactNode;
   className?: string;
 }) {
-  return (
-    <div className={`w-full max-w-frame border-x border-border-strong ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`w-full max-w-frame ${className}`}>{children}</div>;
 }
 
 /** The 60px inset used by every content column in the design. */

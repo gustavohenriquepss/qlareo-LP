@@ -24,7 +24,7 @@ export function SiteHeader() {
     <header
       className={[
         "sticky top-0 z-40 flex h-[83px] w-full items-center justify-center",
-        "border-b border-border-strong bg-background/90 backdrop-blur-md",
+        "bg-background/90 backdrop-blur-md",
         "transition-shadow duration-200",
         scrolled ? "shadow-[0_1px_12px_rgba(15,23,42,0.06)]" : "",
       ].join(" ")}

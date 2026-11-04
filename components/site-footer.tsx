@@ -7,11 +7,10 @@ export function SiteFooter() {
   const Instagram = socialIcons.instagram;
 
   return (
-    <footer className="flex w-full justify-center border-t border-border-strong bg-background px-6 py-[30px] lg:px-0">
+    <footer className="flex w-full justify-center bg-background px-6 py-[30px] lg:px-0">
       <div className="flex w-full max-w-frame flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <Logo className="h-8 w-auto text-ink" />
-          <span aria-hidden className="h-[21px] w-px bg-border-strong" />
           <span className="text-[15px] leading-[1.35] text-ink-muted">{footer.location}</span>
         </div>
 

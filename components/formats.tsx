@@ -22,14 +22,14 @@ export function Formats() {
               <li
                 key={card.title}
                 className={[
-                  "flex flex-col gap-6 rounded-3xl p-6 lg:p-8",
-                  dark ? "bg-ink text-on-ink" : "border border-border-strong bg-surface text-ink",
+                  "flex flex-col gap-6 rounded-2xl p-6 lg:p-8",
+                  dark ? "bg-ink text-on-ink" : "bg-surface text-ink",
                 ].join(" ")}
               >
                 <span
                   className={[
-                    "self-start rounded-full border px-3 py-1 text-[12px] font-semibold tracking-[0.08em]",
-                    dark ? "border-on-ink/30 text-on-ink" : "border-border-strong text-primary",
+                    "self-start rounded-full px-3 py-1 text-[12px] font-semibold tracking-[0.08em]",
+                    dark ? "bg-on-ink/10 text-on-ink" : "bg-brand/10 text-primary",
                   ].join(" ")}
                 >
                   {card.tag}
@@ -57,8 +57,8 @@ export function Formats() {
 
                 <p
                   className={[
-                    "mt-auto border-t pt-5 text-[15px]",
-                    dark ? "border-on-ink/20" : "border-border-strong",
+                    "mt-auto rounded-2xl px-4 py-3 text-[15px]",
+                    dark ? "bg-on-ink/10" : "bg-surface-2",
                   ].join(" ")}
                 >
                   {formats.price.before}

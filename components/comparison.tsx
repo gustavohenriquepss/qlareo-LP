@@ -13,6 +13,10 @@ import { comparison } from "@/lib/content";
  *
  * A coluna "Sacola Qlareo" leva o destaque: cabeçalho em `--primary` e
  * células num véu do azul da marca, só tokens do sistema.
+ *
+ * Sem linha entre as linhas da tabela: quem separa é o fundo alternado
+ * (branco / `--surface-2`). A coluna presa recebe o MESMO fundo da linha, opaco,
+ * senão o conteúdo que rola por baixo dela apareceria através.
  */
 export function Comparison() {
   const captionId = useId();
@@ -26,7 +30,7 @@ export function Comparison() {
           role="region"
           aria-labelledby={captionId}
           tabIndex={0}
-          className="overflow-x-auto rounded-3xl border border-border-strong bg-surface"
+          className="overflow-x-auto rounded-2xl bg-surface"
         >
           <table className="w-full min-w-[560px] border-collapse text-left text-[15px] leading-[1.35]">
             <caption id={captionId} className="sr-only">
@@ -55,27 +59,31 @@ export function Comparison() {
               </tr>
             </thead>
             <tbody>
-              {comparison.rows.map((row) => (
-                <tr key={row.label} className="border-t border-border-strong">
-                  <th
-                    scope="row"
-                    className="sticky left-0 z-10 bg-surface p-4 align-top font-medium text-ink lg:p-5"
-                  >
-                    {row.label}
-                  </th>
-                  {row.values.map((value, index) => (
-                    <td
-                      key={index}
-                      className={[
-                        "p-4 align-top lg:p-5",
-                        index === 0 ? "bg-brand/5 font-semibold text-ink" : "text-ink-muted",
-                      ].join(" ")}
+              {comparison.rows.map((row, rowIndex) => {
+                const rowBg = rowIndex % 2 === 0 ? "bg-surface-2" : "bg-surface";
+
+                return (
+                  <tr key={row.label} className={rowBg}>
+                    <th
+                      scope="row"
+                      className={`sticky left-0 z-10 p-4 align-top font-medium text-ink lg:p-5 ${rowBg}`}
                     >
-                      {value}
-                    </td>
-                  ))}
-                </tr>
-              ))}
+                      {row.label}
+                    </th>
+                    {row.values.map((value, index) => (
+                      <td
+                        key={index}
+                        className={[
+                          "p-4 align-top lg:p-5",
+                          index === 0 ? "bg-brand/5 font-semibold text-ink" : "text-ink-muted",
+                        ].join(" ")}
+                      >
+                        {value}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

@@ -26,7 +26,7 @@ export function SegmentedToggle<T extends string>({
     <div
       role="group"
       aria-label={label}
-      className={`grid auto-cols-fr grid-flow-col gap-1 rounded-xl border border-border-strong bg-surface p-1 ${className}`}
+      className={`grid auto-cols-fr grid-flow-col gap-1 rounded-2xl bg-surface p-1 shadow-[0_1px_3px_rgba(15,23,42,0.08)] ${className}`}
     >
       {options.map((option) => {
         const pressed = option.value === value;
@@ -38,7 +38,7 @@ export function SegmentedToggle<T extends string>({
             aria-pressed={pressed}
             onClick={() => onChange(option.value)}
             className={[
-              "control justify-center rounded-lg px-4 text-[14px] leading-5 font-medium whitespace-nowrap",
+              "control justify-center rounded-xl px-4 text-[14px] leading-5 font-medium whitespace-nowrap",
               "transition-colors duration-150",
               pressed ? "bg-ink text-on-ink" : "text-ink-muted hover:bg-surface-2 hover:text-ink",
             ].join(" ")}

@@ -6,16 +6,14 @@ import type { Perfil } from "@/lib/site";
 export function HowItWorks({ perfil }: { perfil: Perfil }) {
   return (
     <Section id={howItWorks.id}>
-      <Frame>
-        <div className={`border-b border-border-strong ${framePadding}`}>
-          <SectionHeading heading={howItWorks.heading} />
-        </div>
+      <Frame className={`flex flex-col gap-8 ${framePadding}`}>
+        <SectionHeading heading={howItWorks.heading} />
 
         {/* `<ol>`: a ordem é a informação. O número grande é só desenho; a
             posição na lista já é anunciada pelo leitor de tela. */}
-        <ol className="grid gap-px bg-border-strong sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {howItWorks.steps[perfil].map((step, index) => (
-            <li key={step.title} className="flex flex-col gap-3 bg-background p-6 lg:p-8">
+            <li key={step.title} className="flex flex-col gap-3 rounded-2xl bg-surface p-6 lg:p-8">
               <span
                 aria-hidden
                 className="tnum text-[32px] leading-none font-medium tracking-[-0.05em] text-brand"

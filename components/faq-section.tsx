@@ -13,22 +13,18 @@ import type { Perfil } from "@/lib/site";
 export function FaqSection({ perfil }: { perfil: Perfil }) {
   return (
     <Section id={faq.id}>
-      <Frame className="flex flex-col">
-        <div className={`border-b border-border-strong ${framePadding}`}>
-          <SectionHeading heading={faq.heading} />
-        </div>
+      <Frame className={`flex flex-col gap-8 ${framePadding}`}>
+        <SectionHeading heading={faq.heading} />
 
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-3">
           {faq.items[perfil].map((item, index) => (
             <details
               key={item.q}
               name="faq"
               open={index === 0}
-              /* `last:border-b-0`: quem fecha a seção é o `border-b` do próprio
-                 `Section`; sem isto a última linha sairia com 2px. */
-              className="group border-b border-border-strong last:border-b-0 open:bg-surface-2"
+              className="group rounded-2xl bg-surface transition-shadow open:shadow-[0_4px_20px_rgba(15,23,42,0.06)]"
             >
-              <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 p-6 [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-2xl p-6 focus-visible:-outline-offset-2 [&::-webkit-details-marker]:hidden">
                 <ToggleIcon />
                 <h3 className="text-[16px] font-medium text-ink">{item.q}</h3>
               </summary>

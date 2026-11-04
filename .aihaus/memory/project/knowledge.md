@@ -15,7 +15,7 @@
 ## Useful code analogs
 
 - Verified: `components/ui/segmented-toggle.tsx` é o modelo de controle de alternância (botões reais com `aria-pressed`, `.control` para alvo de toque). Source: `components/ui/segmented-toggle.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
-- Verified: listas em cartão usam o padrão `gap-px` + `bg-border-strong` para divisórias de 1px. Source: `components/audience.tsx`, `components/highlights.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
+- Verified: listas em cartão usam cartões soltos (`grid gap-4`, cada item `rounded-2xl bg-surface`), sem divisórias; a página não usa coluna riscada nem linha entre seções. Source: `components/audience.tsx`, `components/highlights.tsx`, `components/ui/frame.tsx` (reviewed 2026-11-04, sobre b2ce499).
 
 Each entry should name its evidence and last review date. Transient research
 belongs in the task that used it, not here.

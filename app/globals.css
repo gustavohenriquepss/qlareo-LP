@@ -102,8 +102,8 @@
      Não existem no produto porque o produto não tem página de marketing.
      Nenhuma redefine token do design system. */
 
-  /* O Figma desenha a página inteira dentro de uma coluna régua de 1200px.
-     O app usa 1400px porque é um painel; a diferença é intencional. */
+  /* Coluna de conteúdo de 1200px. O app usa 1400px porque é um painel; a
+     diferença é intencional. */
   --spacing-frame: 1200px;
 
   /* Texto sobre as superfícies escuras (`bg-ink`). O produto não tem
@@ -119,11 +119,13 @@
    `@layer utilities` — e aí `border-brand` sairia cinza.
 
    DIVERGE DO PRODUTO DE PROPÓSITO: lá o padrão é `--border`, porque um painel
-   denso empilha muita linha e a régua fina evita que a tela vire uma grade. Aqui
-   a linha é elemento de composição — o Figma desenha a página inteira dentro de
-   uma coluna riscada, e no tom sutil ela sumia contra o #f8fafc. Todas as bordas
-   desta página, sem exceção, usam `--border-strong`. `--border` continua
-   definido acima só para o arquivo permanecer comparável com o do produto. */
+   denso vive de régua. Esta página quase não tem linha: o público é dono de
+   restaurante e de comércio de bairro, e coluna riscada com divisória entre
+   seção lia como software corporativo. Quem agrupa conteúdo é cartão branco com
+   canto de 16px (`rounded-2xl`) e quem separa seção é respiro. As poucas bordas
+   que sobraram (campo de formulário, que precisa de contorno para ser lido como
+   campo) usam `--border-strong`. `--border` continua definido acima só para o
+   arquivo permanecer comparável com o do produto. */
 @layer base {
   * {
     border-color: var(--border-strong);

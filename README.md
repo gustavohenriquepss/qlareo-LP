@@ -82,8 +82,11 @@ Três convenções valem para qualquer UI nova:
   não `bg-brand`. O azul da marca fica no símbolo da logo e em destaques.
 - **`.control` dimensiona tudo que é clicável**: 36px para ponteiro fino e 44px quando o
   ponteiro é grosso (dedo).
-- **Toda borda desta página é `--border-strong`**, onde o app usa o `--border`, mais claro.
-  Aqui a linha compõe a página (a coluna riscada de 1200px), e no tom sutil ela sumia.
+- **A página quase não tem linha.** Nada de coluna riscada nem divisória entre seções:
+  conteúdo se agrupa em cartões brancos com canto de 16px (`rounded-2xl`) sobre o
+  `--background`, e seção se separa por respiro. O público é pequeno negócio, e o visual
+  de grade lia como software corporativo. As bordas que sobraram (campos de formulário)
+  usam `--border-strong`.
 
 `components/ui/logo.tsx` é cópia literal do `Logo.tsx` do app. Mantenha os dois iguais:
 copie de novo em vez de editar. No fundo escuro, use `<Logo className="text-on-ink" />`. O

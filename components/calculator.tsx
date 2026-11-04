@@ -73,7 +73,7 @@ export function Calculator() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-6 rounded-3xl bg-ink p-6 text-on-ink lg:p-8">
+          <div className="flex flex-col gap-6 rounded-2xl bg-ink p-6 text-on-ink lg:p-8">
             <div aria-live="polite" aria-atomic="true" className="flex flex-col gap-5">
               <p className="flex flex-col gap-1">
                 <span className="text-[15px] text-on-ink/80">{calculator.monthlyLabel}</span>
@@ -89,7 +89,7 @@ export function Calculator() {
               </p>
             </div>
 
-            <p className="border-t border-on-ink/20 pt-5 text-[14px] leading-[1.4] text-on-ink/80">
+            <p className="text-[14px] leading-[1.4] text-on-ink/80">
               {calculator.note}
             </p>
 
@@ -135,7 +135,7 @@ function Field({
         placeholder={placeholder}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="tnum h-11 rounded-lg border border-border-strong bg-surface px-3 text-[16px] text-ink placeholder:text-ink-muted focus-visible:border-brand"
+        className="tnum h-11 rounded-2xl border border-border-strong bg-surface px-4 text-[16px] text-ink placeholder:text-ink-muted focus-visible:border-brand"
       />
     </div>
   );
