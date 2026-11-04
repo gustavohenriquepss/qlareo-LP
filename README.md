@@ -5,6 +5,33 @@ Landing page for Qlareo, built from the Figma file
 
 Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · pt-BR.
 
+## Arquivo
+
+A landing anterior (do SaaS de relatórios de vendas para lojas VTEX, com a waitlist
+em planilha) está preservada fora do `main`. Ela não fica publicada como rota do site.
+
+| Onde | O que é |
+| --- | --- |
+| tag `legacy/relatorios-v1` | Snapshot imutável do último estado (commit `2437826`). |
+| branch `archive/relatorios` | Mesmo commit, para abrir preview na Vercel ou continuar dali. |
+
+Para recuperar:
+
+```bash
+git checkout legacy/relatorios-v1          # só olhar (HEAD destacado)
+git switch -c minha-branch legacy/relatorios-v1   # trabalhar a partir dele
+git checkout legacy/relatorios-v1 -- components/preview   # trazer um arquivo/pasta para o main
+```
+
+**Preview:** o projeto é implantado pela integração Git da Vercel, que gera um preview para
+cada branch enviada ao GitHub. O da `archive/relatorios` fica em Vercel › projeto ›
+**Deployments**, filtrando pela branch. A URL estável da branch segue o padrão
+`<projeto>-git-archive-relatorios-<time>.vercel.app`. Se o projeto tiver Deployment
+Protection ligada, o preview pede login na Vercel.
+
+O produto de relatórios em si (painel, adapters VTEX, banco) vive em outro repositório,
+`gustavohenriquepss/qlareo`, e não foi alterado aqui.
+
 ## Run it
 
 ```bash
