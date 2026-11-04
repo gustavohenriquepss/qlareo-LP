@@ -1,12 +1,9 @@
 /**
  * Marcas das redes sociais, em SVG inline.
  *
- * SÓLIDAS, e não em contorno como os ícones das seções (que são Heroicons, em
- * `public/figma/icon-*.svg`). A divergência é proposital: aqueles ícones
- * ilustram um conceito — um cubo, uma calculadora — e contorno é o estilo certo
- * para isso. Estes são marcas registradas de terceiros, e a forma cheia é a
- * única que o olho reconhece a 20px. Reestilizar o "in" do LinkedIn como
- * contorno não o deixaria mais consistente, deixaria menos legível.
+ * SÓLIDAS, e não em contorno: são marcas registradas de terceiros, e a forma
+ * cheia é a única que o olho reconhece a 20px. Reestilizar o "in" do LinkedIn
+ * como contorno não o deixaria mais consistente, deixaria menos legível.
  *
  * Inline pelo mesmo motivo da logo (ver `logo.tsx`): herdam `currentColor`, então
  * seguem a cor do contexto e o estado de hover sem um arquivo por variação.

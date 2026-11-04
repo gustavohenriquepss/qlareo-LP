@@ -9,8 +9,8 @@ const nextConfig: NextConfig = {
    * link juice do tráfego pago se dividindo entre dois endereços.
    *
    * O apex é o canônico (ver `metadataBase` em app/layout.tsx); o www só
-   * redireciona. 308 e não 302: é permanente, e preserva o método — um POST
-   * em /api/waitlist que caia no www chega inteiro do outro lado.
+   * redireciona. 308 e não 302: é permanente, e preserva a query string
+   * (`?perfil=restaurante` chega inteiro do outro lado) e o método HTTP.
    */
   async redirects() {
     return [
