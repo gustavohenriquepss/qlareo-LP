@@ -16,8 +16,8 @@ A Qlareo é uma **rede de mídia em sacolas de delivery**.
 - Piloto em **Itaboraí** e **Icaraí, Niterói** (RJ).
 
 A página fala com os dois públicos. Um seletor no topo troca o conteúdo inteiro entre
-"Tenho restaurante" (padrão, porque a prioridade agora é montar a rede) e "Sou anunciante".
-O link `?perfil=anunciante` já abre do lado do anunciante; `?perfil=restaurante` continua
+"Sou anunciante" (padrão, porque é quem gera o faturamento) e "Tenho restaurante".
+O link `?perfil=restaurante` já abre do lado do restaurante; `?perfil=anunciante` continua
 funcionando para os links já enviados. O CTA de todas as seções é o WhatsApp.
 
 O painel do anunciante e o redirect dos QR codes (`/r/:slug`, com contagem de leituras)

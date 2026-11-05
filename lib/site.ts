@@ -3,16 +3,16 @@
 import { formatQuantidade } from "@/lib/pricing";
 
 /**
- * Os dois públicos da página. "restaurante" é o padrão: a prioridade agora é
- * montar a rede de restaurantes, antes de vender espaço nas sacolas.
+ * Os dois públicos da página. "anunciante" é o padrão: é quem paga e traz o
+ * faturamento. O restaurante é o público secundário.
  */
 export type Perfil = "anunciante" | "restaurante";
 
-export const DEFAULT_PERFIL: Perfil = "restaurante";
+export const DEFAULT_PERFIL: Perfil = "anunciante";
 
 /**
- * `?perfil=anunciante` abre a página direto do lado do anunciante.
- * `?perfil=restaurante` continua valendo (links já enviados) e cai no padrão.
+ * `?perfil=restaurante` abre a página direto do lado do restaurante.
+ * `?perfil=anunciante` continua valendo (links já enviados) e cai no padrão.
  */
 export const PERFIL_PARAM = "perfil";
 

@@ -7,7 +7,7 @@
 
 ## Users and outcomes
 
-- Verified: dois públicos na mesma página, alternados por um seletor no hero: restaurante (padrão desde 2026-11-04, para montar a rede) e anunciante; `?perfil=anunciante` abre direto do lado do anunciante. Source: `components/perfil.tsx`, `app/page.tsx`, `lib/site.ts` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
+- Verified: dois públicos na mesma página, alternados por um seletor no hero: anunciante (padrão desde 2026-11-05, gera o faturamento) e restaurante; `?perfil=restaurante` abre direto do lado do restaurante. Source: `components/perfil.tsx`, `app/page.tsx`, `lib/site.ts` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 - Verified: dois planos para o anunciante: Impacto (1 anunciante, frente e verso) e Alcance (1 anunciante por lado), renomeados pelo dono em 2026-11-04; pagamento 100% antecipado. Source: `AGENTS.md`, `lib/content.ts` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 - Verified: piloto em Itaboraí e Icaraí, Niterói (RJ). Source: `AGENTS.md`, `lib/content.ts` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 

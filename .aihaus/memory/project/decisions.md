@@ -44,7 +44,7 @@ Anunciante e restaurante precisam de copy e ordem de seções diferentes, e o do
 
 ### Consequences
 
-O link do restaurante chega sem piscar o lado do anunciante. O canonical continua `/`, então `?perfil=` não duplica a página no Google. Source: `app/page.tsx`, `app/layout.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
+O link do restaurante chega sem piscar o lado do anunciante (o padrão). O canonical continua `/`, então `?perfil=` não duplica a página no Google. Source: `app/page.tsx`, `app/layout.tsx` (reviewed 615cf5230cb0b6af4070831432c035383d6c3d5a).
 
 ### Reversal or migration
 
