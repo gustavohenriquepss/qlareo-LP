@@ -45,9 +45,9 @@ Markdown is authoritative; indexes only retrieve it.
 
 - **status:** accepted
 - **domain:** conversão
-- **statement:** o restaurante é o perfil padrão (a prioridade é montar a rede). `?perfil=anunciante` abre a página do lado do anunciante; `?perfil=restaurante` segue aceito. Trocar no seletor atualiza a query sem recarregar, e o perfil padrão não aparece na URL.
+- **statement:** o anunciante é o perfil padrão (é quem gera o faturamento; restaurante é secundário, decisão do dono em 2026-11-05). `?perfil=restaurante` abre a página do lado do restaurante; `?perfil=anunciante` segue aceito. Trocar no seletor atualiza a query sem recarregar, e o perfil padrão não aparece na URL.
 - **source**: `components/perfil.tsx`, `lib/site.ts`, `app/page.tsx` (working tree 2026-11-04, sobre 667e800)
-- **rationale:** o dono manda o link certo para cada público; hoje o público principal é o restaurante.
+- **rationale:** o dono manda o link certo para cada público; o público principal é o anunciante.
 - **last-reviewed:** 667e800acca67ada4c6360bafe163c7875e521ca
 - **links:** implements: [`components/perfil.tsx`], relates: [BR-003], decided-by: [owner, 2026-11-04]
 

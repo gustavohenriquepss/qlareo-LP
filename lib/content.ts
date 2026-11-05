@@ -56,10 +56,10 @@ export const header = {
 
 export const perfilToggle = {
   label: "Escolha seu perfil",
-  /* O padrão (restaurante) vem primeiro. */
+  /* O padrão (anunciante) vem primeiro. */
   options: [
-    { value: "restaurante", label: "Tenho restaurante" },
     { value: "anunciante", label: "Sou anunciante" },
+    { value: "restaurante", label: "Tenho restaurante" },
   ],
 } as const satisfies { label: string; options: readonly { value: Perfil; label: string }[] };
 
