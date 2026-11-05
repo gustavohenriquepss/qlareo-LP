@@ -9,8 +9,13 @@ import type { Formato, Perfil } from "@/lib/site";
 export type WhatsappPosicao = "header" | "hero" | "formatos" | "calculadora" | "cta_final";
 
 type EventMap = {
-  /** `formato` só vem dos botões da seção de formatos. */
-  click_whatsapp: { perfil: Perfil; posicao: WhatsappPosicao; formato?: Formato };
+  /** `formato` e `quantidade` (sacolas por mês) só vêm dos botões da seção de formatos. */
+  click_whatsapp: {
+    perfil: Perfil;
+    posicao: WhatsappPosicao;
+    formato?: Formato;
+    quantidade?: number;
+  };
   toggle_perfil: { perfil: Perfil };
   calculadora_usada: { perfil: Perfil };
 };

@@ -89,7 +89,7 @@ export default async function OpengraphImage() {
                 boxShadow: "0 1px 3px rgba(15,23,42,0.08)",
               }}
             >
-              {`A partir de ${PRICING.meia} por sacola`}
+              {`${PRICING.sacola} por sacola, só a sua marca`}
             </div>
             <div style={{ display: "flex", fontSize: 28, color: INK_MUTED }}>
               Itaboraí e Icaraí, Niterói · RJ

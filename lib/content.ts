@@ -1,3 +1,5 @@
+import { formatBRL } from "@/lib/calculator";
+import { MINIMO_SACOLAS, PRECO_SACOLA, formatQuantidade, formatTotal } from "@/lib/pricing";
 import type { Perfil } from "@/lib/site";
 
 /**
@@ -13,13 +15,17 @@ import type { Perfil } from "@/lib/site";
 type PorPerfil<T> = Record<Perfil, T>;
 
 /**
- * Preço definido pelo dono. Os dois formatos fecham no MESMO ticket mensal:
- * 2.500 sacolas × R$ 1,30 = 5.000 sacolas × R$ 0,65 = R$ 3.250.
+ * Preço definido pelo dono, já em texto. Os números vivem em `lib/pricing.ts`;
+ * aqui só se formata. O anunciante compra a exclusividade da sacola: preço
+ * único por sacola, com um mínimo por mês.
  */
 export const PRICING = {
-  exclusiva: "R$ 1,30",
-  meia: "R$ 0,65",
-  mensal: "R$ 3.250",
+  /** "R$ 2,00" */
+  sacola: formatBRL(PRECO_SACOLA),
+  /** "1.000" */
+  minimo: formatQuantidade(MINIMO_SACOLAS),
+  /** Menor mês possível: o mínimo de sacolas. "R$ 2.000" */
+  menorMensal: formatTotal(MINIMO_SACOLAS * PRECO_SACOLA),
 } as const;
 
 /** Quem atende no WhatsApp. Rosto e nome reais: é a prova que a página tem hoje. */
@@ -68,7 +74,7 @@ export const hero: PorPerfil<{
     subhead:
       "Sua marca na sacola de delivery dos restaurantes do bairro. Ela chega na mesa, na hora em que o pedido é aberto.",
     primaryCta: "Garantir minha vaga",
-    secondaryCta: { label: "Ver planos", href: "#formatos" },
+    secondaryCta: { label: "Ver preços", href: "#formatos" },
   },
   restaurante: {
     headline: "Ganhe sacolas de delivery. Todo mês.",
@@ -85,7 +91,7 @@ export const hero: PorPerfil<{
  */
 export const heroSupport: PorPerfil<string> = {
   anunciante:
-    "Rodando em Itaboraí e Icaraí, Niterói. No máximo duas marcas por sacola, nunca concorrentes, então as vagas de cada ciclo são contadas.",
+    "Rodando em Itaboraí e Icaraí, Niterói. Uma marca por sacola, só a sua, então as vagas de cada ciclo são contadas.",
   restaurante: "Rodando em Itaboraí e Icaraí, Niterói.",
 };
 
@@ -98,7 +104,7 @@ export const highlights: PorPerfil<readonly string[]> = {
   anunciante: [
     "Dentro de casa",
     "Resultado no QR",
-    "Sem concorrente",
+    "Só a sua marca",
     "A gente faz a arte",
   ],
   restaurante: [
@@ -117,8 +123,8 @@ export const howItWorks: { id: string; heading: string; steps: PorPerfil<readonl
   steps: {
     anunciante: [
       {
-        title: "Escolha o plano",
-        body: "Impacto, com a sacola inteira só sua, ou Alcance, com um lado dela.",
+        title: "Escolha quantas sacolas",
+        body: `A partir de ${PRICING.minimo} por mês. Cada sacola leva só a sua marca, sem outro anunciante.`,
       },
       {
         title: "Mande logo e oferta",
@@ -181,7 +187,7 @@ export const comparison = {
     {
       label: "Custo para começar",
       values: [
-        `${PRICING.exclusiva} por sacola, com arte`,
+        `${PRICING.menorMensal} por mês, com arte`,
         "Você define a verba",
         "Alto, com lona e instalação",
       ],
@@ -234,42 +240,39 @@ export const audience = {
 /** Só anunciante. Mesmo âncora (`#formatos`) que "O que você ganha" do restaurante. */
 export const formats = {
   id: "formatos",
-  heading: "Escolha seu plano",
-  subhead: `Os dois planos fecham em ${PRICING.mensal} por mês. Um entrega mais impacto, o outro mais alcance.`,
-  /* Os planos se chamam Impacto e Alcance; o `body` diz o que cada nome
-     significa na sacola. `formato` ("exclusiva" | "meia") é só o id interno,
-     mantido para não quebrar a série do evento `click_whatsapp`.
-     As duas listas usam a MESMA unidade (sacolas por mês) e a mesma ordem de
-     itens, para a comparação ser feita num eixo só. */
-  cards: [
-    {
-      formato: "exclusiva",
-      title: "Impacto",
-      body: "A sacola inteira é sua: frente e verso com a sua marca, sem dividir com ninguém.",
-      items: [
-        "2.500 sacolas por mês",
-        "Frente e verso com a sua arte",
-        "QR exclusivo e cupom próprio",
-      ],
-      unitPrice: PRICING.exclusiva,
-      unitLabel: "por sacola, frente e verso",
-      cta: "Quero o Impacto",
-      featured: true,
-    },
-    {
-      formato: "meia",
-      title: "Alcance",
-      body: "Um lado da sacola é seu, e você aparece no dobro de sacolas. O outro lado fica com um anunciante que não concorre com você.",
-      items: ["5.000 sacolas por mês", "Um lado com a sua arte", "QR exclusivo e cupom próprio"],
-      unitPrice: PRICING.meia,
-      unitLabel: "por sacola, um lado",
-      cta: "Quero o Alcance",
-      featured: false,
-    },
-  ],
-  monthly: `${PRICING.mensal} por mês`,
-  /* A exclusividade por rede é a âncora alta: aparece como uma terceira opção,
-     e não escondida numa nota, para os dois formatos serem lidos ao lado dela. */
+  heading: "Sua marca sozinha na sacola.",
+  subhead: `${PRICING.sacola} por sacola, a partir de ${PRICING.minimo} por mês. Você escolhe quantas, e nenhum outro anunciante entra nelas.`,
+  quantidade: {
+    label: "Quantas sacolas por mês?",
+    /* Atalhos. O primeiro é o mínimo e o padrão da página: a entrada mais
+       barata fica à vista. */
+    presets: [MINIMO_SACOLAS, 1500, 2500, 5000],
+    inicial: MINIMO_SACOLAS,
+    outraLabel: "Outra quantidade",
+    placeholder: "Ex.: 1.800",
+    vazio: "Escolha quantas sacolas por mês.",
+    abaixoDoMinimo: `O mínimo é ${PRICING.minimo} sacolas por mês.`,
+    nota: `Preço único: ${PRICING.sacola} por sacola em qualquer quantidade, com a arte inclusa.`,
+  },
+  /* Um produto só: a exclusividade da sacola. `formato: "exclusiva"` é o id
+     interno, mantido para não quebrar a série do evento `click_whatsapp`.
+     A página não diz o que vai no outro lado da sacola: o dono ainda não
+     decidiu (logo do restaurante ou da Qlareo). */
+  card: {
+    formato: "exclusiva",
+    title: "Sacola exclusiva",
+    items: [
+      "Sua arte em destaque, sem outro anunciante",
+      "Arte feita pela gente, com a sua aprovação",
+      "QR exclusivo e cupom próprio",
+    ],
+    unitLabel: "por sacola",
+    cta: "Garantir minha vaga",
+  },
+  /** Linha do total sob o preço por sacola. */
+  total: (valor: string, sacolas: string) => `${valor} por mês com ${sacolas} sacolas`,
+  /* A exclusividade por rede é a âncora alta: aparece como uma segunda opção,
+     e não escondida numa nota, para a sacola exclusiva ser lida ao lado dela. */
   network: {
     formato: "rede",
     title: "Exclusividade na rede",
@@ -346,7 +349,11 @@ export const faq: { id: string; heading: string; items: PorPerfil<readonly FaqIt
     anunciante: [
       {
         q: "Quanto custa?",
-        a: `${PRICING.exclusiva} por sacola no Impacto (frente e verso) e ${PRICING.meia} no Alcance (um lado). Os dois planos fecham em ${PRICING.mensal} por mês.`,
+        a: `${PRICING.sacola} por sacola, a partir de ${PRICING.minimo} sacolas por mês (${PRICING.menorMensal}). A sacola é só sua: nenhum outro anunciante aparece nela.`,
+      },
+      {
+        q: "Qual a quantidade mínima?",
+        a: `${PRICING.minimo} sacolas por mês. Acima disso, você escolhe quantas quiser, sempre a ${PRICING.sacola} cada.`,
       },
       {
         q: "Como sei se deu resultado?",
