@@ -260,11 +260,12 @@ export const formats = {
      decidiu (logo do restaurante ou da Qlareo). */
   card: {
     formato: "exclusiva",
-    title: "Sacola exclusiva",
+    title: "Campanha exclusiva",
     items: [
       "Sua arte em destaque, sem outro anunciante",
       "Arte feita pela gente, com a sua aprovação",
       "QR exclusivo e cupom próprio",
+      "Analytics da campanha, com custo por resultado",
     ],
     unitLabel: "por sacola",
     cta: "Garantir minha vaga",
@@ -306,25 +307,40 @@ export const gains = {
   ],
 } as const;
 
-/** Só anunciante. */
+/**
+ * Só anunciante. O que a campanha entrega e o que é medido em cada sacola.
+ * Sem número de resultado: a página diz O QUE se mede, nunca quanto dá.
+ */
 export const deliverables = {
   id: "o-que-voce-recebe",
   heading: "Veja o que a sua sacola trouxe.",
+  subhead: "Cada sacola é rastreada. Você acompanha a campanha do começo ao fim, com números de verdade em vez de achismo.",
   items: [
     {
       title: "QR exclusivo da sua campanha",
       body: "Leva para o seu site, WhatsApp ou Instagram. Dá para trocar o destino durante a campanha sem reimprimir.",
     },
     {
-      title: "Cupom próprio",
-      body: "Para contar quem comprou no balcão ou no seu WhatsApp.",
+      title: "Sacolas distribuídas",
+      body: "Quantas sacolas da sua campanha saíram com pedidos.",
     },
     {
-      title: "Relatório da campanha",
-      body: "Sacolas distribuídas, restaurantes da rede, leituras do QR por dia e cupons usados.",
+      title: "Taxa de leitura do QR",
+      body: "Quantas pessoas escanearam o QR em relação às sacolas distribuídas.",
+    },
+    {
+      title: "Painel de controle",
+      body: "Acompanhe leituras do QR, cupons usados e custo por resultado no seu painel de controle.",
+    },
+    {
+      title: "Uso de cupom",
+      body: "Cada sacola tem um cupom próprio, para contar quem comprou no balcão ou no WhatsApp.",
+    },
+    {
+      title: "Custo por resultado",
+      body: "O valor pago dividido pelas leituras do QR ou pelos cupons usados.",
     },
   ],
-  footnote: "Em breve, um painel para acompanhar os resultados em tempo real.",
 } as const;
 
 /** Só restaurante. */
@@ -357,7 +373,7 @@ export const faq: { id: string; heading: string; items: PorPerfil<readonly FaqIt
       },
       {
         q: "Como sei se deu resultado?",
-        a: "Cada anunciante tem um QR e um cupom próprios. Você recebe o número de leituras e de cupons usados.",
+        a: "Cada anunciante tem um QR e um cupom próprios. No seu painel de controle você vê o número de leituras e de cupons usados.",
       },
       {
         q: "Quem cria a arte?",
