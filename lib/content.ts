@@ -260,18 +260,18 @@ export const formats = {
      decidiu (logo do restaurante ou da Qlareo). */
   card: {
     formato: "exclusiva",
-    title: "Campanha exclusiva",
+    title: "Anúncio na sacola",
     items: [
       "Sua arte em destaque, sem outro anunciante",
       "Arte feita pela gente, com a sua aprovação",
       "QR exclusivo e cupom próprio",
       "Analytics da campanha, com custo por resultado",
     ],
-    unitLabel: "por sacola",
+    totalLabel: "por mês",
     cta: "Garantir minha vaga",
   },
-  /** Linha do total sob o preço por sacola. */
-  total: (valor: string, sacolas: string) => `${valor} por mês com ${sacolas} sacolas`,
+  /** Linha sob o total: de onde ele vem. */
+  total: (sacola: string, sacolas: string) => `${sacola} por sacola × ${sacolas} sacolas`,
   /* A exclusividade por rede é a âncora alta: aparece como uma segunda opção,
      e não escondida numa nota, para a sacola exclusiva ser lida ao lado dela. */
   network: {

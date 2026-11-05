@@ -126,9 +126,9 @@ export function Formats() {
                 <div className="flex flex-col gap-1 rounded-2xl bg-on-ink/10 px-5 py-4">
                   <p className="flex flex-wrap items-baseline gap-x-2">
                     <strong className="tnum text-[28px] leading-none font-semibold tracking-[-0.03em]">
-                      {PRICING.sacola}
+                      {cotacao ? formatTotal(cotacao.total) : "—"}
                     </strong>
-                    <span className="text-[15px]">{card.unitLabel}</span>
+                    {cotacao && <span className="text-[15px]">{card.totalLabel}</span>}
                   </p>
                   {/* O único ponto que o leitor de tela anuncia quando a
                       quantidade muda. */}
@@ -138,10 +138,7 @@ export function Formats() {
                     className="tnum text-[14px] text-on-ink/80"
                   >
                     {cotacao
-                      ? formats.total(
-                          formatTotal(cotacao.total),
-                          formatQuantidade(cotacao.quantidade),
-                        )
+                      ? formats.total(PRICING.sacola, formatQuantidade(cotacao.quantidade))
                       : aviso}
                   </p>
                 </div>
