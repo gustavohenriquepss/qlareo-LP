@@ -8,8 +8,11 @@ A Qlareo é uma **rede de mídia em sacolas de delivery**.
 
 - Restaurantes recebem sacolas de papel kraft impressas **de graça**.
 - Anunciantes locais pagam para aparecer nelas, **100% antecipado**.
-- Dois planos: **Impacto** (um anunciante, sacola inteira, frente e verso) e **Alcance**
-  (um anunciante por lado). No código o id continua `exclusiva` e `meia`.
+- O anunciante compra a **exclusividade da sacola**: uma marca por sacola, com a arte num
+  lado. O que vai no outro lado (logo do restaurante ou da Qlareo) ainda não foi decidido,
+  e a página não fala dele. No código o id do produto é `exclusiva`.
+- Quantidade livre, a partir de 1.000 sacolas por mês (o ciclo é mensal). A seção de
+  formatos tem um seletor de quantidade com o total do mês.
 - Piloto em **Itaboraí** e **Icaraí, Niterói** (RJ).
 
 A página fala com os dois públicos. Um seletor no topo troca o conteúdo inteiro entre
@@ -27,7 +30,7 @@ npm install
 npm run dev          # http://localhost:3000
 npm run build        # build de produção
 npm run typecheck    # tsc --noEmit
-npm test             # testes da calculadora (node --test)
+npm test             # testes da calculadora e do preço (node --test)
 ```
 
 ## Onde fica cada coisa
@@ -38,6 +41,7 @@ npm test             # testes da calculadora (node --test)
 | `lib/site.ts` | Constantes de contato: `WHATSAPP_NUMBER`, `INSTAGRAM_URL` e as mensagens do WhatsApp. |
 | `lib/analytics.ts` | `track()` e os eventos da página, enviados ao Vercel Web Analytics. |
 | `lib/calculator.ts` | Conta da calculadora do restaurante (função pura, com testes). |
+| `lib/pricing.ts` | **Preço do anunciante**: preço por sacola e mínimo (função pura, com testes). |
 | `components/perfil.tsx` | Estado do perfil, leitura e escrita de `?perfil=`. |
 | `components/landing.tsx` | Ordem das seções de cada perfil. |
 | `components/` | Uma seção por arquivo. `components/ui/` tem os componentes base. |
@@ -46,9 +50,14 @@ npm test             # testes da calculadora (node --test)
 ## Contato e preço
 
 Já definidos pelo dono: o Instagram (`INSTAGRAM_URL` em `lib/site.ts`, `@qlareobr`), o
-WhatsApp (`WHATSAPP_NUMBER`, atendido pelo fundador) e o preço
-(`PRICING` em `lib/content.ts`: R$ 1,30 por sacola na exclusiva, R$ 0,65 na meia, os dois
-fechando em R$ 3.250 por mês). Preço só muda quando o dono pedir.
+WhatsApp (`WHATSAPP_NUMBER`, atendido pelo fundador) e o preço, em `lib/pricing.ts`.
+Preço só muda quando o dono pedir.
+
+- **R$ 2,00 por sacola** (`PRECO_SACOLA`), o mesmo em qualquer quantidade.
+- Mínimo de **1.000 sacolas por mês** (`MINIMO_SACOLAS`). Um restaurante parceiro passa de
+  800 pedidos por mês, então menos que isso não dura o ciclo.
+- A seção de formatos, "Quanto custa?", o comparativo e a imagem de compartilhamento leem
+  dali (`PRICING` em `lib/content.ts` só formata), e `npm test` confere os valores.
 
 ## Analytics
 
@@ -70,7 +79,7 @@ no Hobby, só as page views.
 
 | Evento | Quando | Propriedades |
 | --- | --- | --- |
-| `click_whatsapp` | Clique em qualquer botão de WhatsApp | `perfil`, `posicao` (`header`, `hero`, `formatos`, `calculadora`, `cta_final`) e, nos botões de formato, `formato` (`exclusiva`, `meia`, `rede`) |
+| `click_whatsapp` | Clique em qualquer botão de WhatsApp | `perfil`, `posicao` (`header`, `hero`, `formatos`, `calculadora`, `cta_final`) e, nos botões de formato, `formato` (`exclusiva`, `rede`) e `quantidade` (sacolas por mês escolhidas, quando válida) |
 | `toggle_perfil` | Troca no seletor do hero | `perfil` |
 | `calculadora_usada` | Os dois campos da calculadora preenchidos (uma vez por sessão) | `perfil` |
 

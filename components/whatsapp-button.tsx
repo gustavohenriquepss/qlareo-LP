@@ -15,6 +15,7 @@ export function WhatsAppButton({
   posicao,
   label,
   formato,
+  quantidade,
   size = "md",
   variant = "primary",
   className = "",
@@ -22,6 +23,8 @@ export function WhatsAppButton({
   posicao: WhatsappPosicao;
   label: string;
   formato?: Formato;
+  /** Sacolas por mês escolhidas no seletor; entra na mensagem e no evento. */
+  quantidade?: number;
   size?: "sm" | "md" | "lg";
   /** `secondary` só ao lado de um primário, para não competir com ele. */
   variant?: "primary" | "secondary";
@@ -31,14 +34,19 @@ export function WhatsAppButton({
 
   return (
     <ButtonLink
-      href={whatsappHref(perfil, formato)}
+      href={whatsappHref(perfil, formato, quantidade)}
       target="_blank"
       rel="noopener noreferrer"
       size={size}
       variant={variant}
       className={className}
       onClick={() =>
-        track("click_whatsapp", formato ? { perfil, posicao, formato } : { perfil, posicao })
+        track("click_whatsapp", {
+          perfil,
+          posicao,
+          ...(formato && { formato }),
+          ...(quantidade && { quantidade }),
+        })
       }
     >
       <WhatsAppIcon className="size-[18px]" />
