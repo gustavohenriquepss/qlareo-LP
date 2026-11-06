@@ -79,7 +79,7 @@ no Hobby, só as page views.
 
 | Evento | Quando | Propriedades |
 | --- | --- | --- |
-| `click_whatsapp` | Clique em qualquer botão de WhatsApp | `perfil`, `posicao` (`header`, `hero`, `formatos`, `calculadora`, `cta_final`) e, nos botões de formato, `formato` (`exclusiva`, `rede`) e `quantidade` (sacolas por mês escolhidas, quando válida) |
+| `click_whatsapp` | Clique em qualquer botão de WhatsApp | `perfil`, `posicao` (`header`, `hero`, `formatos`, `calculadora`, `cta_final`) e, nos botões de formato, `formato` (`exclusiva`, `rede`) `quantidade` (sacolas por mês escolhidas, quando válida) e `lados` (1 ou 2, junto com a quantidade) |
 | `toggle_perfil` | Troca no seletor do hero | `perfil` |
 | `calculadora_usada` | Os dois campos da calculadora preenchidos (uma vez por sessão) | `perfil` |
 
