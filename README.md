@@ -9,10 +9,11 @@ A Qlareo é uma **rede de mídia em sacolas de delivery**.
 - Restaurantes recebem sacolas de papel kraft impressas **de graça**.
 - Anunciantes locais pagam para aparecer nelas, **100% antecipado**.
 - O anunciante compra a **exclusividade da sacola**: uma marca por sacola, com a arte num
-  lado. O que vai no outro lado (logo do restaurante ou da Qlareo) ainda não foi decidido,
-  e a página não fala dele. No código o id do produto é `exclusiva`.
+  lado ou **frente e verso** (25% a mais). Com a arte num lado, o que vai no outro (logo do
+  restaurante ou da Qlareo) ainda não foi decidido, e a página não fala dele. No código o
+  id do produto é `exclusiva`.
 - Quantidade livre, a partir de 1.000 sacolas por mês (o ciclo é mensal). A seção de
-  formatos tem um seletor de quantidade com o total do mês.
+  formatos tem um seletor de quantidade e de lados, com o total do mês.
 - Piloto em **Itaboraí** e **Icaraí, Niterói** (RJ).
 
 A página fala com os dois públicos. Um seletor no topo troca o conteúdo inteiro entre
@@ -41,7 +42,7 @@ npm test             # testes da calculadora e do preço (node --test)
 | `lib/site.ts` | Constantes de contato: `WHATSAPP_NUMBER`, `INSTAGRAM_URL` e as mensagens do WhatsApp. |
 | `lib/analytics.ts` | `track()` e os eventos da página, enviados ao Vercel Web Analytics. |
 | `lib/calculator.ts` | Conta da calculadora do restaurante (função pura, com testes). |
-| `lib/pricing.ts` | **Preço do anunciante**: preço por sacola e mínimo (função pura, com testes). |
+| `lib/pricing.ts` | **Preço do anunciante**: preço por sacola, adicional de frente e verso e mínimo (função pura, com testes). |
 | `components/perfil.tsx` | Estado do perfil, leitura e escrita de `?perfil=`. |
 | `components/landing.tsx` | Ordem das seções de cada perfil. |
 | `components/` | Uma seção por arquivo. `components/ui/` tem os componentes base. |
@@ -53,7 +54,10 @@ Já definidos pelo dono: o Instagram (`INSTAGRAM_URL` em `lib/site.ts`, `@qlareo
 WhatsApp (`WHATSAPP_NUMBER`, atendido pelo fundador) e o preço, em `lib/pricing.ts`.
 Preço só muda quando o dono pedir.
 
-- **R$ 2,00 por sacola** (`PRECO_SACOLA`), o mesmo em qualquer quantidade.
+- **R$ 2,00 por sacola** com a arte num lado (`PRECO_SACOLA`), o mesmo em qualquer quantidade.
+- **Frente e verso: 25% a mais** (`ADICIONAL_FRENTE_E_VERSO`), R$ 2,50 por sacola. 1.000
+  sacolas saem por R$ 2.000 num lado e R$ 2.500 nos dois (decisão do dono em 06/11/2026).
+  O app usa os mesmos ids de lados (`um_lado`, `frente_e_verso`) em `campaigns.sides`.
 - Mínimo de **1.000 sacolas por mês** (`MINIMO_SACOLAS`). Um restaurante parceiro passa de
   800 pedidos por mês, então menos que isso não dura o ciclo.
 - A seção de formatos, "Quanto custa?", o comparativo e a imagem de compartilhamento leem
@@ -79,7 +83,7 @@ no Hobby, só as page views.
 
 | Evento | Quando | Propriedades |
 | --- | --- | --- |
-| `click_whatsapp` | Clique em qualquer botão de WhatsApp | `perfil`, `posicao` (`header`, `hero`, `formatos`, `calculadora`, `cta_final`) e, nos botões de formato, `formato` (`exclusiva`, `rede`) e `quantidade` (sacolas por mês escolhidas, quando válida) |
+| `click_whatsapp` | Clique em qualquer botão de WhatsApp | `perfil`, `posicao` (`header`, `hero`, `formatos`, `calculadora`, `cta_final`) e, nos botões de formato, `formato` (`exclusiva`, `rede`), `quantidade` (sacolas por mês escolhidas, quando válida) e, no da sacola, `lados` (`um_lado`, `frente_e_verso`) |
 | `toggle_perfil` | Troca no seletor do hero | `perfil` |
 | `calculadora_usada` | Os dois campos da calculadora preenchidos (uma vez por sessão) | `perfil` |
 

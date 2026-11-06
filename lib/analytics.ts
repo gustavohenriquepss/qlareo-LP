@@ -1,4 +1,5 @@
 import { track as vercelTrack } from "@vercel/analytics";
+import type { Lados } from "@/lib/pricing";
 import type { Formato, Perfil } from "@/lib/site";
 
 /**
@@ -9,12 +10,13 @@ import type { Formato, Perfil } from "@/lib/site";
 export type WhatsappPosicao = "header" | "hero" | "formatos" | "calculadora" | "cta_final";
 
 type EventMap = {
-  /** `formato` e `quantidade` (sacolas por mês) só vêm dos botões da seção de formatos. */
+  /** `formato`, `quantidade` (sacolas por mês) e `lados` só vêm dos botões da seção de formatos. */
   click_whatsapp: {
     perfil: Perfil;
     posicao: WhatsappPosicao;
     formato?: Formato;
     quantidade?: number;
+    lados?: Lados;
   };
   toggle_perfil: { perfil: Perfil };
   calculadora_usada: { perfil: Perfil };

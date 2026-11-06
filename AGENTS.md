@@ -5,8 +5,9 @@ page (`qlareo.com`).
 
 - Restaurantes recebem sacolas de papel kraft impressas de graça.
 - Anunciantes locais pagam 100% antecipado para aparecer nelas.
-- Um produto: a **exclusividade da sacola** (1 anunciante por sacola, arte num lado; id
-  `exclusiva`), R$ 2,00 por sacola, quantidade livre a partir de 1.000 sacolas/mês.
+- Um produto: a **exclusividade da sacola** (1 anunciante por sacola; id `exclusiva`),
+  R$ 2,00 por sacola com a arte num lado ou R$ 2,50 frente e verso (+25%), quantidade
+  livre a partir de 1.000 sacolas/mês.
 - Piloto em Itaboraí e Icaraí, Niterói (RJ).
 
 O painel do anunciante e o redirect dos QR codes (`/r/:slug`) ficam no app, em
@@ -14,7 +15,8 @@ O painel do anunciante e o redirect dos QR codes (`/r/:slug`) ficam no app, em
 
 Antes de mudar a landing, leia o `README.md`: copy só em `lib/content.ts`, nenhum token
 de design editado localmente, logo copiada do app. Não invente números (alcance, recall,
-conversão) e não mude o preço (`PRECO_SACOLA` e `MINIMO_SACOLAS` em `lib/pricing.ts`) sem o dono pedir.
+conversão) e não mude o preço (`PRECO_SACOLA`, `ADICIONAL_FRENTE_E_VERSO` e `MINIMO_SACOLAS` em
+`lib/pricing.ts`) sem o dono pedir.
 
 A versão anterior (SaaS de relatórios para lojas VTEX) está na tag `legacy/relatorios-v1`.
 Não traga essa copy de volta para o `main`.

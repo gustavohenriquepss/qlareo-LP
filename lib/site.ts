@@ -1,6 +1,6 @@
 /** Constantes de contato e de perfil. */
 
-import { formatQuantidade } from "@/lib/pricing";
+import { formatQuantidade, type Lados } from "@/lib/pricing";
 
 /**
  * Os dois públicos da página. "anunciante" é o padrão: é quem paga e traz o
@@ -48,15 +48,29 @@ export const WHATSAPP_FORMAT_MESSAGES: Record<Formato, string> = {
   rede: "Oi! Quero saber da exclusividade da minha categoria na rede Qlareo",
 };
 
+/** Fim da mensagem do cartão da sacola, conforme a escolha de lados. */
+const WHATSAPP_LADOS: Record<Lados, string> = {
+  um_lado: "com a arte num lado",
+  frente_e_verso: "com a arte frente e verso",
+};
+
 /**
  * Único construtor de link de WhatsApp da página. `quantidade` (sacolas por
- * mês) só vem dos cartões de formato, com o valor escolhido no seletor.
+ * mês) e `lados` só vêm dos cartões de formato, com o que foi escolhido no
+ * seletor.
  */
-export function whatsappHref(perfil: Perfil, formato?: Formato, quantidade?: number): string {
+export function whatsappHref(
+  perfil: Perfil,
+  formato?: Formato,
+  quantidade?: number,
+  lados?: Lados,
+): string {
+  const detalhes = [
+    quantidade ? `com ${formatQuantidade(quantidade)} sacolas por mês` : null,
+    lados ? WHATSAPP_LADOS[lados] : null,
+  ].filter(Boolean);
   const message = formato
-    ? `${WHATSAPP_FORMAT_MESSAGES[formato]}${
-        quantidade ? `, com ${formatQuantidade(quantidade)} sacolas por mês.` : "."
-      }`
+    ? `${WHATSAPP_FORMAT_MESSAGES[formato]}${detalhes.length ? `, ${detalhes.join(", ")}` : ""}.`
     : WHATSAPP_MESSAGES[perfil];
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }

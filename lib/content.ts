@@ -1,5 +1,13 @@
 import { formatBRL } from "@/lib/calculator";
-import { MINIMO_SACOLAS, PRECO_SACOLA, formatQuantidade, formatTotal } from "@/lib/pricing";
+import {
+  ADICIONAL_FRENTE_E_VERSO,
+  MINIMO_SACOLAS,
+  PRECO_POR_LADOS,
+  PRECO_SACOLA,
+  type Lados,
+  formatQuantidade,
+  formatTotal,
+} from "@/lib/pricing";
 import type { Perfil } from "@/lib/site";
 
 /**
@@ -17,11 +25,16 @@ type PorPerfil<T> = Record<Perfil, T>;
 /**
  * Preço definido pelo dono, já em texto. Os números vivem em `lib/pricing.ts`;
  * aqui só se formata. O anunciante compra a exclusividade da sacola: preço
- * único por sacola, com um mínimo por mês.
+ * único por sacola, com um mínimo por mês, e 25% a mais com a arte frente e
+ * verso.
  */
 export const PRICING = {
-  /** "R$ 2,00" */
+  /** Arte num lado. "R$ 2,00" */
   sacola: formatBRL(PRECO_SACOLA),
+  /** Arte frente e verso. "R$ 2,50" */
+  sacolaFrenteEVerso: formatBRL(PRECO_POR_LADOS.frente_e_verso),
+  /** "25%" */
+  adicionalFrenteEVerso: `${ADICIONAL_FRENTE_E_VERSO}%`,
   /** "1.000" */
   minimo: formatQuantidade(MINIMO_SACOLAS),
   /** Menor mês possível: o mínimo de sacolas. "R$ 2.000" */
@@ -241,7 +254,7 @@ export const audience = {
 export const formats = {
   id: "formatos",
   heading: "Sua marca sozinha na sacola.",
-  subhead: `${PRICING.sacola} por sacola, a partir de ${PRICING.minimo} por mês. Você escolhe quantas, e nenhum outro anunciante entra nelas.`,
+  subhead: `${PRICING.sacola} por sacola, a partir de ${PRICING.minimo} por mês, ou ${PRICING.sacolaFrenteEVerso} com a sua arte frente e verso. Você escolhe quantas, e nenhum outro anunciante entra nelas.`,
   quantidade: {
     label: "Quantas sacolas por mês?",
     /* Atalhos. O primeiro é o mínimo e o padrão da página: a entrada mais
@@ -252,12 +265,22 @@ export const formats = {
     placeholder: "Ex.: 1.800",
     vazio: "Escolha quantas sacolas por mês.",
     abaixoDoMinimo: `O mínimo é ${PRICING.minimo} sacolas por mês.`,
-    nota: `Preço único: ${PRICING.sacola} por sacola em qualquer quantidade, com a arte inclusa.`,
+    nota: "Preço por sacola igual em qualquer quantidade, com a arte inclusa.",
+  },
+  /* Onde vai a arte. Um lado é o padrão: a entrada mais barata fica à vista,
+     e frente e verso aparece com o preço dela, sem conta para fazer. */
+  lados: {
+    label: "Onde vai a sua arte?",
+    inicial: "um_lado" as Lados,
+    opcoes: [
+      { value: "um_lado", label: "Um lado", preco: PRICING.sacola },
+      { value: "frente_e_verso", label: "Frente e verso", preco: PRICING.sacolaFrenteEVerso },
+    ] satisfies { value: Lados; label: string; preco: string }[],
   },
   /* Um produto só: a exclusividade da sacola. `formato: "exclusiva"` é o id
      interno, mantido para não quebrar a série do evento `click_whatsapp`.
-     A página não diz o que vai no outro lado da sacola: o dono ainda não
-     decidiu (logo do restaurante ou da Qlareo). */
+     Com a arte num lado, a página não diz o que vai no outro: o dono ainda
+     não decidiu (logo do restaurante ou da Qlareo). */
   card: {
     formato: "exclusiva",
     title: "Anúncio na sacola",
@@ -365,11 +388,11 @@ export const faq: { id: string; heading: string; items: PorPerfil<readonly FaqIt
     anunciante: [
       {
         q: "Quanto custa?",
-        a: `${PRICING.sacola} por sacola, a partir de ${PRICING.minimo} sacolas por mês (${PRICING.menorMensal}). A sacola é só sua: nenhum outro anunciante aparece nela.`,
+        a: `${PRICING.sacola} por sacola com a arte num lado, a partir de ${PRICING.minimo} sacolas por mês (${PRICING.menorMensal}). Com a arte frente e verso, ${PRICING.adicionalFrenteEVerso} a mais: ${PRICING.sacolaFrenteEVerso} por sacola. A sacola é só sua: nenhum outro anunciante aparece nela.`,
       },
       {
         q: "Qual a quantidade mínima?",
-        a: `${PRICING.minimo} sacolas por mês. Acima disso, você escolhe quantas quiser, sempre a ${PRICING.sacola} cada.`,
+        a: `${PRICING.minimo} sacolas por mês. Acima disso, você escolhe quantas quiser, sempre pelo mesmo preço por sacola.`,
       },
       {
         q: "Como sei se deu resultado?",

@@ -8,13 +8,14 @@ Markdown is authoritative; indexes only retrieve it.
 
 - **status:** accepted
 - **domain:** marketing
-- **statement:** A página não mostra estatística de recall, alcance ou conversão. Preço definido pelo dono em 2026-11-05 (`lib/pricing.ts`, substitui os anteriores): o anunciante compra a exclusividade da sacola (uma marca por sacola, arte num lado; o outro lado ainda indefinido e fora da página), R$ 2,00 por sacola em qualquer quantidade, mínimo de 1.000 sacolas/mês. Sem planos Impacto/Alcance nem faixas. Só muda quando o dono pedir.
-- **source**: `AGENTS.md`, `lib/pricing.ts`, `lib/content.ts` (working tree 2026-11-05, sobre 657f943)
+- **statement:** A página não mostra estatística de recall, alcance ou conversão. Preço definido pelo dono em 2026-11-05 (`lib/pricing.ts`, substitui os anteriores): o anunciante compra a exclusividade da sacola (uma marca por sacola), R$ 2,00 por sacola em qualquer quantidade, mínimo de 1.000 sacolas/mês. Em 2026-11-06 o dono liberou os dois lados: frente e verso custa 25% a mais (R$ 2,50 por sacola; R$ 2.500 nas 1.000). Com a arte num lado, o outro segue indefinido e fora da página. Sem planos Impacto/Alcance nem faixas. Só muda quando o dono pedir.
+- **source**: `AGENTS.md`, `lib/pricing.ts`, `lib/content.ts` (working tree 2026-11-06, sobre 1cf550a)
 - **rationale:** produto em piloto; número sem fonte custa confiança.
 - **last-reviewed:** 657f943389f58e793b29c0f56e9451cb85493ee7
-- **links:** implements: [`lib/pricing.ts`, `lib/content.ts`], relates: [], decided-by: [owner, 2026-11-04; owner, 2026-11-05]
+- **links:** implements: [`lib/pricing.ts`, `lib/content.ts`], relates: [], decided-by: [owner, 2026-11-04; owner, 2026-11-05; owner, 2026-11-06]
 
 - Given a seção de formatos com 1.000 sacolas When a página carrega Then mostra R$ 2,00 por sacola e R$ 2.000 por mês
+- Given 1.000 sacolas e "Frente e verso" escolhido When a seção recalcula Then mostra R$ 2,50 por sacola e R$ 2.500 por mês
 - Given 999 sacolas digitadas When a seção recalcula Then nenhum total aparece e a página avisa o mínimo de 1.000
 
 ### BR-002 — Restaurante não divide sacola com concorrente
