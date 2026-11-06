@@ -1,5 +1,11 @@
 import { formatBRL } from "@/lib/calculator";
-import { MINIMO_SACOLAS, PRECO_SACOLA, formatQuantidade, formatTotal } from "@/lib/pricing";
+import {
+  MINIMO_SACOLAS,
+  PRECO_SACOLA,
+  formatQuantidade,
+  formatTotal,
+  precoSacola,
+} from "@/lib/pricing";
 import type { Perfil } from "@/lib/site";
 
 /**
@@ -16,12 +22,14 @@ type PorPerfil<T> = Record<Perfil, T>;
 
 /**
  * Preço definido pelo dono, já em texto. Os números vivem em `lib/pricing.ts`;
- * aqui só se formata. O anunciante compra a exclusividade da sacola: preço
+ * aqui só se formata. O anunciante compra um lado da sacola, ou os dois: preço
  * único por sacola, com um mínimo por mês.
  */
 export const PRICING = {
   /** "R$ 2,00" */
   sacola: formatBRL(PRECO_SACOLA),
+  /** "R$ 2,50": arte nos dois lados. */
+  sacolaDoisLados: formatBRL(precoSacola(2)),
   /** "1.000" */
   minimo: formatQuantidade(MINIMO_SACOLAS),
   /** Menor mês possível: o mínimo de sacolas. "R$ 2.000" */
@@ -124,7 +132,7 @@ export const howItWorks: { id: string; heading: string; steps: PorPerfil<readonl
     anunciante: [
       {
         title: "Escolha quantas sacolas",
-        body: `A partir de ${PRICING.minimo} por mês. Cada sacola leva só a sua marca, sem outro anunciante.`,
+        body: `A partir de ${PRICING.minimo} por mês. Um lado ou os dois. Com um lado, o outro nunca vai para um concorrente seu.`,
       },
       {
         title: "Mande logo e oferta",
@@ -240,8 +248,8 @@ export const audience = {
 /** Só anunciante. Mesmo âncora (`#formatos`) que "O que você ganha" do restaurante. */
 export const formats = {
   id: "formatos",
-  heading: "Sua marca sozinha na sacola.",
-  subhead: `${PRICING.sacola} por sacola, a partir de ${PRICING.minimo} por mês. Você escolhe quantas, e nenhum outro anunciante entra nelas.`,
+  heading: "Sua marca na sacola.",
+  subhead: `${PRICING.sacola} por sacola (${PRICING.sacolaDoisLados} com os dois lados), a partir de ${PRICING.minimo} por mês. Com um lado, nenhum concorrente seu fica no outro. Com os dois, a sacola é só sua.`,
   quantidade: {
     label: "Quantas sacolas por mês?",
     /* Atalhos. O primeiro é o mínimo e o padrão da página: a entrada mais
@@ -252,17 +260,25 @@ export const formats = {
     placeholder: "Ex.: 1.800",
     vazio: "Escolha quantas sacolas por mês.",
     abaixoDoMinimo: `O mínimo é ${PRICING.minimo} sacolas por mês.`,
-    nota: `Preço único: ${PRICING.sacola} por sacola em qualquer quantidade, com a arte inclusa.`,
+    nota: `Mesmo preço em qualquer quantidade, com a arte inclusa.`,
   },
-  /* Um produto só: a exclusividade da sacola. `formato: "exclusiva"` é o id
-     interno, mantido para não quebrar a série do evento `click_whatsapp`.
-     A página não diz o que vai no outro lado da sacola: o dono ainda não
-     decidiu (logo do restaurante ou da Qlareo). */
+  lados: {
+    label: "Em quantos lados da sacola?",
+    opcoes: [
+      { value: 1, label: "Um lado", preco: PRICING.sacola },
+      { value: 2, label: "Dois lados", preco: PRICING.sacolaDoisLados },
+    ],
+  },
+  /* Um produto só: o anúncio na sacola, em um ou dois lados. `formato:
+     "exclusiva"` é o id interno, mantido para não quebrar a série do evento
+     `click_whatsapp`. Só os dois lados garantem a sacola sem outro anunciante.
+     Com um lado só, o outro pode ir para outro anunciante, nunca do mesmo ramo. */
   card: {
     formato: "exclusiva",
-    title: "Anúncio na sacola",
+    /** Título do cartão segue os lados escolhidos no seletor. */
+    title: { 1: "Um lado", 2: "Dois lados" },
     items: [
-      "Sua arte em destaque, sem outro anunciante",
+      "Nenhum concorrente seu na mesma sacola",
       "Arte feita pela gente, com a sua aprovação",
       "QR exclusivo e cupom próprio",
       "Analytics da campanha, com custo por resultado",
@@ -365,7 +381,7 @@ export const faq: { id: string; heading: string; items: PorPerfil<readonly FaqIt
     anunciante: [
       {
         q: "Quanto custa?",
-        a: `${PRICING.sacola} por sacola, a partir de ${PRICING.minimo} sacolas por mês (${PRICING.menorMensal}). A sacola é só sua: nenhum outro anunciante aparece nela.`,
+        a: `${PRICING.sacola} por sacola, a partir de ${PRICING.minimo} sacolas por mês (${PRICING.menorMensal}). Com os dois lados (${PRICING.sacolaDoisLados} por sacola), a sacola é só sua. Com um lado, o outro nunca vai para um concorrente do seu ramo.`,
       },
       {
         q: "Qual a quantidade mínima?",

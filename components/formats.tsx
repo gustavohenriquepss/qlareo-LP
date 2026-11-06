@@ -5,8 +5,10 @@ import { CheckMark } from "@/components/ui/check-mark";
 import { Frame, Section, cardGrid, framePadding, sectionStack } from "@/components/ui/frame";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { WhatsAppButton } from "@/components/whatsapp-button";
-import { PRICING, formats } from "@/lib/content";
+import { formatBRL } from "@/lib/calculator";
+import { formats } from "@/lib/content";
 import {
+  type Lados,
   cotar,
   formatQuantidade,
   formatTotal,
@@ -15,7 +17,7 @@ import {
 } from "@/lib/pricing";
 
 /**
- * O produto do anunciante: a exclusividade da sacola, a preço único por
+ * O produto do anunciante: a sacola em um ou dois lados, a preço fixo por
  * sacola, com a quantidade por mês escolhida ao lado. Abaixo, a exclusividade
  * da categoria na rede.
  *
@@ -24,17 +26,19 @@ import {
  * texto secundário é `on-ink` a 80% (12:1) e o check usa o azul da marca
  * (3.45:1, objeto gráfico).
  *
- * O botão de WhatsApp leva a quantidade escolhida na mensagem e no evento.
+ * O botão de WhatsApp leva a quantidade e os lados escolhidos na mensagem e no evento.
  */
 export function Formats() {
   const { quantidade: copy, card, network } = formats;
   const [raw, setRaw] = useState(formatQuantidade(copy.inicial));
+  const [lados, setLados] = useState<Lados>(1);
+  const ladosLabelId = useId();
   const labelId = useId();
   const inputId = useId();
   const hintId = useId();
 
   const quantidade = parseQuantidade(raw);
-  const cotacao = quantidade === null ? null : cotar(quantidade);
+  const cotacao = quantidade === null ? null : cotar(quantidade, lados);
   /* Fora do mínimo, o total dá lugar ao aviso: nenhum total errado aparece. */
   const aviso = cotacao ? null : quantidade === null ? copy.vazio : copy.abaixoDoMinimo;
 
@@ -103,12 +107,45 @@ export function Formats() {
                 )}
               </div>
 
+              <p id={ladosLabelId} className="pt-2 text-[18px] font-semibold text-ink">
+                {formats.lados.label}
+              </p>
+              <div
+                role="group"
+                aria-labelledby={ladosLabelId}
+                className="grid grid-cols-2 gap-1 rounded-2xl bg-surface-2 p-1"
+              >
+                {formats.lados.opcoes.map((opcao) => {
+                  const pressed = lados === opcao.value;
+                  return (
+                    <button
+                      key={opcao.value}
+                      type="button"
+                      aria-pressed={pressed}
+                      onClick={() => setLados(opcao.value)}
+                      className={[
+                        "inline-flex min-h-10 flex-col items-center justify-center rounded-xl px-2 py-1.5 text-[15px] leading-5 font-medium pointer-coarse:min-h-11",
+                        "transition-colors duration-150",
+                        pressed
+                          ? "bg-ink text-on-ink"
+                          : "text-ink-muted hover:bg-surface hover:text-ink",
+                      ].join(" ")}
+                    >
+                      {opcao.label}
+                      <span className="tnum text-[13px] font-normal opacity-80">
+                        {opcao.preco} por sacola
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
               <p className="mt-auto pt-2 text-[14px] leading-[1.5] text-ink-muted">{copy.nota}</p>
             </div>
 
             <div className="flex flex-col gap-6 rounded-2xl bg-ink p-6 text-on-ink lg:gap-8 lg:p-10">
               <h3 className="text-[24px] leading-tight font-semibold tracking-[-0.03em]">
-                {card.title}
+                {card.title[lados]}
               </h3>
 
               <ul className="flex flex-col gap-3">
@@ -138,7 +175,7 @@ export function Formats() {
                     className="tnum text-[14px] text-on-ink/80"
                   >
                     {cotacao
-                      ? formats.total(PRICING.sacola, formatQuantidade(cotacao.quantidade))
+                      ? formats.total(formatBRL(cotacao.sacola), formatQuantidade(cotacao.quantidade))
                       : aviso}
                   </p>
                 </div>
@@ -147,6 +184,7 @@ export function Formats() {
                   posicao="formatos"
                   formato={card.formato}
                   quantidade={cotacao?.quantidade}
+                  lados={lados}
                   label={card.cta}
                   size="lg"
                   className="w-full"
