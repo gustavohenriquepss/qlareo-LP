@@ -8,9 +8,9 @@ A Qlareo é uma **rede de mídia em sacolas de delivery**.
 
 - Restaurantes recebem sacolas de papel kraft impressas **de graça**.
 - Anunciantes locais pagam para aparecer nelas, **100% antecipado**.
-- O anunciante compra a **exclusividade da sacola**: uma marca por sacola, com a arte num
-  lado. O que vai no outro lado (logo do restaurante ou da Qlareo) ainda não foi decidido,
-  e a página não fala dele. No código o id do produto é `exclusiva`.
+- O anunciante compra um lado da sacola (R$ 2,00) ou os dois (+25%, R$ 2,50). Só os dois
+  lados garantem a sacola sem outro anunciante; com um lado, o outro pode ir para outro
+  anunciante (nunca do mesmo ramo) ou levar um "anuncie aqui" da Qlareo. No código o id do produto é `exclusiva`.
 - Quantidade livre, a partir de 1.000 sacolas por mês (o ciclo é mensal). A seção de
   formatos tem um seletor de quantidade com o total do mês.
 - Piloto em **Itaboraí** e **Icaraí, Niterói** (RJ).

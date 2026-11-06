@@ -1,6 +1,6 @@
 /** Constantes de contato e de perfil. */
 
-import { formatQuantidade } from "@/lib/pricing";
+import { type Lados, formatQuantidade } from "@/lib/pricing";
 
 /**
  * Os dois públicos da página. "anunciante" é o padrão: é quem paga e traz o
@@ -50,12 +50,21 @@ export const WHATSAPP_FORMAT_MESSAGES: Record<Formato, string> = {
 
 /**
  * Único construtor de link de WhatsApp da página. `quantidade` (sacolas por
- * mês) só vem dos cartões de formato, com o valor escolhido no seletor.
+ * mês) e `lados` só vêm dos cartões de formato, com o que foi escolhido no seletor.
  */
-export function whatsappHref(perfil: Perfil, formato?: Formato, quantidade?: number): string {
+export function whatsappHref(
+  perfil: Perfil,
+  formato?: Formato,
+  quantidade?: number,
+  lados?: Lados,
+): string {
   const message = formato
     ? `${WHATSAPP_FORMAT_MESSAGES[formato]}${
-        quantidade ? `, com ${formatQuantidade(quantidade)} sacolas por mês.` : "."
+        quantidade
+          ? `, com ${formatQuantidade(quantidade)} sacolas por mês${
+              lados === 2 ? ", arte nos dois lados" : ", arte em um lado"
+            }.`
+          : "."
       }`
     : WHATSAPP_MESSAGES[perfil];
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;

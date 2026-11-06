@@ -4,6 +4,7 @@ import { usePerfil } from "@/components/perfil";
 import { ButtonLink } from "@/components/ui/button";
 import { WhatsAppIcon } from "@/components/ui/social-icons";
 import { track, type WhatsappPosicao } from "@/lib/analytics";
+import type { Lados } from "@/lib/pricing";
 import { type Formato, whatsappHref } from "@/lib/site";
 
 /**
@@ -16,6 +17,7 @@ export function WhatsAppButton({
   label,
   formato,
   quantidade,
+  lados,
   size = "md",
   variant = "primary",
   className = "",
@@ -25,6 +27,8 @@ export function WhatsAppButton({
   formato?: Formato;
   /** Sacolas por mês escolhidas no seletor; entra na mensagem e no evento. */
   quantidade?: number;
+  /** Lados da sacola com a arte; só junto com `quantidade`. */
+  lados?: Lados;
   size?: "sm" | "md" | "lg";
   /** `secondary` só ao lado de um primário, para não competir com ele. */
   variant?: "primary" | "secondary";
@@ -34,7 +38,7 @@ export function WhatsAppButton({
 
   return (
     <ButtonLink
-      href={whatsappHref(perfil, formato, quantidade)}
+      href={whatsappHref(perfil, formato, quantidade, lados)}
       target="_blank"
       rel="noopener noreferrer"
       size={size}
@@ -46,6 +50,7 @@ export function WhatsAppButton({
           posicao,
           ...(formato && { formato }),
           ...(quantidade && { quantidade }),
+          ...(quantidade && lados && { lados }),
         })
       }
     >
