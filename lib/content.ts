@@ -329,7 +329,7 @@ export const gains = {
  */
 export const deliverables = {
   id: "o-que-voce-recebe",
-  heading: "Veja o que a sua sacola trouxe.",
+  heading: "Acompanhe os resultados do seu anúncio.",
   subhead: "Cada sacola é rastreada. Você acompanha a campanha do começo ao fim, com números de verdade em vez de achismo.",
   items: [
     {
